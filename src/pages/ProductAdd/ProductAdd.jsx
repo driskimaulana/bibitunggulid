@@ -55,8 +55,8 @@ const ProductAdd = () => {
       weight,
     };
     console.log(newProduct);
-    await Axios.post('https://utamibakery-backend.vercel.app/products/', newProduct).then((response) => {
-      console.log(response.data);
+    // await Axios.post('https://utamibakery-backend.vercel.app/products/', newProduct).then((response) => {
+    await Axios.post('http://localhost:5000/products/', newProduct).then((response) => {
       window.location.href = 'http://localhost:3000/dashboard/products/';
     });
   };
