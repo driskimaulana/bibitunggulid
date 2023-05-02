@@ -24,6 +24,8 @@
       "jsx-a11y/click-events-have-key-events": "off",
       "array-callback-return": "off",
       "for-direction": "off",
+      "react/sort-comp": "off",
+      "react/no-access-state-in-setstate": "off",
       "no-new": 0,
       "no-alert": 0,
       "no-shadow": 0,

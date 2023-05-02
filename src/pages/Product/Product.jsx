@@ -10,8 +10,6 @@ import Axios from 'axios';
 import FilterBox from '../../components/FilterBox/FilterBox';
 import ProductCard from '../../components/ProductCard/ProductCard';
 
-import products from '../../utils/products_data';
-
 const Product = () => {
   const [prods, setprods] = useState(null);
   useEffect(() => {
@@ -48,7 +46,12 @@ const Product = () => {
               {
             prods.map((product, index) => (
               <Grid key={index} item md={3}>
-                <ProductCard name={product.name} price={product.price} imgUrl={product.photos[0]} />
+                <ProductCard
+                  id={product._id}
+                  name={product.name}
+                  price={product.price}
+                  imgUrl={product.photos[0]}
+                />
               </Grid>
             ))
           }

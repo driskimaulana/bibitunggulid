@@ -7,6 +7,7 @@ import Account from '../pages/Account/Account';
 import Product from '../pages/Product/Product';
 import Blog from '../pages/Blog/Blog';
 import ProductAdd from '../pages/ProductAdd/ProductAdd';
+import ProductDetails from '../pages/ProductDetails/ProductDetails';
 
 // ----------------------------------------------------------------------
 
@@ -22,6 +23,7 @@ export default function Router() {
         { path: 'products', element: <Product /> },
         { path: 'blogs', element: <Blog /> },
         { path: 'products/add', element: <ProductAdd /> },
+        { path: 'products/:id', element: <ProductDetails /> },
       ],
     },
     // {
