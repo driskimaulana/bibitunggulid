@@ -18,7 +18,9 @@ const MySideBar = () => {
 
   return (
     <div style={{
-      display: 'flex', height,
+      display: 'flex',
+      height,
+      position: 'fixed',
     }}
     >
       <Sidebar style={{

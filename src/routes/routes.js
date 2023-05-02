@@ -6,6 +6,7 @@ import Dashboard from '../pages/Dashboard/Dashboard';
 import Account from '../pages/Account/Account';
 import Product from '../pages/Product/Product';
 import Blog from '../pages/Blog/Blog';
+import ProductAdd from '../pages/ProductAdd/ProductAdd';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +21,7 @@ export default function Router() {
         { path: 'users', element: <Account /> },
         { path: 'products', element: <Product /> },
         { path: 'blogs', element: <Blog /> },
+        { path: 'products/add', element: <ProductAdd /> },
       ],
     },
     // {

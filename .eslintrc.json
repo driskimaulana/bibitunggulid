@@ -20,7 +20,10 @@
     "rules": {
       "linebreak-style": "off",
       "no-import-assign": "off",
+      "consistent-return": "off",
       "jsx-a11y/click-events-have-key-events": "off",
+      "array-callback-return": "off",
+      "for-direction": "off",
       "no-new": 0,
       "no-alert": 0,
       "no-shadow": 0,

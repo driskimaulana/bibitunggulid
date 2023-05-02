@@ -38,11 +38,11 @@ export default function DashboardLayout() {
 
   return (
     <StyledRoot>
-
-      {/* <Nav openNav={open} onCloseNav={() => setOpen(false)} /> */}
-      {/* <VerticalTabs /> */}
       <MySideBar />
-      <Main>
+      <Main sx={{
+        marginLeft: '250px',
+      }}
+      >
         <Outlet />
       </Main>
 
