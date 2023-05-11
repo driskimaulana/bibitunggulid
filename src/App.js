@@ -3,6 +3,7 @@ import { HelmetProvider } from 'react-helmet-async';
 // routes
 import { ProSidebarProvider } from 'react-pro-sidebar';
 import { ThemeProvider, createTheme } from '@mui/material';
+import { useEffect } from 'react';
 import Router from './routes/routes';
 
 // ----------------------------------------------------------------------

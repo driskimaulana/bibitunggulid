@@ -9,6 +9,7 @@ import Blog from '../pages/Blog/Blog';
 import ProductAdd from '../pages/ProductAdd/ProductAdd';
 import ProductDetails from '../pages/ProductDetails/ProductDetails';
 import ProductEdit from '../pages/ProductEdit/ProductEdit';
+import UserList from '../pages/UserList/UserList';
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +21,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <Dashboard /> },
-        { path: 'users', element: <Account /> },
+        { path: 'users', element: <UserList /> },
         { path: 'products', element: <Product /> },
         { path: 'blogs', element: <Blog /> },
         { path: 'products/add', element: <ProductAdd /> },
