@@ -12,7 +12,7 @@ const Blog = () => {
   const [count, setCount] = useState(0);
 
   const getBlogsData = async () => {
-    await Axios.get('http://localhost:5000/blogs').then((response) => {
+    await Axios.get('https://utamibakery-backend.vercel.app/blogs').then((response) => {
       console.log(response);
       setBlogs(response.data.data.blogs);
     });

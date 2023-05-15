@@ -104,8 +104,8 @@ const BlogAdd = () => {
       content,
       cover: img[0],
     };
-    await Axios.post('http://localhost:5000/blogs/', newBlog).then((response) => {
-      window.location.href = 'http://localhost:3000/dashboard/blogs/';
+    await Axios.post('https://utamibakery-backend.vercel.app/blogs/', newBlog).then((response) => {
+      window.location.href = '/dashboard/blogs/';
     });
   };
 

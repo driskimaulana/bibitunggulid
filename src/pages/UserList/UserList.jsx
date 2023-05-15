@@ -287,7 +287,7 @@ export default function UserList() {
 
   const handleDelete = async () => {
     handleStartLoading();
-    await Axios.delete('http://localhost:5000/users/', { data: { id: selected } }).then((response) => {
+    await Axios.delete('https://utamibakery-backend.vercel.app/users/', { data: { id: selected } }).then((response) => {
       setCount(1);
       handleStopLoading();
     });

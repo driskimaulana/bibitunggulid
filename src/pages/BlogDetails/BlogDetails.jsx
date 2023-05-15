@@ -14,7 +14,7 @@ const BlogDetails = () => {
   const id = window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
 
   const getData = async () => {
-    await Axios.get(`http://localhost:5000/blogs/${id}`).then((response) => {
+    await Axios.get(`https://utamibakery-backend.vercel.app/blogs/${id}`).then((response) => {
       setisLoading(false);
       setblog(response.data.data.blog);
     });

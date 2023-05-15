@@ -83,7 +83,7 @@ const ProductEdit = () => {
     console.log(newProduct);
     await Axios.put(`https://utamibakery-backend.vercel.app/products/${id}`, newProduct).then((response) => {
       console.log(response.data);
-      window.location.href = 'http://localhost:3000/dashboard/products/';
+      window.location.href = '/dashboard/products/';
     });
   };
 

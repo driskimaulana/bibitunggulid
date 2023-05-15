@@ -10,7 +10,7 @@ const Dashboard = () => {
   const [isLoading, setisLoading] = useState(true);
 
   const getData = async () => {
-    await Axios.get('http://localhost:5000/dashboard').then((response) => {
+    await Axios.get('https://utamibakery-backend.vercel.app/dashboard').then((response) => {
       setdashboardData(response.data.data);
       setisLoading(false);
     });

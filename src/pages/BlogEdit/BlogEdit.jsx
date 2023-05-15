@@ -49,7 +49,7 @@ const BlogEdit = () => {
   const id = window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
 
   const getData = async () => {
-    await Axios.get(`http://localhost:5000/blogs/${id}`).then((response) => {
+    await Axios.get(`https://utamibakery-backend.vercel.app/blogs/${id}`).then((response) => {
       setisLoading(false);
       console.log(response);
       settitle(response.data.data.blog.title);
@@ -133,7 +133,7 @@ const BlogEdit = () => {
       cover: img[0],
     };
     console.log(newBlog);
-    await Axios.put(`http://localhost:5000/blogs/${id}`, newBlog).then((response) => {
+    await Axios.put(`https://utamibakery-backend.vercel.app/blogs/${id}`, newBlog).then((response) => {
       window.location.href = `/dashboard/blogs/${id}`;
     });
   };
