@@ -10,6 +10,9 @@ import ProductAdd from '../pages/ProductAdd/ProductAdd';
 import ProductDetails from '../pages/ProductDetails/ProductDetails';
 import ProductEdit from '../pages/ProductEdit/ProductEdit';
 import UserList from '../pages/UserList/UserList';
+import BlogAdd from '../pages/BlogAdd/BlogAdd';
+import BlogDetails from '../pages/BlogDetails/BlogDetails';
+import BlogEdit from '../pages/BlogEdit/BlogEdit';
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +27,9 @@ export default function Router() {
         { path: 'users', element: <UserList /> },
         { path: 'products', element: <Product /> },
         { path: 'blogs', element: <Blog /> },
+        { path: 'blogs/add', element: <BlogAdd /> },
+        { path: 'blogs/:id', element: <BlogDetails /> },
+        { path: 'blogs/edit/:id', element: <BlogEdit /> },
         { path: 'products/add', element: <ProductAdd /> },
         { path: 'products/:id', element: <ProductDetails /> },
         { path: 'products/edit/:id', element: <ProductEdit /> },

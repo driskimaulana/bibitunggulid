@@ -141,7 +141,7 @@ const ProductEdit = () => {
               marginBottom: '40px',
             }}
           >
-            Product Baru
+            Edit Product
 
           </Typography>
           <Grid container gap={2}>
@@ -258,7 +258,7 @@ const ProductEdit = () => {
                   }}
                   onClick={submitImage}
                 >
-                  Tambah Produk
+                  Edit Produk
                 </Button>
               )}
           </Grid>

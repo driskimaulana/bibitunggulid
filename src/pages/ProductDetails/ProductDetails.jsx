@@ -1,5 +1,6 @@
 import {
   Box, CircularProgress, Typography, ImageList, ImageListItem, Grid, Divider, Fab,
+  Backdrop,
 } from '@mui/material';
 import { Icon } from '@iconify/react';
 
@@ -9,16 +10,23 @@ import FsLightbox from 'fslightbox-react';
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
+  const [isLoading, setisLoading] = useState(false);
   const id = window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
 
   const [toggler, setToggler] = useState(false);
 
   useEffect(() => {
     Axios.get(`https://utamibakery-backend.vercel.app/products/${id}`).then((response) => {
-      console.log(response.data.data.product);
       setProduct(response.data.data.product);
     });
   }, []);
+
+  const handleDelete = async () => {
+    setisLoading(true);
+    await Axios.delete(`http://localhost:5000/products/${id}`).then((response) => {
+      window.location.href = '/dashboard/products';
+    });
+  };
 
   return (
 
@@ -125,11 +133,29 @@ const ProductDetails = () => {
           >
             <Icon icon="material-symbols:edit" color="#fff" height="30px" />
           </Fab>
+          <Fab
+            sx={{
+              position: 'fixed',
+              top: 30,
+              right: 140,
+              backgroundColor: '#9A2A3C',
+            }}
+            color="secondary"
+            onClick={handleDelete}
+          >
+            <Icon icon="material-symbols:delete" color="#fff" height="30px" />
+          </Fab>
 
           <FsLightbox
             toggler={toggler}
             sources={product.photos}
           />
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isLoading}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
         </Grid>
       )
 

@@ -54,7 +54,6 @@ const ProductAdd = () => {
       quantity: stock,
       weight,
     };
-    console.log(newProduct);
     // await Axios.post('https://utamibakery-backend.vercel.app/products/', newProduct).then((response) => {
     await Axios.post('http://localhost:5000/products/', newProduct).then((response) => {
       window.location.href = 'http://localhost:3000/dashboard/products/';
@@ -70,9 +69,6 @@ const ProductAdd = () => {
       data.append('file', i);
       data.append('upload_preset', 'utamibakerypresets');
       data.append('cloud_name', 'dscbb3cu2');
-
-      console.log('Proces upload');
-      console.log(data);
 
       await Axios.post('https://api.cloudinary.com/v1_1/dscbb3cu2/image/upload', data).then((response) => {
         imgData.push(response.data.secure_url);
