@@ -56,7 +56,7 @@ const ProductAdd = () => {
     };
     // await Axios.post('https://utamibakery-backend.vercel.app/products/', newProduct).then((response) => {
     await Axios.post('https://utamibakery-backend.vercel.app/products/', newProduct).then((response) => {
-      window.location.href = 'http://localhost:3000/dashboard/products/';
+      window.location.href = '/dashboard/products/';
     });
   };
 

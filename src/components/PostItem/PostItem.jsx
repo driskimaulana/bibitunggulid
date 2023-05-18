@@ -18,7 +18,7 @@ const PostItem = (props) => {
 
   const handleDelete = async () => {
     setIsLoading(true);
-    await Axios.delete(`http://localhost:5000/blogs/${id}`).then((response) => {
+    await Axios.delete(`https://utamibakery-backend.vercel.app/blogs/${id}`).then((response) => {
       setCount(count + 1);
       setIsLoading(false);
     });

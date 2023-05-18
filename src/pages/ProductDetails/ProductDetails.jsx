@@ -23,7 +23,7 @@ const ProductDetails = () => {
 
   const handleDelete = async () => {
     setisLoading(true);
-    await Axios.delete(`http://localhost:5000/products/${id}`).then((response) => {
+    await Axios.delete(`https://utamibakery-backend.vercel.app/products/${id}`).then((response) => {
       window.location.href = '/dashboard/products';
     });
   };
