@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
@@ -35,6 +35,14 @@ const Main = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const adminLoggedIn = JSON.parse(window.localStorage.getItem('adminLoggedIn'));
+    if (adminLoggedIn === null) {
+      window.location.href = '/';
+    }
+    // setIsLoading(!isLoading);
+  }, []);
 
   return (
     <StyledRoot>

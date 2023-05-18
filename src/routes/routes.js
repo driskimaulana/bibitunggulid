@@ -3,7 +3,6 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from '../layouts/dashboard/DashboardLayout';
 
 import Dashboard from '../pages/Dashboard/Dashboard';
-import Account from '../pages/Account/Account';
 import Product from '../pages/Product/Product';
 import Blog from '../pages/Blog/Blog';
 import ProductAdd from '../pages/ProductAdd/ProductAdd';
@@ -13,16 +12,22 @@ import UserList from '../pages/UserList/UserList';
 import BlogAdd from '../pages/BlogAdd/BlogAdd';
 import BlogDetails from '../pages/BlogDetails/BlogDetails';
 import BlogEdit from '../pages/BlogEdit/BlogEdit';
+import SignIn from '../pages/SignIn/SignIn';
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  // window.location.href = adminLoggedIn === null ? '/signin' : '/dashboard';
   const routes = useRoutes([
+    {
+      path: '/',
+      element: <SignIn />,
+    },
     {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" />, index: true },
+        { element: <Navigate to="app" />, index: true },
         { path: 'app', element: <Dashboard /> },
         { path: 'users', element: <UserList /> },
         { path: 'products', element: <Product /> },
@@ -35,22 +40,6 @@ export default function Router() {
         { path: 'products/edit/:id', element: <ProductEdit /> },
       ],
     },
-    // {
-    //   path: 'login',
-    //   element: <LoginPage />,
-    // },
-    // {
-    //   element: <SimpleLayout />,
-    //   children: [
-    //     { element: <Navigate to="/dashboard/app" />, index: true },
-    //     { path: '404', element: <Page404 /> },
-    //     { path: '*', element: <Navigate to="/404" /> },
-    //   ],
-    // },
-    // {
-    //   path: '*',
-    //   element: <Navigate to="/404" replace />,
-    // },
   ]);
 
   return routes;
