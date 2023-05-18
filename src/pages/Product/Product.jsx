@@ -12,19 +12,56 @@ import Axios from 'axios';
 import FilterBox from '../../components/FilterBox/FilterBox';
 import ProductCard from '../../components/ProductCard/ProductCard';
 
+const SearchBox = (props) => {
+  const { setSearchValue } = props;
+  return (
+    <TextField
+      onChange={(e) => setSearchValue(e.target.value)}
+      sx={{
+        borderRadius: '20px',
+      }}
+      size="small"
+      InputProps={{
+        endAdornment: <Icon icon="ic:outline-search" />,
+        style: {
+          borderRadius: '20px',
+        },
+      }}
+    />
+  );
+};
 const Product = () => {
-  const [prods, setprods] = useState(null);
+  const [searchValue, setSearchValue] = useState('');
   const [price, setPrice] = React.useState('');
-
   const handleChange = (event) => {
-    setPrice(event.target.value);
-    prods.sort((a, b) => {
-      if (price === 'Tertinggi') {
-        return a.price - b.price;
-      }
-      return a.price + b.price;
-    });
+    const selectedValue = event.target.value;
+
+    if (selectedValue === 'Tertinggi') {
+      prods.sort((a, b) => b.price - a.price);
+    } else if (selectedValue === 'Terendah') {
+      prods.sort((a, b) => a.price - b.price);
+    }
+
+    setPrice(selectedValue);
   };
+  const handleChangeNewest = (event) => {
+    const isChecked = event.target.checked;
+    console.log(isChecked);
+
+    if (isChecked) {
+      // Sort the prods array in descending order of createdAt
+      const sortedProds = [...prods].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      setprods(sortedProds);
+      console.log(sortedProds);
+    } else {
+      // Reset the prods array to its default order
+      const defaultOrder = [...prods].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      setprods(defaultOrder);
+      console.log(defaultOrder);
+    }
+  };
+
+  const [prods, setprods] = useState(null);
 
   useEffect(() => {
     if (prods !== null) {
@@ -65,18 +102,21 @@ const Product = () => {
         marginTop: '30px',
       }}
       >
-        <Box sx={{
-          display: 'flex',
-          columnGap: '10px',
-          alignItems: 'center',
-        }}
-        >
-          <Icon icon="material-symbols:filter-list-rounded" height={20} />
-          <Box sx={{
+        <Box
+          sx={{
             display: 'flex',
-            columnGap: '20px',
+            flexWrap: 'wrap',
+            columnGap: '10px',
             alignItems: 'center',
           }}
+        >
+          <Icon icon="material-symbols:filter-list-rounded" height={20} />
+          <Box
+            sx={{
+              display: 'flex',
+              columnGap: '20px',
+              alignItems: 'center',
+            }}
           >
             <FormControl sx={{ m: 1, minWidth: 130 }} size="small">
               <InputLabel id="select-harga">Harga</InputLabel>
@@ -91,26 +131,19 @@ const Product = () => {
                 <MenuItem value="Terendah">Terendah</MenuItem>
               </Select>
             </FormControl>
+            <FormControlLabel
+              control={
+                <Checkbox onChange={handleChangeNewest} />
+                  }
+              label="Terbaru"
+            />
           </Box>
         </Box>
-        <TextField
-          sx={{
-            borderRadius: '20px',
-          }}
-          size="small"
-          InputProps={{
-            endAdornment: (
-
-              <Icon icon="ic:outline-search" />
-            ),
-            style: (
-              {
-                borderRadius: '20px',
-              }
-            ),
-          }}
-        />
+        <div>
+          <SearchBox setSearchValue={setSearchValue} />
+        </div>
       </Box>
+
       {
         prods == null ? <CircularProgress />
           : (
@@ -123,16 +156,19 @@ const Product = () => {
             >
 
               {
-               prods.map((product, index) => (
-                 <Grid key={index} item md={3}>
-                   <ProductCard
-                     id={product._id}
-                     name={product.name}
-                     price={product.price}
-                     imgUrl={product.photos[0]}
-                   />
-                 </Grid>
-               ))
+               prods
+                 .filter(
+                   (data) => data.name && data.name.match(new RegExp(searchValue, 'i')),
+                 ).map((product, index) => (
+                   <Grid key={index} item md={3}>
+                     <ProductCard
+                       id={product._id}
+                       name={product.name}
+                       price={product.price}
+                       imgUrl={product.photos[0]}
+                     />
+                   </Grid>
+                 ))
             // prods.map((product, index) => (
             //   <Grid key={index} item md={3}>
             //     <ProductCard
