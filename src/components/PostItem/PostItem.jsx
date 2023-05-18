@@ -53,9 +53,22 @@ const PostItem = (props) => {
             display: 'flex',
             flexDirection: 'column',
             rowGap: '5px',
+            maxWidth: '700px',
           }}
           >
-            <Typography variant="h5" fontWeight="bold">{title}</Typography>
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              sx={{
+                width: '800px',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {title}
+
+            </Typography>
             <Typography variant="p" fontSize="10px">{format(new Date(updatedAt), 'MMM d, yyyy')}</Typography>
             <Typography variant="p">
               {summary}

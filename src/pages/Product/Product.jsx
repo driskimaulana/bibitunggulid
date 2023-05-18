@@ -169,16 +169,6 @@ const Product = () => {
                      />
                    </Grid>
                  ))
-            // prods.map((product, index) => (
-            //   <Grid key={index} item md={3}>
-            //     <ProductCard
-            //       id={product._id}
-            //       name={product.name}
-            //       price={product.price}
-            //       imgUrl={product.photos[0]}
-            //     />
-            //   </Grid>
-            // ))
           }
 
             </Grid>
