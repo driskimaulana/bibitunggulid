@@ -10,7 +10,6 @@ This is package and technologi used in this backend project:
 - [ExpressJS] - JavaScript back-end framework.
 - [jsonwebtoken] - Authentication using token
 - [bcryptjs] - Encrypting package
-- [mongoose] - MongoDB object modelling
 - [cors] - Enable cross origin data transaction
 - [body-parser] - Parse body request in the middleware phase
 - [dotenv] - Using .env file
