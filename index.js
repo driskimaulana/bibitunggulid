@@ -12,6 +12,7 @@ import bodyParser from 'body-parser';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 import * as dotenv from 'dotenv';
+// import { Sequelize } from 'sequelize';
 
 // swagger configuration
 const options = {
@@ -38,7 +39,7 @@ const options = {
     ],
   },
   apis: ['./src/routes/*.js',
-    './src/models/*.js',
+    './database/models/*.js',
     './src/controllers/*.js'],
 };
 
