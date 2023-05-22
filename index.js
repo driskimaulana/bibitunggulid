@@ -6,14 +6,22 @@
 * Description: Starting point for this application. Start server.
 * */
 
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import swaggerJSDoc from 'swagger-jsdoc';
-import swaggerUI from 'swagger-ui-express';
-import * as dotenv from 'dotenv';
+// import express from 'express';
+// import cors from 'cors';
+// import bodyParser from 'body-parser';
+// import swaggerJSDoc from 'swagger-jsdoc';
+// import swaggerUI from 'swagger-ui-express';
+// import * as dotenv from 'dotenv';
 // import { Sequelize } from 'sequelize';
+// import authenticatiosRoutes from './src/routes/authentication.routes.js';
 
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
+const dotenv = require('dotenv');
+const authenticatiosRoutes = require('./src/routes/authentication.routes.js');
 // swagger configuration
 const options = {
   definition: {
@@ -50,12 +58,13 @@ const init = () => {
   server.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
   server.use(cors());
 
+  dotenv.config();
+
   //   setting up swagger
   const specs = swaggerJSDoc(options);
   server.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
+  server.use('/authentication', authenticatiosRoutes);
 
-  //   get all environment variables from .env
-  dotenv.config();
   const PORT = process.env.PORT || 5000;
 
   server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`));

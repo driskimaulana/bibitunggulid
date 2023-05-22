@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Model } from 'sequelize';
+const { Model } = require('sequelize');
 
 /**
  * @swagger
@@ -53,7 +53,7 @@ import { Model } from 'sequelize';
  *              updateAt: 2020-03-10T04:05:06.157Z
  */
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   class Customers extends Model {
     /**
      * Helper method for defining associations.
@@ -76,8 +76,7 @@ export default (sequelize, DataTypes) => {
     }
   }
   Customers.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    fullName: DataTypes.STRING,
     phone: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
