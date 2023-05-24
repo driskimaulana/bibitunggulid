@@ -22,6 +22,7 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 const dotenv = require('dotenv');
 const authenticatiosRoutes = require('./src/routes/authentication.routes.js');
+const customerRoutes = require('./src/routes/customers.routes.js');
 // swagger configuration
 const options = {
   definition: {
@@ -64,6 +65,7 @@ const init = () => {
   const specs = swaggerJSDoc(options);
   server.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
   server.use('/authentication', authenticatiosRoutes);
+  server.use('/customers', customerRoutes);
 
   const PORT = process.env.PORT || 5000;
 
