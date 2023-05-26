@@ -26,51 +26,51 @@ const customerRoutes = require('./src/routes/customers.routes.js');
 const productRoutes = require('./src/routes/customers.routes.js');
 // swagger configuration
 const options = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'BibitUnggulId API',
-            version: '0.1.0',
-            description: 'This is an API for the BibitUnggulId applications',
-            license: {
-                name: 'MIT',
-                url: 'https://spdx.org/licenses/MIT.html',
-            },
-            contact: {
-                name: 'BibitUnggulId',
-                url: 'bibitunggul.id',
-                email: 'bibitunggulid@gmail.com',
-            },
-        },
-        servers: [{
-            url: 'http://127.0.0.1:5000',
-        }, ],
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'BibitUnggulId API',
+      version: '0.1.0',
+      description: 'This is an API for the BibitUnggulId applications',
+      license: {
+        name: 'MIT',
+        url: 'https://spdx.org/licenses/MIT.html',
+      },
+      contact: {
+        name: 'BibitUnggulId',
+        url: 'bibitunggul.id',
+        email: 'bibitunggulid@gmail.com',
+      },
     },
-    apis: ['./src/routes/*.js',
-        './database/models/*.js',
-        './src/controllers/*.js'
-    ],
+    servers: [{
+      url: 'http://127.0.0.1:5000',
+    }],
+  },
+  apis: ['./src/routes/*.js',
+    './database/models/*.js',
+    './src/controllers/*.js',
+  ],
 };
 
 const init = () => {
-    // setting up the server
-    const server = express();
-    server.use(bodyParser.json({ limit: '10mb', extended: true }));
-    server.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
-    server.use(cors());
+  // setting up the server
+  const server = express();
+  server.use(bodyParser.json({ limit: '10mb', extended: true }));
+  server.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+  server.use(cors());
 
-    dotenv.config();
+  dotenv.config();
 
-    //   setting up swagger
-    const specs = swaggerJSDoc(options);
-    server.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
-    server.use('/authentication', authenticatiosRoutes);
-    server.use('/customers', customerRoutes);
-    server.use('/product', productRoutes);
+  //   setting up swagger
+  const specs = swaggerJSDoc(options);
+  server.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
+  server.use('/authentication', authenticatiosRoutes);
+  server.use('/customers', customerRoutes);
+  server.use('/product', productRoutes);
 
-    const PORT = process.env.PORT || 5000;
+  const PORT = process.env.PORT || 5000;
 
-    server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`));
+  server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`));
 };
 
 init();

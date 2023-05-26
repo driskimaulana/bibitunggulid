@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const {
-    getProduct,
-    getProductById,
-    updateProduct,
-    deleteProduct,
+  getProduct,
+  getProductById,
+  updateProduct,
+  deleteProduct,
 } = require('../controllers/product.controllers');
 
 router.get('/', getProduct);
