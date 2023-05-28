@@ -17,12 +17,11 @@ jobs:
         steps:
 
         - name: Login
-          uses: google-github-actions/auth@v1
+          uses: google-github-actions/setup-gcloud@v0
           with:
-            credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-#             project_id: ${{ secrets.GCP_PROJECT_ID }}
-#             service_account_email: ${{ secrets.GCP_EMAIL }}
-#             service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+            project_id: ${{ secrets.GCP_PROJECT_ID }}
+            service_account_email: ${{ secrets.GCP_EMAIL }}
+            service_account_key: ${{ secrets.GCP_CREDENTIALS }}
 
         - name: Configure Docker
           run: gcloud auth configure-docker --quiet
