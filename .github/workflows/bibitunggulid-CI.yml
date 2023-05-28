@@ -30,8 +30,7 @@ jobs:
 #           uses: actions/checkout@master
 
         - name: Build Docker image
-#           run: gcloud auth login && gcloud builds submit --tag gcr.io/bibitunggulid/devbibitunggul
-          run: docker build . --tag gcr.io/bibitunggulid/devbibitunggulid
+          run: docker build . -t $IMAGE_NAME
 
         - name: Push Docker image
           run: docker push gcr.io/bibitunggulid/devbibitunggulid
