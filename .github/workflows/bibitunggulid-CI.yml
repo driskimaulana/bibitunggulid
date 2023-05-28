@@ -30,7 +30,7 @@ jobs:
           uses: actions/checkout@v2
 
         - name: Build Docker image
-          run: gcloud builds submit --impersonate-service-account=${{ secrets.GCP_PROJECT_ID }} --tag gcr.io/bibitunggulid/devbibitunggul
+          run: gcloud config set account ${{ secrets.GCP_EMAIL }} && gcloud builds submit --tag gcr.io/bibitunggulid/devbibitunggul
 #           run: docker build -t gcr.io/bibitunggulid/devbibitunggulid .
 
 #         - name: Push Docker image
