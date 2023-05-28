@@ -27,7 +27,7 @@ jobs:
           run: gcloud auth configure-docker --quiet
 
         - name: Checkout repository
-          uses: actions/checkout@v0
+          uses: actions/checkout@v2
 
         - name: Build Docker image
           run: docker build . -t gcr.io/bibitunggulid/devbibitunggulid
