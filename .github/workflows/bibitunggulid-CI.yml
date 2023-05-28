@@ -31,9 +31,6 @@ jobs:
 
         - name: Build Docker image
           run: docker build -t gcr.io/bibitunggulid/devbibitunggulid .
-          
-        - name: Configure Docker Authentication
-        - run: gcloud auth configure-docker asia-southeast2-docker.pkg.dev
 
         - name: Push Docker image
           run: docker push gcr.io/bibitunggulid/devbibitunggulid
