@@ -30,10 +30,11 @@ jobs:
           uses: actions/checkout@v2
 
         - name: Build Docker image
-          run: docker build -t gcr.io/bibitunggulid/devbibitunggulid .
+          run: gcloud build submits --tag gcr.io/bibitunggulid/devbibitunggul
+#           run: docker build -t gcr.io/bibitunggulid/devbibitunggulid .
 
-        - name: Push Docker image
-          run: docker push gcr.io/bibitunggulid/devbibitunggulid
+#         - name: Push Docker image
+#           run: docker push gcr.io/bibitunggulid/devbibitunggulid
 
         - name: Deploy Docker image
           run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image gcr.io/bibitunggulid/devbibitunggulid --region asia-southeast2 --platform managed --max-instances=5
