@@ -1,39 +1,39 @@
-name: BibitUnggulID CI
-
+name: Deploy the application to Google Cloud Run
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches:
+      - 'master'
 
 jobs:
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
 
-    deploy:
+    # Setup gcloud CLI
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '270.0.0'
+        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
 
-        name: Setup Gcloud Account
-        runs-on: ubuntu-latest
-        env:
-          IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
-        steps:
-
-        - name: Login
-          uses: google-github-actions/setup-gcloud@v0
-          with:
-            project_id: ${{ secrets.GCP_PROJECT_ID }}
-            service_account_email: ${{ secrets.GCP_EMAIL }}
-            service_account_key: ${{ secrets.GCP_CREDENTIALS }}
-
-        - name: Configure Docker
-          run: gcloud auth configure-docker --quiet
-
-#         - name: Checkout repository
-#           uses: actions/checkout@master
-
-        - name: Build Docker image
-          run: docker build . -t $IMAGE_NAME
-
-        - name: Push Docker image
-          run: docker push gcr.io/bibitunggulid/devbibitunggulid
-
-        - name: Deploy Docker image
-          run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image gcr.io/bibitunggulid/devbibitunggulid --region asia-southeast2 --platform managed --max-instances=5
+    # Configure docker to use the gcloud command-line tool as a credential helper
+    - run: |
+        # Set up docker to authenticate
+        # via gcloud command-line tool.
+        gcloud auth configure-docker
+      
+    # Build the Docker image
+    - name: Build
+      run: |        
+        docker build . --tag eu.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
+    # Push the Docker image to Google Container Registry
+    - name: Publish
+      run: |
+        docker push eu.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
+        
+    # Deploy the Docker image to the GKE cluster
+    - name: Deploy
+      run: |
+        gcloud components install beta && gcloud beta run deploy ${{ secrets.GCP_APP_NAME }} --quiet --image eu.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }} --project ${{ secrets.GCP_PROJECT_ID }} --region europe-west1 --platform managed
