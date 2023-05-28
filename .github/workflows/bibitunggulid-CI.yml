@@ -17,7 +17,7 @@ jobs:
         steps:
 
         - name: Login
-          uses: google-github-actions/setup-gcloud@v0
+          uses: google-github-actions/setup-gcloud@master
           with:
             project_id: ${{ secrets.GCP_PROJECT_ID }}
             service_account_email: ${{ secrets.GCP_EMAIL }}
@@ -26,15 +26,15 @@ jobs:
         - name: Configure Docker
           run: gcloud auth configure-docker --quiet
 
-        - name: Checkout repository
-          uses: actions/checkout@v2
+#         - name: Checkout repository
+#           uses: actions/checkout@master
 
         - name: Build Docker image
-          run: gcloud auth login && gcloud builds submit --tag gcr.io/bibitunggulid/devbibitunggul
-#           run: docker build -t gcr.io/bibitunggulid/devbibitunggulid .
+#           run: gcloud auth login && gcloud builds submit --tag gcr.io/bibitunggulid/devbibitunggul
+          run: docker build . --tag gcr.io/bibitunggulid/devbibitunggulid
 
-#         - name: Push Docker image
-#           run: docker push gcr.io/bibitunggulid/devbibitunggulid
+        - name: Push Docker image
+          run: docker push gcr.io/bibitunggulid/devbibitunggulid
 
         - name: Deploy Docker image
           run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image gcr.io/bibitunggulid/devbibitunggulid --region asia-southeast2 --platform managed --max-instances=5
