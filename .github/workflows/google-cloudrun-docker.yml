@@ -90,7 +90,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
+          registry: gcr.io
+#           registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
 
       - name: Build and Push Container
         run: |-
