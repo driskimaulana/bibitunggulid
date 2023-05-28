@@ -33,7 +33,7 @@ jobs:
           run: docker build . -t gcr.io/bibitunggulid/devbibitunggulid
 
         - name: Push Docker image
-          run: gcloud auth activate-service-account ${{ secrets.GCP_EMAIL }} && docker push gcr.io/bibitunggulid/devbibitunggulid
+          run: gcloud auth activate-service-account ${{ secrets.GCP_EMAIL }} --key-file=${{ secrets.GCP_CREDENTIALS }} && docker push gcr.io/bibitunggulid/devbibitunggulid
 
         - name: Deploy Docker image
           run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image gcr.io/bibitunggulid/devbibitunggulid --region asia-southeast2 --platform managed --max-instances=5
