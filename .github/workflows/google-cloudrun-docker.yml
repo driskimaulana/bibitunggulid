@@ -96,7 +96,7 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          docker build -t "devbibitunggulid:${{ github.sha }}" ./
+          docker build -t "asia-southeast2-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/devbibitunggulid:${{ github.sha }}" ./
           docker push "asia-southeast2-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/devbibitunggulid:${{ github.sha }}"
 
       # END - Docker auth and build
