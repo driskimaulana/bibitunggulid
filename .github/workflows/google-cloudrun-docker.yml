@@ -79,35 +79,38 @@ jobs:
         id: auth
         uses: 'google-github-actions/auth@v0'
         with:
-          credentials_json: '${{ secrets.CREDENTIALS_JSON }}'
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       # BEGIN - Docker auth and build (NOTE: If you already have a container image, these Docker steps can be omitted)
 
       # Authenticate Docker to Google Cloud Artifact Registry
       - name: Docker Auth
-        id: docker-auth
-        uses: 'docker/login-action@v1'
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          registry: gcr.io
+#         id: docker-auth
+        run: docker login -u _json_key -p  '${{ secrets.GCP_CREDENTIALS }}' https://asia-southeast2-docker.pkg.dev
+#         uses: 'docker/login-action@v1'
+#         with:
+#           username: ${{ secrets.DOCKER_USERNAME }}
+#           password: ${{ secrets.DOCKER_PASSWORD }}
+# #           registry: gcr.io
 #           registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
 
       - name: Build and Push Container
         run: |-
-          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" ./
-          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+          docker build -t "asia-southeast2-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/devbibitunggulid:${{ github.sha }}" ./
+          docker push "asia-southeast2-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/devbibitunggulid:${{ github.sha }}"
 
       # END - Docker auth and build
 
       - name: Deploy to Cloud Run
-        id: deploy
-        uses: google-github-actions/deploy-cloudrun@v0
-        with:
-          service: ${{ env.SERVICE }}
-          region: ${{ env.REGION }}
-          # NOTE: If using a pre-built image, update the image name here
-          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
+#         id: deploy
+        run: gcloud run deploy ${{ env.SERVICE }} --image asia-southeast2-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/devbibitunggulid:${{ github.sha }} --platform managed --region ${{ env.REGION }} --allow-unauthenticated --max-instances=5
+#         uses: google-github-actions/deploy-cloudrun@v0
+#         with:
+#           service: ${{ env.SERVICE }}
+#           region: ${{ env.REGION }}
+#           allow-unauthenticated: true
+#           # NOTE: If using a pre-built image, update the image name here
+#           image: asia-southeast2-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/devbibitunggulid:${{ github.sha }}
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
