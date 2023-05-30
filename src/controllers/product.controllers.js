@@ -20,6 +20,28 @@ const { Product } = require('../../database/models');
  *              description: Product data is not found
  *          500:
  *              description: Service unavailable
+ *  post:
+ *      summary: create new product
+ *      tags: [product]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Product'
+ *      responses:
+ *          200:
+ *              desciption: Create product success
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Product'
+ *          404:
+ *              description: Product is not found
+ *          400:
+ *              description: Product data is not found
+ *          500:
+ *              description: Service unavailable
  * /product/{id}:
  *  get:
  *      summary: get product data by id
@@ -255,9 +277,61 @@ const deleteProduct = async (
   }
 };
 
+const addNewProduct = async(
+  /** @type import('express').Request */
+  req,
+  /** @type import('express').Response */
+  res,
+) => {
+  const {
+    supplierId, 
+    productName,
+    productDescription,
+    categoryId,
+    unitPrice,
+    unitWeight,
+    unitInStock, 
+    isAvailable, 
+    pictures,
+  } = req.body;
+  const createdAt = new Date().toISOString();
+  const updatedAt = new Date().toISOString();
+  const newProduct = Product({
+    supplierId, 
+    productName,
+    productDescription,
+    categoryId,
+    unitPrice,
+    unitWeight,
+    unitInStock, 
+    isAvailable, 
+    pictures,
+    createdAt,
+    updatedAt,
+  });
+
+  try {
+    await newProduct.save();
+    const response = res.status(200).json({
+      status: 'success',
+      data: {
+        product: newProduct,
+      },
+    });
+    return response;
+  } catch (error) {
+    const response = res.status(500).json({
+      status: 'fail',
+      message: 'Server unavailable.'
+    });
+    return response;
+  }
+};
+
 module.exports = {
   getProduct,
   getProductById,
   updateProduct,
   deleteProduct,
+  addNewProduct,
 };

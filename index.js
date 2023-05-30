@@ -24,6 +24,7 @@ const dotenv = require('dotenv');
 const authenticatiosRoutes = require('./src/routes/authentication.routes.js');
 const customerRoutes = require('./src/routes/customers.routes.js');
 const productRoutes = require('./src/routes/customers.routes.js');
+const favoriteRoutes = require('./src/routes/favorite.routes.js');
 // swagger configuration
 const options = {
   definition: {
@@ -67,6 +68,7 @@ const init = () => {
   server.use('/authentication', authenticatiosRoutes);
   server.use('/customers', customerRoutes);
   server.use('/product', productRoutes);
+  server.use('/favorite', favoriteRoutes);
 
   const PORT = process.env.PORT || 8080;
 
