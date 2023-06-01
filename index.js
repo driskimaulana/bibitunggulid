@@ -18,6 +18,7 @@ const customerRoutes = require('./src/routes/customers.routes.js');
 const productRoutes = require('./src/routes/product.routes.js');
 const cartRoutes = require('./src/routes/carts.routes.js');
 
+const favoriteRoutes = require('./src/routes/favorite.routes.js');
 // swagger configuration
 const options = {
   definition: {
@@ -64,6 +65,7 @@ const init = () => {
   server.use('/customers', customerRoutes);
   server.use('/product', productRoutes);
   server.use('/carts', cartRoutes);
+  server.use('/favorite', favoriteRoutes);
 
   const PORT = process.env.PORT || 8080;
 
