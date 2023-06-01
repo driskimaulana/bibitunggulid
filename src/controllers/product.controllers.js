@@ -277,34 +277,34 @@ const deleteProduct = async (
   }
 };
 
-const addNewProduct = async(
+const addNewProduct = async (
   /** @type import('express').Request */
   req,
   /** @type import('express').Response */
   res,
 ) => {
   const {
-    supplierId, 
+    supplierId,
     productName,
     productDescription,
     categoryId,
     unitPrice,
     unitWeight,
-    unitInStock, 
-    isAvailable, 
+    unitInStock,
+    isAvailable,
     pictures,
   } = req.body;
   const createdAt = new Date().toISOString();
   const updatedAt = new Date().toISOString();
   const newProduct = Product({
-    supplierId, 
+    supplierId,
     productName,
     productDescription,
     categoryId,
     unitPrice,
     unitWeight,
-    unitInStock, 
-    isAvailable, 
+    unitInStock,
+    isAvailable,
     pictures,
     createdAt,
     updatedAt,
@@ -322,7 +322,7 @@ const addNewProduct = async(
   } catch (error) {
     const response = res.status(500).json({
       status: 'fail',
-      message: 'Server unavailable.'
+      message: 'Server unavailable.',
     });
     return response;
   }
