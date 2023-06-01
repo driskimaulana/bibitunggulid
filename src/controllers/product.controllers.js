@@ -8,7 +8,7 @@ const { Product } = require('../../database/models');
  * /product/:
  *  get:
  *      summary: get all product data
- *      tags: [product]
+ *      tags: [Product CRUD]
  *      responses:
  *          200:
  *              desciption: get product data success
@@ -23,7 +23,7 @@ const { Product } = require('../../database/models');
  * /product/{id}:
  *  get:
  *      summary: get product data by id
- *      tags: [product]
+ *      tags: [Product CRUD]
  *      parameters:
  *          -   in: path
  *              name: id
@@ -45,7 +45,7 @@ const { Product } = require('../../database/models');
  *              description: Service unavailable
  *  delete:
  *      summary: delete product by id
- *      tags: [product]
+ *      tags: [Product CRUD]
  *      parameters:
  *          -   in: path
  *              name: id
@@ -67,7 +67,7 @@ const { Product } = require('../../database/models');
  *              description: Service unavailable
  *  put:
  *      summary: update product data
- *      tags: [product]
+ *      tags: [Product CRUD]
  *      parameters:
  *          -   in: path
  *              name: id
