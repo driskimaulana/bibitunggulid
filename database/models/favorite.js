@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       Favorite.belongsTo(models.Customers, {
-        foreignKey: 'customerid',
+        foreignKey: 'customerId',
         as: 'customers',
         onDelete: 'CASCADE',
       });
