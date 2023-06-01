@@ -29,6 +29,68 @@ const { Cart, sequelize } = require('../../database/models');
  *              description: Cart data is not found
  *          500:
  *              description: Service unavailable
+ *  post:
+ *      summary: Add product to customers cart using productId.
+ *      tags: [Carts CRUD]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Cart'
+ *                  summary: The product id
+ *      responses:
+ *          201:
+ *              description: New account succesfully created
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Customer'
+ *          400:
+ *              description: Telphone is already used
+ *          500:
+ *              description: Service is unavailable
+ * /carts/{productId}:
+ *  delete:
+ *      summary: delete product from customers cart using product id
+ *      tags: [Carts CRUD]
+ *      parameters:
+ *          -   in: path
+ *              name: productId
+ *              schema:
+ *                  type: int
+ *              summary: The product id
+ *      responses:
+ *          200:
+ *              desciption: delete product data success
+ *          400:
+ *              description: No id is specified
+ *          404:
+ *              description: Product data is not found
+ *          500:
+ *              description: Service unavailable
+ *  put:
+ *      summary: reduce product count in the customers cart
+ *      tags: [Carts CRUD]
+ *      parameters:
+ *          -   in: path
+ *              name: productId
+ *              schema:
+ *                  type: int
+ *              summary: The product id
+ *      responses:
+ *          200:
+ *              desciption: Product successfully reduced.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Cart'
+ *          400:
+ *              description: No id is specified
+ *          404:
+ *              description: Cart data is not found
+ *          500:
+ *              description: Service unavailable
  */
 
 const getCartByCustomerId = async (
@@ -67,13 +129,13 @@ const addProductToCustomerCarts = async (
   /** @type import('express').Request */ req,
   /** @type import('express').Response */ res,
 ) => {
-  const { id } = req.body;
+  const { productId } = req.body;
   try {
     console.log(req.userId);
-    let productInCarts = await Cart.findOne({ where: { productId: id, customerId: req.userId } });
+    let productInCarts = await Cart.findOne({ where: { productId, customerId: req.userId } });
     console.log(productInCarts);
     if (!productInCarts) {
-      const cartCreated = await Cart.create({ productId: id, customerId: req.userId, count: 1 });
+      const cartCreated = await Cart.create({ productId, customerId: req.userId, count: 1 });
       const response = res.status(201).json({
         status: 'success',
         message: 'Add product success.',
@@ -86,7 +148,7 @@ const addProductToCustomerCarts = async (
       count: productInCarts.count + 1,
     };
 
-    await Cart.update({ ...productInCarts }, { where: { customerId: req.userId, productId: id } });
+    await Cart.update({ ...productInCarts }, { where: { customerId: req.userId, productId } });
 
     const response = res.status(201).json({
       status: 'success',
