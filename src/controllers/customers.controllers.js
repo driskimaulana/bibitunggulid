@@ -16,7 +16,7 @@ const Customer = require('../../database/models').Customers;
  * /customers/:
  *  get:
  *      summary: get all custonmers data
- *      tags: [customers]
+ *      tags: [Customers CRUD]
  *      responses:
  *          200:
  *              desciption: get customers data success
@@ -31,7 +31,7 @@ const Customer = require('../../database/models').Customers;
  * /customers/{id}:
  *  get:
  *      summary: get custonmers data by id
- *      tags: [customers]
+ *      tags: [Customers CRUD]
  *      parameters:
  *          -   in: path
  *              name: id
@@ -53,7 +53,7 @@ const Customer = require('../../database/models').Customers;
  *              description: Service unavailable
  *  delete:
  *      summary: delete cutomers by id
- *      tags: [customers]
+ *      tags: [Customers CRUD]
  *      parameters:
  *          -   in: path
  *              name: id
@@ -75,7 +75,7 @@ const Customer = require('../../database/models').Customers;
  *              description: Service unavailable
  *  put:
  *      summary: update custonmers data
- *      tags: [customers]
+ *      tags: [Customers CRUD]
  *      parameters:
  *          -   in: path
  *              name: id

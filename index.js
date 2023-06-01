@@ -6,24 +6,18 @@
  * Description: Starting point for this application. Start server.
  * */
 
-// import express from 'express';
-// import cors from 'cors';
-// import bodyParser from 'body-parser';
-// import swaggerJSDoc from 'swagger-jsdoc';
-// import swaggerUI from 'swagger-ui-express';
-// import * as dotenv from 'dotenv';
-// import { Sequelize } from 'sequelize';
-// import authenticatiosRoutes from './src/routes/authentication.routes.js';
-
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 const authenticatiosRoutes = require('./src/routes/authentication.routes.js');
 const customerRoutes = require('./src/routes/customers.routes.js');
-const productRoutes = require('./src/routes/customers.routes.js');
+const productRoutes = require('./src/routes/product.routes.js');
+const cartRoutes = require('./src/routes/carts.routes.js');
+
 const favoriteRoutes = require('./src/routes/favorite.routes.js');
 // swagger configuration
 const options = {
@@ -60,6 +54,8 @@ const init = () => {
   server.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
   server.use(cors());
 
+  // middlewares
+  server.use(morgan('common'));
   dotenv.config();
 
   //   setting up swagger
@@ -68,6 +64,7 @@ const init = () => {
   server.use('/authentication', authenticatiosRoutes);
   server.use('/customers', customerRoutes);
   server.use('/product', productRoutes);
+  server.use('/carts', cartRoutes);
   server.use('/favorite', favoriteRoutes);
 
   const PORT = process.env.PORT || 8080;

@@ -48,21 +48,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Cart.belongsTo(models.Product, {
-        foreignKey: 'supplierId',
-        as: 'suppliers',
-        onDelete: 'CASCADE',
-      });
+      // Cart.belongsTo(models.Product, {
+      //   foreignKey: 'supplierId',
+      //   as: 'suppliers',
+      //   onDelete: 'CASCADE',
+      // });
 
       Cart.belongsTo(models.Customers, {
-        foreignKey: 'customerid',
+        foreignKey: 'customerId',
         as: 'customers',
         onDelete: 'CASCADE',
       });
     }
   }
   Cart.init({
-    productid: DataTypes.INTEGER,
+    productId: DataTypes.INTEGER,
     customerId: DataTypes.INTEGER,
     count: DataTypes.INTEGER,
   }, {
