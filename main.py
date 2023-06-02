@@ -6,12 +6,9 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 import numpy as np
-from PIL import Image
-
 from flask import Flask, request, jsonify
 
 model = keras.models.load_model("models/modelv1.h5")
-
 
 def transform_image(image_bytes):
     img = image.load_img(io.BytesIO(image_bytes), target_size=(400,400))

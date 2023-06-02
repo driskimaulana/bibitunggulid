@@ -10,6 +10,9 @@ ENV APP_HOME /app
 WORKDIR $APP_HOME
 COPY . ./
 
+# Upgrade pip
+RUN /usr/local/bin/python -m pip install --upgrade pip
+
 # Install production dependencies.
 RUN pip install -r requirements.txt
 
