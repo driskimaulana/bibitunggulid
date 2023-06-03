@@ -12,11 +12,17 @@ const processFileMiddleware = require('../middleware/uploadfile.middleware');
 require('dotenv').config();
 const credentials = JSON.parse(process.env.GSTORAGE_SERVICE_KEY);
 
+const credentials = process.env.GSTORAGE_SERVICE_KEY;
+
+const base64EncodedKey = process.env.GSTORAGE_SERVICE_KEY;
+const key = Buffer.from(base64EncodedKey, 'base64').toString('utf8');
+
+const storage = new Storage({ projectId: 'bibitunggulid', credentials: JSON.parse(key) });
 //const storage = new Storage({ projectId: 'bibitunggulid', credentials: JSON.parse(credentials) });
 // const storage = new Storage({ keyFilename: 'gstorage-service-account.json' });
 
 // const storage = new Storage({ credentials: JSON.parse(process.env.GSTORAGE_SERVICE_KEY) });
-//const bucket = storage.bucket('bibitunggulid-public');
+const bucket = storage.bucket('bibitunggulid-public');
 
 /**
  * @swagger
