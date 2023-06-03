@@ -7,11 +7,11 @@ const uuidv4 = require('uuid').v4;
 const { once } = require('events');
 const processFileMiddleware = require('../middleware/uploadfile.middleware');
 
-const storage = new Storage({ keyFilename: 'gstorage-service-account.json' });
-// const storage = new Storage({ credentials: JSON.parse(process.env.GSTORAGE_SERVICE_KEY) });
+// const storage = new Storage({ keyFilename: 'gstorage-service-account.json' });
+require('dotenv').config();
+const storage = new Storage({ credentials: JSON.parse(process.env.GSTORAGE_SERVICE_KEY) });
 const bucket = storage.bucket('bibitunggulid-public');
 
-require('dotenv').config();
 
 
 /**
