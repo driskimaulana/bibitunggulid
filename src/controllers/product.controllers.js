@@ -7,6 +7,12 @@ const uuidv4 = require('uuid').v4;
 const { once } = require('events');
 const processFileMiddleware = require('../middleware/uploadfile.middleware');
 
+const storage = new Storage({ keyFilename: 'gstorage-service-account.json' });
+// const storage = new Storage({ credentials: JSON.parse(process.env.GSTORAGE_SERVICE_KEY) });
+const bucket = storage.bucket('bibitunggulid-public');
+
+require('dotenv').config();
+
 
 /**
  * @swagger
@@ -286,12 +292,12 @@ const deleteProduct = async (
 };
 
 const addNewProduct = async (
-  /** @type import('express').Request */
-  req,
-  /** @type import('express').Response */
-  res,
+/** @type import('express').Request */ req,
+  /** @type import('express').Response */ res,
+// eslint-disable-next-line consistent-return
 ) => {
   try {
+    await processFileMiddleware(req, res);
     const {
       supplierId,
       productName,
@@ -299,37 +305,81 @@ const addNewProduct = async (
       categoryId,
       unitPrice,
       unitWeight,
-      unitInStock,
       isAvailable,
-      pictures,
     } = req.body;
-    const createdAt = new Date().toISOString();
-    const updatedAt = new Date().toISOString();
-    const newProduct = Product({
-      supplierId,
-      productName,
-      productDescription,
-      categoryId,
-      unitPrice,
-      unitWeight,
-      unitInStock,
-      isAvailable,
-      pictures,
-      createdAt,
-      updatedAt,
-    });
 
-    const response = res.status(200).json({
-      status: 'success',
-      message: 'Add new product success.',
-      data: newProduct,
-    });
-    return response;
+    if (!req.files) {
+      const response = res.status(400).json({
+        status: 'failed',
+        message: 'No image send.',
+      });
+      return response;
+    }
+
+    // eslint-disable-next-line prefer-const
+    let pictures = [];
+
+    // eslint-disable-next-line guard-for-in
+    for (const i in req.files) {
+      // create new blob in the bucket and upload the file data
+      const blob = bucket.file(`product-images/${uuidv4()}.${req.files[i].originalname.split('.')[1]}`);
+      const blobStream = blob.createWriteStream({
+        resumable: false,
+      });
+
+      blobStream.on('error', (err) => {
+        console.log(err.message);
+        const response = res.status(500).json({
+          status: 'failed',
+          message: 'Upload data failed',
+        });
+        return response;
+      });
+
+      // eslint-disable-next-line consistent-return
+      blobStream.on('finish', (data) => {
+      // Create public URL for the file
+        const publicUrl = format(
+          `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
+        );
+        // console.log(`pu:${blob.name}`);
+        pictures.push(publicUrl);
+        // console.log(pictures);
+      });
+
+      blobStream.end(req.files[i].buffer);
+
+      // wait until the upload is finish
+      await once(blobStream, 'finish');
+      // eslint-disable-next-line eqeqeq
+      if (i == req.files.length - 1) {
+        // console.log(pictures);
+
+        const newProduct = await Product.create({
+          supplierId,
+          productName,
+          productDescription,
+          categoryId,
+          unitPrice,
+          unitWeight,
+          isAvailable,
+          pictures,
+        });
+        console.log(newProduct);
+
+        const response = res.status(200).json({
+          status: 'success',
+          message: 'Add new product success.',
+          data: newProduct,
+        });
+        return response;
+      }
+    }
   } catch (error) {
     console.log(error.message);
     const response = res.status(500).json({
-      status: 'fail',
-      message: 'Server unavailable.',
+      status: 'failed',
+      message: 'Server unavaiable.',
     });
     return response;
   }
