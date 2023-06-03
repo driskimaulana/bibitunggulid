@@ -52,7 +52,7 @@ const options = {
 const init = () => {
   // setting up the server
   const server = express();
-  server.use(bodyParser.json({ limit: '10mb', extended: true }));
+  server.use(bodyParser.json({ limit: '30mb', extended: true }));
   server.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
   server.use(cors());
 
