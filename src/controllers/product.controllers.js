@@ -10,8 +10,9 @@ const { once } = require('events');
 const processFileMiddleware = require('../middleware/uploadfile.middleware');
 
 require('dotenv').config();
+const credentials = process.env.GSTORAGE_SERVICE_KEY;
 
-const storage = new Storage({ projectId: 'bibitunggulid', credentials: process.env.GSTORAGE_SERVICE_KEY });
+const storage = new Storage({ projectId: 'bibitunggulid', credentials: JSON.parse(credentials) });
 // const storage = new Storage({ keyFilename: 'gstorage-service-account.json' });
 
 // const storage = new Storage({ credentials: JSON.parse(process.env.GSTORAGE_SERVICE_KEY) });
