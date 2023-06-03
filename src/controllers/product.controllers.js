@@ -288,52 +288,51 @@ const deleteProduct = async (
   }
 };
 
-const addNewProduct = async(
+const addNewProduct = async (
   /** @type import('express').Request */
   req,
   /** @type import('express').Response */
   res,
 ) => {
-  const {
-    supplierId, 
-    productName,
-    productDescription,
-    categoryId,
-    unitPrice,
-    unitWeight,
-    unitInStock, 
-    isAvailable, 
-    pictures,
-  } = req.body;
-  const createdAt = new Date().toISOString();
-  const updatedAt = new Date().toISOString();
-  const newProduct = Product({
-    supplierId, 
-    productName,
-    productDescription,
-    categoryId,
-    unitPrice,
-    unitWeight,
-    unitInStock, 
-    isAvailable, 
-    pictures,
-    createdAt,
-    updatedAt,
-  });
+  try {
+    const {
+      supplierId,
+      productName,
+      productDescription,
+      categoryId,
+      unitPrice,
+      unitWeight,
+      unitInStock,
+      isAvailable,
+      pictures,
+    } = req.body;
+    const createdAt = new Date().toISOString();
+    const updatedAt = new Date().toISOString();
+    const newProduct = Product({
+      supplierId,
+      productName,
+      productDescription,
+      categoryId,
+      unitPrice,
+      unitWeight,
+      unitInStock,
+      isAvailable,
+      pictures,
+      createdAt,
+      updatedAt,
+    });
 
-        const response = res.status(200).json({
-          status: 'success',
-          message: 'Add new product success.',
-          data: newProduct,
-        });
-        return response;
-      }
-    }
+    const response = res.status(200).json({
+      status: 'success',
+      message: 'Add new product success.',
+      data: newProduct,
+    });
+    return response;
   } catch (error) {
     console.log(error.message);
     const response = res.status(500).json({
       status: 'fail',
-      message: 'Server unavailable.'
+      message: 'Server unavailable.',
     });
     return response;
   }
