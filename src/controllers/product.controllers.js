@@ -6,6 +6,8 @@ const { Product } = require('../../database/models');
 const uuidv4 = require('uuid').v4;
 const { once } = require('events');
 const processFileMiddleware = require('../middleware/uploadfile.middleware');
+const storage = new Storage({ credentials: JSON.parse(process.env.GSTORAGE_SERVICE_KEY) });
+const bucket = storage.bucket('bibitunggulid-public');
 
 /**
  * @swagger
