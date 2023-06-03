@@ -1,15 +1,7 @@
 /* eslint-disable no-unused-vars */
 const { format } = require('util');
 const { Storage } = require('@google-cloud/storage');
-const uuidv4 = require('uuid').v4;
-const { once } = require('events');
 const { Product } = require('../../database/models');
-const processFileMiddleware = require('../middleware/uploadfile.middleware');
-
-const storage = new Storage({ credentials: JSON.parse(process.env.GSTORAGE_SERVICE_KEY) });
-const bucket = storage.bucket('bibitunggulid-public');
-
-require('dotenv').config();
 
 /**
  * @swagger
