@@ -1,18 +1,21 @@
+/* eslint-disable import/order */
 /* eslint-disable no-unused-vars */
 const { format } = require('util');
 const { Storage } = require('@google-cloud/storage');
+// const { Product } = require('../../database/models');
 const { Product } = require('../../database/models');
 
 const uuidv4 = require('uuid').v4;
 const { once } = require('events');
 const processFileMiddleware = require('../middleware/uploadfile.middleware');
 
-// const storage = new Storage({ keyFilename: 'gstorage-service-account.json' });
 require('dotenv').config();
-const storage = new Storage({ credentials: JSON.parse(process.env.GSTORAGE_SERVICE_KEY) });
+
+const storage = new Storage({ projectId: 'bibitunggulid', credentials: JSON.parse(process.envGSTORAGE_SERVICE_KEY) });
+// const storage = new Storage({ keyFilename: 'gstorage-service-account.json' });
+
+// const storage = new Storage({ credentials: JSON.parse(process.env.GSTORAGE_SERVICE_KEY) });
 const bucket = storage.bucket('bibitunggulid-public');
-
-
 
 /**
  * @swagger
