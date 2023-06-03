@@ -15,7 +15,7 @@ require('dotenv').config();
 // const storage = new Storage({ keyFilename: 'gstorage-service-account.json' });
 
 // const storage = new Storage({ credentials: JSON.parse(process.env.GSTORAGE_SERVICE_KEY) });
-const bucket = storage.bucket('bibitunggulid-public');
+// const bucket = storage.bucket('bibitunggulid-public');
 
 /**
  * @swagger
