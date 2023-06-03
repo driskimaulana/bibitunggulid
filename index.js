@@ -39,8 +39,6 @@ const options = {
     },
     servers: [{
       url: 'http://127.0.0.1:5000',
-    }, {
-      url: 'https://dev-bibitunggulid-zldx7crkfq-et.a.run.app/',
     }],
   },
   apis: ['./src/routes/*.js',
