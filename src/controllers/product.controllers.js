@@ -3,6 +3,10 @@ const { format } = require('util');
 const { Storage } = require('@google-cloud/storage');
 const { Product } = require('../../database/models');
 
+const uuidv4 = require('uuid').v4;
+const { once } = require('events');
+const processFileMiddleware = require('../middleware/uploadfile.middleware');
+
 /**
  * @swagger
  * tags:
