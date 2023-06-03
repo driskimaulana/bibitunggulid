@@ -17,7 +17,7 @@ const credentials = process.env.GSTORAGE_SERVICE_KEY;
 const base64EncodedKey = process.env.GSTORAGE_SERVICE_KEY;
 const key = Buffer.from(base64EncodedKey, 'base64').toString('utf8');
 
-const storage = new Storage({ projectId: 'bibitunggulid', credentials: JSON.parse(key) });
+const storage = new Storage({ projectId: 'bibitunggulid', credentials: key });
 //const storage = new Storage({ projectId: 'bibitunggulid', credentials: JSON.parse(credentials) });
 // const storage = new Storage({ keyFilename: 'gstorage-service-account.json' });
 
