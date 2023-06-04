@@ -10,11 +10,11 @@ const { Model } = require('sequelize');
  *          required:
  *              - name
  *              - phone
- *              - shipProvince
- *              - shipCity
- *              - shipSubDistrict
- *              - shipAddress
- *              - shipPostalCode
+ *              - province
+ *              - city
+ *              - subDistrict
+ *              - fullAddress
+ *              - postalCode
  *              - customerId
  *          properties:
  *              id:
@@ -26,19 +26,19 @@ const { Model } = require('sequelize');
  *              phone:
  *                  type: int
  *                  description: The phone number of ship receiver
- *              shipProvince:
+ *              province:
  *                  type: string
  *                  description: The province of ship address
- *              shipCity:
+ *              city:
  *                  type: string
  *                  description: The city of address
  *              subDistrict:
  *                  type: string
  *                  description: The subdistrict of address
- *              shipAddress:
+ *              fullAddress:
  *                  type: string
  *                  description: The full address
- *              shipPostalCode:
+ *              postalCode:
  *                  type: string
  *                  description: The postal code of address
  *              customerId:
@@ -54,11 +54,11 @@ const { Model } = require('sequelize');
  *              id: 0
  *              name: Roronoa Zoro
  *              phone: 085156087141
- *              shipProvince: East Blue
- *              shipCity: Grand Line
- *              shipSubDistrict: Shimotsuki
- *              shipAddress: Rt:03/01
- *              shipPostalCode: 44181
+ *              province: East Blue
+ *              city: Grand Line
+ *              subDistrict: Shimotsuki
+ *              fullAddress: Rt:03/01
+ *              postalCode: 44181
  *              customerId: 0
  *              createdAt: 2020-03-10T04:05:06.157Z
  *              updateAt: 2020-03-10T04:05:06.157Z
@@ -83,11 +83,11 @@ module.exports = (sequelize, DataTypes) => {
   ShipAddress.init({
     name: DataTypes.STRING,
     phone: DataTypes.STRING,
-    shipProvince: DataTypes.STRING,
-    shipCity: DataTypes.STRING,
-    shipSubDistrict: DataTypes.STRING,
-    shipAddress: DataTypes.STRING,
-    shipPostalCode: DataTypes.STRING,
+    province: DataTypes.STRING,
+    city: DataTypes.STRING,
+    subDistrict: DataTypes.STRING,
+    fullAddress: DataTypes.STRING,
+    postalCode: DataTypes.STRING,
     customerId: DataTypes.INTEGER,
   }, {
     sequelize,

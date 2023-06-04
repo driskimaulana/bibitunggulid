@@ -1,119 +1,117 @@
 /**
 * Programmer: D'Riski Maulana
-* Filename:customers.controllers.js
+* Filename: category.controllers.js
 * Contact: driskimaulana@upi.edu
-* Date:May 24, 2023
-* Description: This is controllers for customers
+* Date: June 03, 2023
+* Description: This is the crud controllers for category table
 * */
-
-const Customer = require('../../database/models').Customers;
 
 /**
  * @swagger
  * tags:
- *  name: Customers CRUD
- *  description: The customer crud operations API
- * /customers/:
+ *  name: categories CRUD
+ *  description: The category crud operations API
+ * /category/:
  *  get:
- *      summary: get all custonmers data
- *      tags: [Customers CRUD]
+ *      summary: get all categories data
+ *      tags: [categories CRUD]
  *      responses:
  *          200:
- *              desciption: get customers data success
+ *              desciption: get categories data success
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/Customer'
+ *                          $ref: '#/components/schemas/Category'
  *          404:
- *              description: Customer data is not found
+ *              description: category data is not found
  *          500:
  *              description: Service unavailable
- * /customers/{id}:
- *  get:
- *      summary: get custonmers data by id
- *      tags: [Customers CRUD]
- *      parameters:
- *          -   in: path
- *              name: id
- *              schema:
- *                  type: int
- *              summary: The customers id
+ *  post:
+ *      summary: Create new categoy
+ *      tags: [categories CRUD]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Category'
  *      responses:
- *          200:
- *              desciption: get customers data success
+ *          201:
+ *              description: New category succesfully created
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/Customer'
+ *                          $ref: '#/components/schemas/Category'
  *          400:
- *              description: No id is specified
- *          404:
- *              description: Customer data is not found
+ *              description: Telphone is already used
  *          500:
- *              description: Service unavailable
+ *              description: Service is unavailable
+ * /category/{id}:
  *  delete:
- *      summary: delete cutomers by id
- *      tags: [Customers CRUD]
+ *      summary: delete category by id
+ *      tags: [categories CRUD]
  *      parameters:
  *          -   in: path
  *              name: id
  *              schema:
  *                  type: int
- *              summary: The customers id
+ *              summary: The categories id
  *      responses:
  *          200:
- *              desciption: delete customers data success
+ *              desciption: delete categories data success
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/Customer'
+ *                          $ref: '#/components/schemas/category'
  *          400:
  *              description: No id is specified
  *          404:
- *              description: Customer data is not found
+ *              description: category data is not found
  *          500:
  *              description: Service unavailable
  *  put:
- *      summary: update custonmers data
- *      tags: [Customers CRUD]
+ *      summary: update category data
+ *      tags: [categories CRUD]
  *      parameters:
  *          -   in: path
  *              name: id
  *              schema:
  *                  type: int
- *              summary: The customers id
+ *              summary: The categories id
  *      requestBody:
  *          required: false
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/Customer'
+ *                      $ref: '#/components/schemas/Category'
  *      responses:
  *          200:
- *              desciption: get customers data success
+ *              desciption: get categories data success
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/Customer'
+ *                          $ref: '#/components/schemas/category'
  *          400:
  *              description: No id is specified
  *          404:
- *              description: Customer data is not found
+ *              description: category data is not found
  *          500:
  *              description: Service unavailable
  */
 
-const getCustomers = async (
-/** @type import("express").Request */ req,
-  /** @type import("express").Response */ res,
+const { Category } = require('../../database/models');
+
+const getAllCategory = async (
+/** @type import('express').Request */ req,
+  /** @type import('express').Response */ res,
 ) => {
   try {
-    const customers = await Customer.findAll();
+    const categories = await Category.findAll();
 
-    if (!customers) {
+    if (!categories) {
       const response = res.status(404).json({
         status: 'failed',
-        message: 'No customers data found.',
+        message: 'No categories data found.',
       });
       return response;
     }
@@ -121,84 +119,85 @@ const getCustomers = async (
     const response = res.status(200).json({
       status: 'success',
       message: 'Fetch data successfull',
-      data: customers,
+      data: categories,
     });
     return response;
-  } catch (error) {
-    console.log(error.message);
+  } catch (err) {
+    console.log(err.message);
     const response = res.status(500).json({
       status: 'failed',
-      message: 'Service unavailable.',
+      message: 'Service unavaiable.',
     });
     return response;
   }
 };
 
-const getCustomersById = async (
+const addNewCategory = async (
 /** @type import('express').Request */ req,
   /** @type import('express').Response */ res,
 ) => {
-  const { id } = req.params;
+  const {
+    categoryName, description,
+  } = req.body;
+
   try {
-    if (!id) {
+    // console.log(db);
+    // check if email is already exist in database
+    const oldCategory = await Category.findOne({ where: { categoryName } });
+    if (oldCategory) {
       const response = res.status(400).json({
         status: 'failed',
-        message: 'No id specified in the url.',
+        message: 'Category is already in the database.',
       });
       return response;
     }
 
-    const customer = await Customer.findOne({ where: { id } });
-    if (!customer) {
-      const response = res.status(404).json({
-        status: 'failed',
-        message: `Customer with id: ${id} is not found.`,
-      });
-      return response;
-    }
-
-    const response = res.status(200).json({
-      status: 'success',
-      message: 'Get data success.',
-      data: customer,
+    // create new category
+    const newCategory = await Category.create({
+      categoryName, description,
     });
 
+    const response = res.status(201).json({
+      status: 'success',
+      message: 'Add new category success.',
+      data: newCategory,
+    });
     return response;
-  } catch (error) {
-    console.log(error.message);
+  } catch (e) {
+    console.log(e.message);
     const response = res.status(500).json({
       status: 'failed',
-      message: 'Service unavailable.',
+      message: 'Service unavailble.',
     });
     return response;
   }
 };
 
-const updateCustomers = async (
+const updateCategory = async (
 /** @type import('express').Request */ req,
   /** @type import('express').Response */ res,
 ) => {
   const { id } = req.params;
   const {
-    phone, email, fullName,
+    categoryName, description,
   } = req.body;
 
   try {
-    let customer = await Customer.findOne({ where: { id } });
-    if (!customer) {
+    let category = await Category.findOne({ where: { id } });
+    if (!category) {
       const response = res.status(404).json({
         status: 'failed',
-        message: `Customers with id: ${id} is not found.`,
+        message: `Category with id: ${id} is not found.`,
       });
       return response;
     }
     const updatedAt = new Date().toISOString();
 
-    customer = {
-      phone, email, fullName, updatedAt,
+    category = {
+      categoryName, description, updatedAt,
     };
 
-    await Customer.update({ ...customer }, { where: { id } });
+    await Category.update({ ...category }, { where: { id } });
 
     const response = res.status(200).json({
       status: 'success',
@@ -214,22 +213,22 @@ const updateCustomers = async (
   }
 };
 
-const deleteCustomers = async (
+const deleteCategory = async (
 /** @type import('express').Request */ req,
   /** @type import('express').Response */ res,
 ) => {
   const { id } = req.params;
   try {
-    const customer = await Customer.findOne({ where: { id } });
-    if (!customer) {
+    const category = await Category.findOne({ where: { id } });
+    if (!category) {
       const response = res.status(404).json({
         status: 'failed',
-        message: `Customer with id: ${id} is not found.`,
+        message: `Category with id: ${id} is not found.`,
       });
       return response;
     }
 
-    await customer.destroy({ where: { id } });
+    await Category.destroy({ where: { id } });
     const response = res.status(400).json({
       status: 'success',
       message: 'Data deleted succesfully.',
@@ -245,5 +244,5 @@ const deleteCustomers = async (
 };
 
 module.exports = {
-  getCustomers, getCustomersById, updateCustomers, deleteCustomers,
+  getAllCategory, addNewCategory, updateCategory, deleteCategory,
 };

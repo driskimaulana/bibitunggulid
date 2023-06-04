@@ -1,9 +1,8 @@
 const router = require('express').Router();
 const {
-    getFavoriteById,
-    updateFavorite,
-    deleteFavorite,
-    addFavorite,
+  getFavoriteById,
+  deleteFavorite,
+  addFavorite,
 } = require('../controllers/favorite.controllers');
 
 router.get('/:customerId', getFavoriteById);
