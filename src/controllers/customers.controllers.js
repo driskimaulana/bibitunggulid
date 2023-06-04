@@ -180,7 +180,7 @@ const updateCustomers = async (
 ) => {
   const { id } = req.params;
   const {
-    phone, email, fullName, addressId,
+    phone, email, fullName,
   } = req.body;
 
   try {
@@ -195,7 +195,7 @@ const updateCustomers = async (
     const updatedAt = new Date().toISOString();
 
     customer = {
-      phone, email, fullName, addressId, updatedAt,
+      phone, email, fullName, updatedAt,
     };
 
     await Customer.update({ ...customer }, { where: { id } });
@@ -203,7 +203,6 @@ const updateCustomers = async (
     const response = res.status(200).json({
       status: 'success',
       message: 'Update data successful',
-      data: customer,
     });
     return response;
   } catch (error) {

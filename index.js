@@ -18,6 +18,7 @@ const customerRoutes = require('./src/routes/customers.routes.js');
 const productRoutes = require('./src/routes/product.routes.js');
 const cartRoutes = require('./src/routes/carts.routes.js');
 const categoryRoutes = require('./src/routes/category.routes.js');
+const shipAddressRoutes = require('./src/routes/shipaddress.routes.js');
 
 const favoriteRoutes = require('./src/routes/favorite.routes.js');
 // swagger configuration
@@ -38,9 +39,14 @@ const options = {
         email: 'bibitunggulid@gmail.com',
       },
     },
-    servers: [{
-      url: 'http://127.0.0.1:5000',
-    }],
+    servers: [
+      {
+        url: 'http://127.0.0.1:5000',
+      },
+      {
+        url: 'https://dev-bibitunggulid-zldx7crkfq-et.a.run.app',
+      },
+    ],
   },
   apis: ['./src/routes/*.js',
     './database/models/*.js',
@@ -68,6 +74,7 @@ const init = () => {
   server.use('/carts', cartRoutes);
   server.use('/favorite', favoriteRoutes);
   server.use('/category', categoryRoutes);
+  server.use('/shipaddress', shipAddressRoutes);
 
   const PORT = process.env.PORT || 8080;
 

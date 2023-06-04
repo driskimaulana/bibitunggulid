@@ -6,6 +6,99 @@
 * Description: This is the crud controllers for category table
 * */
 
+/**
+ * @swagger
+ * tags:
+ *  name: categories CRUD
+ *  description: The category crud operations API
+ * /category/:
+ *  get:
+ *      summary: get all categories data
+ *      tags: [categories CRUD]
+ *      responses:
+ *          200:
+ *              desciption: get categories data success
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Category'
+ *          404:
+ *              description: category data is not found
+ *          500:
+ *              description: Service unavailable
+ *  post:
+ *      summary: Create new categoy
+ *      tags: [categories CRUD]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Category'
+ *      responses:
+ *          201:
+ *              description: New category succesfully created
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Category'
+ *          400:
+ *              description: Telphone is already used
+ *          500:
+ *              description: Service is unavailable
+ * /category/{id}:
+ *  delete:
+ *      summary: delete category by id
+ *      tags: [categories CRUD]
+ *      parameters:
+ *          -   in: path
+ *              name: id
+ *              schema:
+ *                  type: int
+ *              summary: The categories id
+ *      responses:
+ *          200:
+ *              desciption: delete categories data success
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/category'
+ *          400:
+ *              description: No id is specified
+ *          404:
+ *              description: category data is not found
+ *          500:
+ *              description: Service unavailable
+ *  put:
+ *      summary: update category data
+ *      tags: [categories CRUD]
+ *      parameters:
+ *          -   in: path
+ *              name: id
+ *              schema:
+ *                  type: int
+ *              summary: The categories id
+ *      requestBody:
+ *          required: false
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Category'
+ *      responses:
+ *          200:
+ *              desciption: get categories data success
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/category'
+ *          400:
+ *              description: No id is specified
+ *          404:
+ *              description: category data is not found
+ *          500:
+ *              description: Service unavailable
+ */
+
 const { Category } = require('../../database/models');
 
 const getAllCategory = async (

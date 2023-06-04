@@ -32,9 +32,6 @@ const { Model } = require('sequelize');
  *              password:
  *                  type: string
  *                  description: The encryted password that users created
- *              addressId:
- *                  type: int
- *                  description: The address id of users
  *              createdAt:
  *                  type: date
  *                  description: The date user created thir account
@@ -62,12 +59,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Customers.hasOne(models.Address, {
-        foreignKey: 'addressId',
-        as: 'addresses',
-        onDelete: 'CASCADE',
-      });
-
       Customers.hasMany(models.ShipAddress, {
         foreignKey: 'customerId',
         as: 'customers',
@@ -80,7 +71,6 @@ module.exports = (sequelize, DataTypes) => {
     phone: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    addressId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Customers',
