@@ -83,11 +83,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'suppliers',
         onDelete: 'CASCADE',
       });
-      Product.hasOne(models.Category, {
-        foreignKey: 'categoryId',
-        as: 'categories',
-        onDelete: 'CASCADE',
-      });
+      // Product.hasOne(models.Category, {
+      //   foreignKey: 'categoryId',
+      //   as: 'categories',
+      //   onDelete: 'CASCADE',
+      // });
     }
   }
   Product.init({
