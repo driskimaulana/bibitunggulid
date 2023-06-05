@@ -71,22 +71,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Supplier.hasMany(models.Address, {
-        foreignKey: 'addressId',
-        as: 'addresses',
-        onDelete: 'CASCADE',
-      });
+      // Supplier.hasMany(models.Address, {
+      //   foreignKey: 'addressId',
+      //   as: 'addresses',
+      //   onDelete: 'CASCADE',
+      // });
     }
   }
   Supplier.init({
     companyName: DataTypes.STRING,
-    contactFName: DataTypes.STRING,
-    contactLName: DataTypes.STRING,
-    addressId: DataTypes.INTEGER,
+    contactName: DataTypes.STRING,
     email: DataTypes.STRING,
     bio: DataTypes.STRING,
     logo: DataTypes.STRING,
-    isOnline: DataTypes.BOOLEAN,
+    isActive: DataTypes.BOOLEAN,
+    contactPhone: DataTypes.STRING,
+    province: DataTypes.STRING,
+    city: DataTypes.STRING,
+    subDistrict: DataTypes.STRING,
+    fullAddress: DataTypes.STRING,
+    postalCode: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Supplier',

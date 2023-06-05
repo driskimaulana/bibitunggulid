@@ -3,12 +3,12 @@ const { Favorite } = require('../../database/models');
 /**
  * @swagger
  * tags:
- *  name: Favorite CRUD
+ *  name: Favorite
  *  description: The favorite crud operations API
  * /favorite/{customerId}:
  *  get:
  *      summary: get favorite data by id
- *      tags: [favorite]
+ *      tags: [Favorite ]
  *      parameters:
  *          -   in: path
  *              name: customerId
@@ -31,7 +31,7 @@ const { Favorite } = require('../../database/models');
  * /favorite/{favoriteId}:
  *  delete:
  *      summary: delete favorite by id
- *      tags: [favorite]
+ *      tags: [Favorite ]
  *      parameters:
  *          -   in: path
  *              name: favoriteId
@@ -54,7 +54,7 @@ const { Favorite } = require('../../database/models');
  * /favorite/:
  *  post:
  *      summary: create new favorite
- *      tags: [favorite]
+ *      tags: [Favorite ]
  *      requestBody:
  *          required: true
  *          content:
@@ -104,7 +104,7 @@ const addFavorite = async (
     });
     return response;
   }
-}
+};
 
 const getFavoriteById = async (
   /** @type import("express").Request */
@@ -115,7 +115,7 @@ const getFavoriteById = async (
   const { customerId } = req.params;
   console.log(customerId);
   try {
-    if(!customerId){
+    if (!customerId) {
       const response = res.status(400).json({
         status: 'failed',
         message: 'No customerId specified in url',
@@ -123,24 +123,24 @@ const getFavoriteById = async (
       return response;
     }
     const favorite = await Favorite.findAll({ where: { customerId } });
-    if(!favorite){
-        const response = res.status(404).json({
-            status: 'failed',
-            message: `Favorite with customerId: ${customerId} is not found.`,
-        });
-        return response;
+    if (!favorite) {
+      const response = res.status(404).json({
+        status: 'failed',
+        message: `Favorite with customerId: ${customerId} is not found.`,
+      });
+      return response;
     }
     const response = res.status(200).json({
-        status: 'success',
-        message: 'Get data success.',
-        data: favorite,
+      status: 'success',
+      message: 'Get data success.',
+      data: favorite,
     });
     return response;
   } catch (error) {
     console.log(error.message);
     const response = res.status(500).json({
-        status: 'failed',
-        message: 'Service unavailable.',
+      status: 'failed',
+      message: 'Service unavailable.',
     });
     return response;
   }
@@ -186,23 +186,23 @@ const getFavoriteById = async (
 //   }
 // };
 
-const deleteFavorite = async(
+const deleteFavorite = async (
   /** @type import('express').Request */
   req,
   /** @type import('express').Response */
   res,
 ) => {
-  const {favoriteId} = req.params;
+  const { favoriteId } = req.params;
   try {
-    const favorite = await Favorite.findAll({where: {id:favoriteId}});
-    if(!favorite){
+    const favorite = await Favorite.findAll({ where: { id: favoriteId } });
+    if (!favorite) {
       const response = res.status(404).json({
         status: 'failed',
         message: `Favorite with favoriteId: ${favoriteId} is not found.`,
       });
       return response;
     }
-    await Favorite.destroy({where: {id:favoriteId}});
+    await Favorite.destroy({ where: { id: favoriteId } });
     const response = res.status(400).json({
       status: 'success',
       message: 'Data deleted successfully.',
@@ -219,5 +219,5 @@ const deleteFavorite = async(
 };
 
 module.exports = {
-  getFavoriteById, deleteFavorite, addFavorite
+  getFavoriteById, deleteFavorite, addFavorite,
 };

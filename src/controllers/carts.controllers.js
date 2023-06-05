@@ -12,12 +12,12 @@ const { Cart, sequelize } = require('../../database/models');
 /**
  * @swagger
  * tags:
- *  name: Carts CRUD
+ *  name: Carts
  *  description: The carts crud operations API
  * /carts/:
  *  get:
  *      summary: get all carts by customer id
- *      tags: [Carts CRUD]
+ *      tags: [Carts ]
  *      responses:
  *          200:
  *              desciption: get cart data success
@@ -31,7 +31,7 @@ const { Cart, sequelize } = require('../../database/models');
  *              description: Service unavailable
  *  post:
  *      summary: Add product to customers cart using productId.
- *      tags: [Carts CRUD]
+ *      tags: [Carts ]
  *      requestBody:
  *          required: true
  *          content:
@@ -53,7 +53,7 @@ const { Cart, sequelize } = require('../../database/models');
  * /carts/{productId}:
  *  delete:
  *      summary: delete product from customers cart using product id
- *      tags: [Carts CRUD]
+ *      tags: [Carts ]
  *      parameters:
  *          -   in: path
  *              name: productId
@@ -71,7 +71,7 @@ const { Cart, sequelize } = require('../../database/models');
  *              description: Service unavailable
  *  put:
  *      summary: reduce product count in the customers cart
- *      tags: [Carts CRUD]
+ *      tags: [Carts ]
  *      parameters:
  *          -   in: path
  *              name: productId
