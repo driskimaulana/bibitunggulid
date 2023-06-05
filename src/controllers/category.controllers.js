@@ -9,12 +9,12 @@
 /**
  * @swagger
  * tags:
- *  name: categories CRUD
+ *  name: Categories
  *  description: The category crud operations API
  * /category/:
  *  get:
  *      summary: get all categories data
- *      tags: [categories CRUD]
+ *      tags: [Categories ]
  *      responses:
  *          200:
  *              desciption: get categories data success
@@ -28,7 +28,7 @@
  *              description: Service unavailable
  *  post:
  *      summary: Create new categoy
- *      tags: [categories CRUD]
+ *      tags: [Categories ]
  *      requestBody:
  *          required: true
  *          content:
@@ -49,7 +49,7 @@
  * /category/{id}:
  *  delete:
  *      summary: delete category by id
- *      tags: [categories CRUD]
+ *      tags: [Categories ]
  *      parameters:
  *          -   in: path
  *              name: id
@@ -71,7 +71,7 @@
  *              description: Service unavailable
  *  put:
  *      summary: update category data
- *      tags: [categories CRUD]
+ *      tags: [Categories ]
  *      parameters:
  *          -   in: path
  *              name: id

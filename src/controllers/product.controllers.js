@@ -25,12 +25,12 @@ const bucket = storage.bucket('bibitunggulid-public');
 /**
  * @swagger
  * tags:
- *  name: Product CRUD
+ *  name: Product
  *  description: The product crud operations API
  * /product/:
  *  get:
  *      summary: get all product data
- *      tags: [Product CRUD]
+ *      tags: [Product ]
  *      responses:
  *          200:
  *              desciption: get product data success
@@ -44,7 +44,7 @@ const bucket = storage.bucket('bibitunggulid-public');
  *              description: Service unavailable
  *  post:
  *      summary: create new product
- *      tags: [product]
+ *      tags: [Product ]
  *      requestBody:
  *          required: true
  *          content:
@@ -67,7 +67,7 @@ const bucket = storage.bucket('bibitunggulid-public');
  * /product/{id}:
  *  get:
  *      summary: get product data by id
- *      tags: [Product CRUD]
+ *      tags: [Product ]
  *      parameters:
  *          -   in: path
  *              name: id
@@ -89,7 +89,7 @@ const bucket = storage.bucket('bibitunggulid-public');
  *              description: Service unavailable
  *  delete:
  *      summary: delete product by id
- *      tags: [Product CRUD]
+ *      tags: [Product ]
  *      parameters:
  *          -   in: path
  *              name: id
@@ -111,7 +111,7 @@ const bucket = storage.bucket('bibitunggulid-public');
  *              description: Service unavailable
  *  put:
  *      summary: update product data
- *      tags: [Product CRUD]
+ *      tags: [Product ]
  *      parameters:
  *          -   in: path
  *              name: id

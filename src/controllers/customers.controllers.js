@@ -11,12 +11,12 @@ const Customer = require('../../database/models').Customers;
 /**
  * @swagger
  * tags:
- *  name: Customers CRUD
+ *  name: Customers
  *  description: The customer crud operations API
  * /customers/:
  *  get:
  *      summary: get all custonmers data
- *      tags: [Customers CRUD]
+ *      tags: [Customers ]
  *      responses:
  *          200:
  *              desciption: get customers data success
@@ -31,7 +31,7 @@ const Customer = require('../../database/models').Customers;
  * /customers/{id}:
  *  get:
  *      summary: get custonmers data by id
- *      tags: [Customers CRUD]
+ *      tags: [Customers ]
  *      parameters:
  *          -   in: path
  *              name: id
@@ -53,7 +53,7 @@ const Customer = require('../../database/models').Customers;
  *              description: Service unavailable
  *  delete:
  *      summary: delete cutomers by id
- *      tags: [Customers CRUD]
+ *      tags: [Customers ]
  *      parameters:
  *          -   in: path
  *              name: id
@@ -75,7 +75,7 @@ const Customer = require('../../database/models').Customers;
  *              description: Service unavailable
  *  put:
  *      summary: update custonmers data
- *      tags: [Customers CRUD]
+ *      tags: [Customers ]
  *      parameters:
  *          -   in: path
  *              name: id
