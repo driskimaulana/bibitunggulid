@@ -132,7 +132,7 @@ const addProductToCustomerCarts = async (
   const { productId } = req.body;
   try {
     console.log(req.userId);
-    let productInCarts = await Cart.findOne({ where: { productId, customerId: req.userId } });
+    const productInCarts = await Cart.findOne({ where: { productId, customerId: req.userId } });
     console.log(productInCarts);
     if (!productInCarts) {
       const cartCreated = await Cart.create({ productId, customerId: req.userId, count: 1 });
@@ -144,16 +144,18 @@ const addProductToCustomerCarts = async (
       return response;
     }
 
-    productInCarts = {
-      count: productInCarts.count + 1,
-    };
+    const updatedCart = await productInCarts.increment('count');
 
-    await Cart.update({ ...productInCarts }, { where: { customerId: req.userId, productId } });
+    // productInCarts = {
+    //   count: productInCarts.count + 1,
+    // };
+
+    // await Cart.update({ ...productInCarts }, { where: { customerId: req.userId, productId } });
 
     const response = res.status(201).json({
       status: 'success',
       message: 'Add product success',
-      data: productInCarts,
+      data: updatedCart,
     });
     return response;
   } catch (error) {

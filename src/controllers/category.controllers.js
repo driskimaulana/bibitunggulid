@@ -217,24 +217,25 @@ const deleteCategory = async (
 /** @type import('express').Request */ req,
   /** @type import('express').Response */ res,
 ) => {
-  const { id } = req.params;
+  const { id } = req.body;
   try {
-    const category = await Category.findOne({ where: { id } });
-    if (!category) {
-      const response = res.status(404).json({
-        status: 'failed',
-        message: `Category with id: ${id} is not found.`,
-      });
-      return response;
-    }
+    // const category = await Category.findOne({ where: { id } });
+    // if (!category) {
+    //   const response = res.status(404).json({
+    //     status: 'failed',
+    //     message: `Category with id: ${id} is not found.`,
+    //   });
+    //   return response;
+    // }
 
     await Category.destroy({ where: { id } });
-    const response = res.status(400).json({
+    const response = res.status(200).json({
       status: 'success',
       message: 'Data deleted succesfully.',
     });
     return response;
   } catch (error) {
+    console.log(error.message);
     const response = res.status(500).json({
       status: 'failed',
       message: 'Server unavailable.',
