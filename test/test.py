@@ -1,5 +1,5 @@
 import requests
 
-resp = requests.post("https://ml-bibitunggulid-zldx7crkfq-et.a.run.app", files={'file': open('bunga4.jpg', 'rb')})
+resp = requests.post("http://127.0.0.1:5000", files={'file': open('bunga3.jpg', 'rb')})
 
 print(resp.json())

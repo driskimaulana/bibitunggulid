@@ -8,6 +8,7 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 from flask import Flask, request, jsonify
 import psycopg2
+from dotenv import load_dotenv
 
 model = keras.models.load_model("models/modelv1.h5")
 
@@ -65,11 +66,11 @@ def getPlants(predicition):
     scName = getClass(predicition)
     # inisialisasi postgresql
     conn = psycopg2.connect(
-        host='34.128.121.25',
-        port=5432,
-        database='dev_bibitunggulid',
-        user='postgres',
-        password='wordpass'
+        host=os.getenv("DB_HOST"),
+        port=os.getenv("DB_PORT"),
+        database=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD")
     )
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM \"Plants\" WHERE \"Plants\".\"scienceName\" = %s", (scName,))
