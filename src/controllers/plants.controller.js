@@ -1,4 +1,4 @@
-const {plants} = require('../../database/models');
+const { Plants } = require('../../database/models');
 
 /**
  * @swagger
@@ -98,68 +98,67 @@ const {plants} = require('../../database/models');
  */
 
 const addNewPlants = async (
-    /** @type import('express').Request */ req,
-      /** @type import('express').Response */ res,
-    ) => {
-      const {
-        localName, about, scienceName, family, kingdom, order
-      } = req.body;
-      try {
+  /** @type import('express').Request */ req,
+  /** @type import('express').Response */ res,
+) => {
+  const {
+    localName, about, scienceName, family, kingdom, order,
+  } = req.body;
+  try {
+    const newPlants = await Plants.create({
+      localName,
+      about,
+      scienceName,
+      family,
+      kingdom,
+      order,
+    });
 
-        const newPlants = await plants.create({
-            localName,
-            about,
-            scienceName,
-            family,
-            kingdom,
-            order,
-        });
-    
-        const response = res.status(201).json({
-          status: 'success',
-          message: 'Add new plants success',
-          data: newPlants,
-        });
-        return response;
-      } catch (error) {
-        console.log(error.message);
-        const response = res.status(500).json({
-          status: 'failed',
-          message: 'Server unavailable.',
-        });
-    
-        return response;
-      }
-    };
+    const response = res.status(201).json({
+      status: 'success',
+      message: 'Add new plants success',
+      data: newPlants,
+    });
+    return response;
+  } catch (error) {
+    console.log(error.message);
+    const response = res.status(500).json({
+      status: 'failed',
+      message: 'Server unavailable.',
+    });
+
+    return response;
+  }
+};
 
 const deletePlants = async (
   /** @type import('express').Request */ req,
   /** @type import('express').Response */ res,
-  ) => {   
-    const { id } = req.params
-    try {
-      const plant = await plants.findOne({ where: { id } });
-      if (!plant) {
-        const response = res.status(404).json({
-          status: 'failed',
-          message: 'Data is not found.',
-          });
-          return response;
-          }
-      
-      await plants.destroy({ where: { id } });
-      const response = res.status(200).json({
-          status: 'success',
-          message: 'Delete plant data successful',
-          });
-          return response;
-      } catch (error) {
-      const response = res.status(500).json({
-          status: 'failed',
-          message: 'Server unavailable.',
-          });
-          return response;
-      }
+) => {
+  const { id } = req.params;
+  try {
+    const plant = await Plants.findOne({ where: { id } });
+    if (!plant) {
+      const response = res.status(404).json({
+        status: 'failed',
+        message: 'Data is not found.',
+      });
+      return response;
+    }
+
+    await Plants.destroy({ where: { id } });
+    const response = res.status(200).json({
+      status: 'success',
+      message: 'Delete plant data successful',
+    });
+    return response;
+  } catch (error) {
+    const response = res.status(500).json({
+      status: 'failed',
+      message: 'Server unavailable.',
+    });
+    return response;
+  }
 };
 
 const getPlants = async (
@@ -169,7 +168,7 @@ const getPlants = async (
   res,
 ) => {
   try {
-    const plant = await plants.findAll();
+    const plant = await Plants.findAll();
     if (!plant) {
       const response = res.status(404).json({
         status: 'failed',
@@ -195,51 +194,51 @@ const getPlants = async (
 
 const updatePlants = async (
   /** @type import('express').Request */ req,
-    /** @type import('express').Response */ res,
-  ) => {
-    const { id } = req.params;
-    const {
-      localName, about, scienceName, family, kingdom, order
-    } = req.body;
-  
-    try {
-      let plant = await plants.findOne({ where: { id } });
-      if (!plant) {
-        const response = res.status(404).json({
-          status: 'failed',
-          message: 'Data is not found.',
-        });
-        return response;
-      }
-  
-      const updatedAt = new Date().toISOString();
-  
-      plant = {
-        localName, 
-        about, 
-        scienceName, 
-        family, 
-        kingdom,
-        order,
-        updatedAt,
-      };
-  
-      await plants.update({ ...plant }, { where: { id } });
-      const response = res.status(200).json({
-        status: 'success',
-        message: 'Update data successful',
-      });
-      return response;
-    } catch (error) {
-      const response = res.status(500).json({
+  /** @type import('express').Response */ res,
+) => {
+  const { id } = req.params;
+  const {
+    localName, about, scienceName, family, kingdom, order,
+  } = req.body;
+
+  try {
+    let plant = await Plants.findOne({ where: { id } });
+    if (!plant) {
+      const response = res.status(404).json({
         status: 'failed',
-        message: 'Server unavailable.',
+        message: 'Data is not found.',
       });
-  
       return response;
     }
-  };
+
+    const updatedAt = new Date().toISOString();
+
+    plant = {
+      localName,
+      about,
+      scienceName,
+      family,
+      kingdom,
+      order,
+      updatedAt,
+    };
+
+    await Plants.update({ ...plant }, { where: { id } });
+    const response = res.status(200).json({
+      status: 'success',
+      message: 'Update data successful',
+    });
+    return response;
+  } catch (error) {
+    const response = res.status(500).json({
+      status: 'failed',
+      message: 'Server unavailable.',
+    });
+
+    return response;
+  }
+};
 
 module.exports = {
-    addNewPlants, deletePlants, getPlants, updatePlants
+  addNewPlants, deletePlants, getPlants, updatePlants,
 };
