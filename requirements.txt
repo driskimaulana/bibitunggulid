@@ -3,4 +3,4 @@ gunicorn
 tensorflow
 numpy
 pillow
-psycopg2
+psycopg2-binary==2.9.6

@@ -7,6 +7,7 @@ from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 import numpy as np
 from flask import Flask, request, jsonify
+import psycopg2
 
 model = keras.models.load_model("models/modelv1.h5")
 
@@ -25,38 +26,70 @@ def predict(x):
     label0 = np.argmax(pred0)
     return label0
 
-def getClass(prediction):
+def getClass(id):
     dataClass = ""
-    if int(prediction) == 0:
+    if int(id) == 0:
         dataClass = "Aloevera"
-    elif int(prediction) == 1:
+    elif int(id) == 1:
         dataClass = "Anthuriumandreanum"
-    elif int(prediction) == 2:
+    elif int(id) == 2:
         dataClass = "Araucariaheterophylla"
-    elif int(prediction) == 3:
+    elif int(id) == 3:
         dataClass = "Bamboo"
-    elif int(prediction) == 4:
+    elif int(id) == 4:
         dataClass = "Bostonfern"
-    elif int(prediction) == 5:
+    elif int(id) == 5:
+        dataClass = "Chlorophytumcomosum"
+    elif int(id) == 6:
         dataClass = "Croton"
-    elif int(prediction) == 6:
+    elif int(id) == 7:
         dataClass = "Dieffenbachia"
-    elif int(prediction) == 7:
+    elif int(id) == 8:
         dataClass = "Epipremnum"
-    elif int(prediction) == 8:
+    elif int(id) == 9:
         dataClass = "Euphorbiamilii"
-    elif int(prediction) == 9:
+    elif int(id) == 10:
         dataClass = "Monsteradeliciosa"   
-    elif int(prediction) == 10:
-        dataClass = "Snake_plant"
-    elif int(prediction) == 11:
+    elif int(id) == 11:
+        dataClass = "Dracaenatrifasciata"
+    elif int(id) == 12:
         dataClass = "Spathiphyllum"
-    elif int(prediction) == 12:
+    elif int(id) == 13:
         dataClass = "Whiteorchids"
-    elif int(prediction) == 13:
-        dataClass = "ZZ_plant" 
+    elif int(id) == 14:
+        dataClass = "Zamioculcas" 
     
     return dataClass
+
+def getPlants(predicition):
+    scName = getClass(predicition)
+    # inisialisasi postgresql
+    conn = psycopg2.connect(
+        host='localhost',
+        port=5432,
+        database='dev_bibitunggulid',
+        user='postgres',
+        password='root123'
+    )
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM plants WHERE \"scienceName\" = %s", (scName,))
+    row = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if row is not None:
+        # Return the column value as a response
+        return jsonify({
+            'localName': row[1],
+            'about': row[2],
+            'scienceName': row[3],
+            'family': row[4],
+            'kingdom': row[5],
+            'order': row[6],
+        })
+    else:
+        # Return a message if no row was found
+        return jsonify({'message': 'No data found for the given ID'})
 
 app = Flask(__name__)
 
@@ -66,14 +99,12 @@ def index():
         file = request.files.get('file')
         if file is None or file.filename == "":
             return jsonify({"error": "no file"})
-
+    
         try:
             image_bytes = file.read()
             tensor = transform_image(image_bytes)
             prediction = predict(tensor)
-            data_class = getClass(prediction)
-            data = {"prediction": str(data_class)}
-            return jsonify(data)
+            return getPlants(predicition=prediction)
         except Exception as e:
             return jsonify({"error": str(e)})
 
