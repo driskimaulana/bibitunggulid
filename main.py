@@ -65,14 +65,14 @@ def getPlants(predicition):
     scName = getClass(predicition)
     # inisialisasi postgresql
     conn = psycopg2.connect(
-        host='localhost',
+        host='34.128.121.25',
         port=5432,
         database='dev_bibitunggulid',
         user='postgres',
-        password='root123'
+        password='wordpass'
     )
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM plants WHERE \"scienceName\" = %s", (scName,))
+    cursor.execute("SELECT * FROM \"Plants\" WHERE \"Plants\".\"scienceName\" = %s", (scName,))
     row = cursor.fetchone()
     cursor.close()
     conn.close()
