@@ -1,9 +1,10 @@
-'use strict';
+/* eslint-disable no-unused-vars */
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  class plants extends Model {
+  class Plants extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,16 +14,16 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  plants.init({
+  Plants.init({
     localName: DataTypes.STRING,
     about: DataTypes.STRING,
     scienceName: DataTypes.STRING,
     family: DataTypes.STRING,
     kingdom: DataTypes.STRING,
-    order: DataTypes.STRING
+    order: DataTypes.STRING,
   }, {
     sequelize,
-    modelName: 'plants',
+    modelName: 'Plants',
   });
-  return plants;
+  return Plants;
 };

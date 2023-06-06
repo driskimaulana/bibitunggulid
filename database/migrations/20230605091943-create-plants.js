@@ -1,4 +1,4 @@
-'use strict';
+/* eslint-disable no-unused-vars */
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -7,37 +7,37 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       localName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       about: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       scienceName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       family: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       kingdom: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       order: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('plants');
-  }
+  },
 };

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-    addNewPlants, getPlants, deletePlants, updatePlants,
+  addNewPlants, getPlants, deletePlants, updatePlants,
 } = require('../controllers/plants.controller');
 
 router.post('/', addNewPlants);
