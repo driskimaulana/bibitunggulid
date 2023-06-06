@@ -17,7 +17,6 @@ module.exports = {
         email: 'roronoazoro@gmail.com',
         phone: '087786765565',
         password: 'asdfghjkl',
-        addressId: 3,
         picture: 'zoro-profile.png',
         createdAt: new Date(),
         updatedAt: new Date(),
