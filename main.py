@@ -7,6 +7,7 @@ from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 import numpy as np
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import psycopg2
 from dotenv import load_dotenv
 
@@ -93,6 +94,7 @@ def getPlants(predicition):
         return jsonify({'message': 'No data found for the given ID'})
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
