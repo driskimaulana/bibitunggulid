@@ -13,6 +13,7 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const { Order } = require('./database/models');
 const authenticatiosRoutes = require('./src/routes/authentication.routes.js');
 const customerRoutes = require('./src/routes/customers.routes.js');
 const productRoutes = require('./src/routes/product.routes.js');
@@ -22,6 +23,9 @@ const shipAddressRoutes = require('./src/routes/shipaddress.routes.js');
 const supplierRoutes = require('./src/routes/suppliers.routes.js');
 const plantRoutes = require('./src/routes/plants.routes.js');
 const favoriteRoutes = require('./src/routes/favorite.routes.js');
+const adminAccountRoutes = require('./src/routes/adminaccount.routes.js');
+const orderRoutes = require('./src/routes/order.routes.js');
+
 // swagger configuration
 const options = {
   definition: {
@@ -65,9 +69,56 @@ const init = () => {
   // middlewares
   server.use(morgan('common'));
   dotenv.config();
-
   //   setting up swagger
   const specs = swaggerJSDoc(options);
+
+  // web hook for xendit payment
+  // trigger when there is done payment
+  // eslint-disable-next-line consistent-return
+  server.post('/xendit-webhook', async (req, res) => {
+    const { event, data } = req.body;
+    if (event === 'invoice.paid' && data.status === 'PAID') {
+      // Pembayaran telah berhasil, lakukan tindakan yang sesuai
+      console.log('Pembayaran berhasil:', data.external_id);
+
+      try {
+        let order = await Order.findOne({ where: { paymentId: data.id } });
+
+        if (!order) {
+          const response = res.status(404).json({
+            status: 'failed',
+            message: 'Order is not found',
+          });
+          return response;
+        }
+
+        const updatedAt = new Date().toISOString();
+
+        order = {
+          paymentDate: new Date().toISOString(),
+          orderStatusId: 2,
+          updatedAt,
+        };
+
+        await Order.update({ ...order }, { where: { id: order.id } });
+
+        const response = res.status(200).json({
+          status: 'success',
+          message: 'Pay success. Wait for the shipment.',
+        });
+        return response;
+      } catch (error) {
+        const response = res.status(500).json({
+          status: 'failed',
+          message: 'Server unavailable.',
+        });
+        return response;
+      }
+    }
+
+    res.sendStatus(200);
+  });
+
   server.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
   server.use('/authentication', authenticatiosRoutes);
   server.use('/customers', customerRoutes);
@@ -78,6 +129,8 @@ const init = () => {
   server.use('/shipaddress', shipAddressRoutes);
   server.use('/suppliers', supplierRoutes);
   server.use('/plants', plantRoutes);
+  server.use('/admin', adminAccountRoutes);
+  server.use('/orders', orderRoutes);
 
   const PORT = process.env.PORT || 8080;
 

@@ -12,9 +12,9 @@ const key = Buffer.from(base64EncodedKey, 'base64').toString('utf8');
 const storage = new Storage({ projectId: 'bibitunggulid', credentials: JSON.parse(key) });
 const bucket = storage.bucket('bibitunggulid-public');
 
-const uploadImageToBucket = async (file) => {
+const uploadImageToBucket = async (file, folder) => {
   // create new blob in the bucket and upload the file data
-  const blob = bucket.file(`supplier-logo-images/${uuidv4()}.${file.originalname.split('.')[1]}`);
+  const blob = bucket.file(`${folder}/${uuidv4()}.${file.originalname.split('.')[1]}`);
   const blobStream = blob.createWriteStream({
     resumable: false,
   });

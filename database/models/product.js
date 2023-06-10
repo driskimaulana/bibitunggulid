@@ -98,7 +98,9 @@ module.exports = (sequelize, DataTypes) => {
     unitPrice: DataTypes.DOUBLE,
     unitWeight: DataTypes.FLOAT,
     unitInStock: DataTypes.INTEGER,
-    isAvailable: DataTypes.BOOLEAN,
+    adminId: DataTypes.INTEGER,
+    planId: DataTypes.INTEGER,
+    slug: DataTypes.STRING,
     pictures: DataTypes.ARRAY(DataTypes.STRING),
   }, {
     sequelize,

@@ -1,27 +1,8 @@
-/* eslint-disable import/order */
-/* eslint-disable no-unused-vars */
-const { format } = require('util');
-const { Storage } = require('@google-cloud/storage');
-// const { Product } = require('../../database/models');
 const { Product } = require('../../database/models');
-
-const uuidv4 = require('uuid').v4;
-const { once } = require('events');
 const processFileMiddleware = require('../middleware/uploadfile.middleware');
+const uploadImageToBucket = require('../services/uploadimage.services');
 
 require('dotenv').config();
-
-const credentials = process.env.GSTORAGE_SERVICE_KEY;
-
-const base64EncodedKey = process.env.GSTORAGE_SERVICE_KEY;
-const key = Buffer.from(base64EncodedKey, 'base64').toString('utf8');
-
-const storage = new Storage({ projectId: 'bibitunggulid', credentials: JSON.parse(key) });
-// const storage = new Storage({ keyFilename: 'gstorage-service-account.json' });
-
-// const storage = new Storage({ credentials: JSON.parse(process.env.GSTORAGE_SERVICE_KEY) });
-const bucket = storage.bucket('bibitunggulid-public');
-
 /**
  * @swagger
  * tags:
@@ -216,31 +197,12 @@ const updateProduct = async (
   req,
   /** @type import('express').Response */
   res,
+// eslint-disable-next-line consistent-return
 ) => {
-  const { id } = req.params;
-  const {
-    supplierId,
-    productName,
-    productDescription,
-    categoryId,
-    unitPrice,
-    unitWeight,
-    unitInStock,
-    isAvailable,
-    pictures,
-  } = req.body;
-
   try {
-    let product = await Product.findOne({ where: { id } });
-    if (!product) {
-      const response = res.status(400).json({
-        status: 'failed',
-        message: `Product with id: ${id} is not found.`,
-      });
-      return response;
-    }
-    const updatedAt = new Date().toISOString();
-    product = {
+    await processFileMiddleware(req, res);
+    const { id } = req.params;
+    const {
       supplierId,
       productName,
       productDescription,
@@ -249,17 +211,119 @@ const updateProduct = async (
       unitWeight,
       unitInStock,
       isAvailable,
-      pictures,
-      updatedAt,
-    };
-    await Product.update({ ...product }, { where: { id } });
-    const response = res.status(200).json({
-      status: 'success',
-      message: 'Update data successfull',
-      data: product,
-    });
-    return response;
+      oldPictures,
+    } = req.body;
+
+    const { adminId } = req;
+
+    let product = await Product.findOne({ where: { id } });
+    if (!product) {
+      const response = res.status(400).json({
+        status: 'failed',
+        message: `Product with id: ${id} is not found.`,
+      });
+      return response;
+    }
+
+    const updatedAt = new Date().toISOString();
+
+    if (req.files.length > 0) {
+      // eslint-disable-next-line prefer-const
+      let pictures = [];
+
+      // eslint-disable-next-line guard-for-in
+      for (const i in req.files) {
+        const uploadResults = await uploadImageToBucket(req.files[i], 'product-images');
+
+        if (uploadResults.status === 'failed') {
+          const response = res.status(505).json({
+            status: 'failed',
+            message: uploadResults.message,
+          });
+          return response;
+        }
+
+        pictures.push(uploadResults.publicUrl);
+
+        // eslint-disable-next-line eqeqeq
+        if (i == req.files.length - 1) {
+          let slug;
+          if (productName) {
+            slug = `${productName.toLowerCase().replace(/ /g, '-')}-${product.supplierId}`;
+          }
+
+          let oldPic = [];
+
+          if (oldPictures) {
+            if (Array.isArray(oldPictures)) {
+              oldPic = [...oldPictures];
+            } else {
+              oldPic.push(oldPictures);
+            }
+          }
+
+          oldPic = [...oldPic, ...pictures];
+
+          product = {
+            supplierId,
+            productName,
+            productDescription,
+            categoryId,
+            unitPrice,
+            unitWeight,
+            unitInStock,
+            isAvailable,
+            adminId,
+            slug,
+            pictures: oldPictures ? [...oldPic]
+              : [...product.pictures, ...pictures],
+            updatedAt,
+          };
+          pictures = [];
+          oldPic = [];
+
+          await Product.update({ ...product }, { where: { id } });
+
+          const response = res.status(200).json({
+            status: 'success',
+            message: 'Add new product success.',
+            data: product,
+          });
+          return response;
+        }
+      }
+    } else {
+      let slug;
+      if (productName) {
+        slug = `${productName.toLowerCase().replace(/ /g, '-')}-${product.supplierId}`;
+      }
+
+      product = {
+        supplierId,
+        productName,
+        productDescription,
+        categoryId,
+        unitPrice,
+        unitWeight,
+        unitInStock,
+        isAvailable,
+        adminId,
+        slug,
+        pictures: oldPictures,
+        updatedAt,
+      };
+
+      await Product.update({ ...product }, { where: { id } });
+
+      const response = res.status(200).json({
+        status: 'success',
+        message: 'Add new product success.',
+        data: product,
+      });
+      return response;
+    }
   } catch (err) {
+    console.log(err.message);
     const response = res.status(500).json({
       status: 'failed',
       message: 'Server unavailable.',
@@ -312,9 +376,12 @@ const addNewProduct = async (
       productDescription,
       categoryId,
       unitPrice,
+      planId,
       unitWeight,
       isAvailable,
     } = req.body;
+
+    const { adminId } = req;
 
     if (!req.files) {
       const response = res.status(400).json({
@@ -329,39 +396,21 @@ const addNewProduct = async (
 
     // eslint-disable-next-line guard-for-in
     for (const i in req.files) {
-      // create new blob in the bucket and upload the file data
-      const blob = bucket.file(`product-images/${uuidv4()}.${req.files[i].originalname.split('.')[1]}`);
-      const blobStream = blob.createWriteStream({
-        resumable: false,
-      });
-
-      blobStream.on('error', (err) => {
-        console.log(err.message);
-        const response = res.status(500).json({
+      const uploadResults = await uploadImageToBucket(req.files[i], 'product-images');
+      console.log('test');
+      if (uploadResults.status === 'failed') {
+        const response = res.status(505).json({
           status: 'failed',
-          message: 'Upload data failed',
+          message: uploadResults.message,
         });
         return response;
-      });
+      }
 
-      // eslint-disable-next-line consistent-return
-      blobStream.on('finish', (data) => {
-      // Create public URL for the file
-        const publicUrl = format(
-          `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
-        );
-        // console.log(`pu:${blob.name}`);
-        pictures.push(publicUrl);
-        // console.log(pictures);
-      });
+      pictures.push(uploadResults.publicUrl);
 
-      blobStream.end(req.files[i].buffer);
-
-      // wait until the upload is finish
-      await once(blobStream, 'finish');
       // eslint-disable-next-line eqeqeq
       if (i == req.files.length - 1) {
-        // console.log(pictures);
+        const slug = `${productName.toLowerCase().replace(' ', '-')}-${supplierId}`;
 
         const newProduct = await Product.create({
           supplierId,
@@ -372,8 +421,10 @@ const addNewProduct = async (
           unitWeight,
           isAvailable,
           pictures,
+          adminId,
+          slug,
+          planId,
         });
-        console.log(newProduct);
 
         const response = res.status(200).json({
           status: 'success',
@@ -384,7 +435,6 @@ const addNewProduct = async (
       }
     }
   } catch (error) {
-    console.log(error.message);
     const response = res.status(500).json({
       status: 'failed',
       message: 'Server unavaiable.',
@@ -392,59 +442,6 @@ const addNewProduct = async (
     return response;
   }
 };
-
-// const addNewProduct = async (
-//   /** @type import('express').Request */
-//   req,
-//   /** @type import('express').Response */
-//   res,
-// ) => {
-//   const {
-//     supplierId,
-//     productName,
-//     productDescription,
-//     categoryId,
-//     unitPrice,
-//     unitWeight,
-//     unitInStock,
-//     isAvailable,
-//     pictures,
-//   } = req.body;
-//   // const createdAt = new Date().toISOString();
-//   // const updatedAt = new Date().toISOString();
-//   // const newProduct = Product({
-//   //   supplierId,
-//   //   productName,
-//   //   productDescription,
-//   //   categoryId,
-//   //   unitPrice,
-//   //   unitWeight,
-//   //   unitInStock,
-//   //   isAvailable,
-//   //   pictures,
-//   //   createdAt,
-//   //   updatedAt,
-//   // });
-
-//   console.log(req.body);
-
-//   try {
-//     // await newProduct.save();
-//     const response = res.status(200).json({
-//       status: 'success',
-//       data: {
-//         product: 'success',
-//       },
-//     });
-//     return response;
-//   } catch (error) {
-//     const response = res.status(500).json({
-//       status: 'fail',
-//       message: 'Server unavailable.',
-//     });
-//     return response;
-//   }
-// };
 
 module.exports = {
   getProduct,

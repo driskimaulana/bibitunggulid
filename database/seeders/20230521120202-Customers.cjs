@@ -11,17 +11,17 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('Customers', [
-      {
-        fullName: 'Roronoa Zoro',
-        email: 'roronoazoro@gmail.com',
-        phone: '087786765565',
-        password: 'asdfghjkl',
-        picture: 'zoro-profile.png',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ]);
+    // await queryInterface.bulkInsert('Customers', [
+    //   {
+    //     fullName: 'Roronoa Zoro',
+    //     email: 'roronoazoro@gmail.com',
+    //     phone: '087786765565',
+    //     password: 'asdfghjkl',
+    //     picture: 'zoro-profile.png',
+    //     createdAt: new Date(),
+    //     updatedAt: new Date(),
+    //   },
+    // ]);
   },
 
   async down(queryInterface, Sequelize) {
