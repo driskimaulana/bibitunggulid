@@ -11,18 +11,26 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('ShipAddresses', [
+    await queryInterface.bulkInsert('OrderStatuses', [
       {
-        name: 'Roronoa Zoro',
-        phone: '085156087141',
-        province: 'East Blue',
-        city: 'Grand Line',
-        subDistrict: 'Shimotsuki',
-        fullAddress: 'Rt:03/01',
-        postalCode: '44181',
-        customerId: 5,
-        createdAt: '2020-03-10T04:05:06.157Z',
-        updatedAt: '2020-03-10T04:05:06.157Z',
+        statusName: 'Waiting For Payment',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        statusName: 'Waiting For Shipment',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        statusName: 'On Shipping',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        statusName: 'Finish',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ]);
   },
@@ -33,7 +41,6 @@ module.exports = {
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
-    */
-    // await queryInterface.bulkDelete('ShipAddress', null, {});
+     */
   },
 };

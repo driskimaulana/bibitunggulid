@@ -1,10 +1,10 @@
 /* eslint-disable consistent-return */
 /**
 * Programmer: D'Riski Maulana
-* Filename: authentication.middleware.js
+* Filename: admin.authentication.middleware.js
 * Contact: driskimaulana@upi.edu
 * Date: June 01, 2023
-* Description: Middleware for authentication
+* Description: Middleware for admin authentication
 * */
 
 const jwt = require('jsonwebtoken');
@@ -12,7 +12,7 @@ require('dotenv').config();
 
 const jwtSecret = process.env.JWT_TOKEN_KEY;
 
-const middleware = (
+const adminMiddleware = (
 /** @type import('express').Request */ req,
   /** @type import('express').Response */ res,
   next,
@@ -31,7 +31,16 @@ const middleware = (
 
   try {
     const decodedData = jwt.verify(token, jwtSecret);
-    req.userId = decodedData?.id;
+    if (!decodedData?.role) {
+      const response = res.status(500).json({
+        status: 'failed',
+        message: "You don't have enough permission or you are not admin.",
+      });
+      return response;
+    }
+    req.adminId = decodedData?.id;
+    req.adminRole = decodedData?.role;
+
     next();
   } catch (error) {
     const response = res.status(500).json({
@@ -42,4 +51,4 @@ const middleware = (
   }
 };
 
-module.exports = middleware;
+module.exports = adminMiddleware;

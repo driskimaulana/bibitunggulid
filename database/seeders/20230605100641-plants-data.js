@@ -24,7 +24,7 @@ module.exports = {
     {
       localName: 'Bunga Flamingo',
       about: 'Bunga Flamingo adalah spesies tanaman berbunga dalam keluarga Araceae yang berasal dari Kolombia dan Ekuador. Ini adalah pemenang Penghargaan Royal Horticultural Society of Garden Merit.',
-      scienceName: 'Anthuriumandraeanum',
+      scienceName: 'Anthuriumandreanum',
       family: 'Araceae',
       kingdom: 'Plantae',
       order: 'Water plantains',

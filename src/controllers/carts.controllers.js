@@ -131,9 +131,7 @@ const addProductToCustomerCarts = async (
 ) => {
   const { productId } = req.body;
   try {
-    console.log(req.userId);
     const productInCarts = await Cart.findOne({ where: { productId, customerId: req.userId } });
-    console.log(productInCarts);
     if (!productInCarts) {
       const cartCreated = await Cart.create({ productId, customerId: req.userId, count: 1 });
       const response = res.status(201).json({

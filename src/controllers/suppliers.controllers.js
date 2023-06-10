@@ -284,7 +284,7 @@ const updateSupplier = async (
     let publicUrl;
 
     if (req.files.length !== 0) {
-      const uploadImage = await uploadImageToBucket(req.files[0]);
+      const uploadImage = await uploadImageToBucket(req.files[0], 'supplier-logo-images');
       if (uploadImage.status === 'success') {
         publicUrl = uploadImage.publicUrl;
       } else {
