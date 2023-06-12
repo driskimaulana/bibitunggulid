@@ -117,6 +117,7 @@ const init = () => {
       } catch (error) {
         const response = res.status(500).json({
           status: 'failed',
+          error: error.message,
           message: 'Server unavailable.',
         });
         return response;
