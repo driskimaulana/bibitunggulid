@@ -18,7 +18,14 @@ const getAllOrder = async (
   try {
     // const customerCarts = await Cart.findAll({ where: { customerId: req.userId } });
 
-    const orders = await Order.findAll();
+    const orders = await sequelize.query(
+      `SELECT "Orders".id, "Orders".freight, "OrderStatuses"."statusName", "Customers"."fullName"
+      FROM "Orders" 
+      INNER JOIN "OrderStatuses" ON "Orders"."orderStatusId" = "OrderStatuses".id 
+      INNER JOIN "Customers" ON "Customers".id = "Orders"."customerId" `,
+    );
+
+    // const orders = await Order.findAll();
 
     if (!orders) {
       const response = res.status(404).json({
@@ -27,10 +34,38 @@ const getAllOrder = async (
       });
       return response;
     }
+
+    const ordersData = [];
+
+    // eslint-disable-next-line array-callback-return
+    orders[0].map((e) => {
+      ordersData.push(e);
+    });
+
+    // eslint-disable-next-line guard-for-in
+    for (const i in ordersData) {
+      const prods = await OrderDetail.findAll(
+        { where: { orderId: ordersData[i].id } },
+      );
+      ordersData[i].products = [];
+
+      // eslint-disable-next-line guard-for-in
+      for (const j in prods) {
+        const prodDetails = await Product.findOne(
+          {
+            attributes: ['productName', 'pictures', 'unitPrice'],
+            where: { id: prods[j].productId },
+          },
+
+        );
+        ordersData[i].products.push({ ...prodDetails.dataValues, quantity: prods[j].quantity });
+      }
+    }
+
     const response = res.status(200).json({
       status: 'success',
       message: 'Fetch orders data success.',
-      data: orders,
+      data: ordersData,
     });
 
     return response;
@@ -50,6 +85,7 @@ const createOrder = async (
   const {
     products,
     freight,
+    totalPay,
   } = req.body;
 
   const { userId } = req;
@@ -72,7 +108,7 @@ const createOrder = async (
       total += prod.unitPrice * products[i].quantity;
     }
 
-    const invoice = await createInvoince(total + freight, customer.email, userId);
+    const invoice = await createInvoince(totalPay, customer.email, userId);
 
     if (invoice.status === 'failed') {
       const response = res.status(invoice.statusCode).json({
