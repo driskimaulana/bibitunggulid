@@ -218,19 +218,10 @@ const deleteCustomers = async (
 /** @type import('express').Request */ req,
   /** @type import('express').Response */ res,
 ) => {
-  const { id } = req.params;
+  const { id } = req.body;
   try {
-    const customer = await Customer.findOne({ where: { id } });
-    if (!customer) {
-      const response = res.status(404).json({
-        status: 'failed',
-        message: `Customer with id: ${id} is not found.`,
-      });
-      return response;
-    }
-
-    await customer.destroy({ where: { id } });
-    const response = res.status(400).json({
+    await Customer.destroy({ where: { id } });
+    const response = res.status(200).json({
       status: 'success',
       message: 'Data deleted succesfully.',
     });

@@ -157,6 +157,7 @@ const addProductToCustomerCarts = async (
     });
     return response;
   } catch (error) {
+    console.error(error);
     const response = res.status(500).json({
       status: 'failed',
       message: 'Server unavailable.',
