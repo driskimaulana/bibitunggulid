@@ -65,6 +65,7 @@ def getClass(id):
 
 def getPlants(predicition):
     scName = getClass(predicition)
+    # dummyName = "Chlorophytumcomosum"
     # inisialisasi postgresql
     conn = psycopg2.connect(
         host=os.getenv("DB_HOST"),
@@ -74,7 +75,8 @@ def getPlants(predicition):
         password=os.getenv("DB_PASSWORD")
     )
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM \"Plants\" WHERE \"Plants\".\"scienceName\" = %s", (scName,))
+    # cursor.execute("SELECT * FROM \"Plants\" WHERE \"Plants\".\"scienceName\" = %s", (scName,))
+    cursor.execute("SELECT * FROM \"Products\" LEFT JOIN \"Plants\" ON \"Products\".\"planId\" = \"Plants\".\"id\" WHERE \"Plants\".\"scienceName\" = %s", (scName,))
     row = cursor.fetchone()
     cursor.close()
     conn.close()
@@ -82,12 +84,17 @@ def getPlants(predicition):
     if row is not None:
         # Return the column value as a response
         return jsonify({
-            'localName': row[1],
-            'about': row[2],
-            'scienceName': row[3],
-            'family': row[4],
-            'kingdom': row[5],
-            'order': row[6],
+            'supplierId': row[1],
+            'productName': row[2],
+            'productDescription': row[3],
+            'categoryId': row[4],
+            'unitPrice': row[5],
+            'unitWeight': row[6],
+            'unitInStock': row[7],
+            'pictures': row[8],
+            'adminId': row[11],
+            'planId': row[12],
+            'slug': row[13],
         })
     else:
         # Return a message if no row was found
@@ -96,7 +103,7 @@ def getPlants(predicition):
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/android", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         file = request.files.get('file')
