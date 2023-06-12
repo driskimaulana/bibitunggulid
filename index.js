@@ -112,7 +112,6 @@ const init = () => {
 
         const response = res.status(200).json({
           status: 'success',
-          data: order,
           message: 'Pay success. Wait for the shipment.',
         });
         return response;
@@ -120,22 +119,11 @@ const init = () => {
         const response = res.status(500).json({
           status: 'failed',
           error: error.message,
-          body: req.body,
-          id,
-          statusBody: status,
-          paidAt: paid_at,
           message: 'Server unavailable.',
         });
         return response;
       }
     }
-
-    // if (event === 'invoice.paid' && data.status === 'PAID') {
-    //   // Pembayaran telah berhasil, lakukan tindakan yang sesuai
-    //   console.log('Pembayaran berhasil:', data.external_id);
-
-    // }
-
     res.status(200).end();
   });
 
