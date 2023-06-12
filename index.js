@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /**
  * Programmer: D'Riski Maulana
  * Filename: index.js
@@ -80,13 +81,15 @@ const init = () => {
   // trigger when there is done payment
   // eslint-disable-next-line consistent-return
   server.post('/xendit-webhook', async (req, res) => {
-    const { event, data } = req.body;
-    if (event === 'invoice.paid' && data.status === 'PAID') {
-      // Pembayaran telah berhasil, lakukan tindakan yang sesuai
-      console.log('Pembayaran berhasil:', data.external_id);
+    // const { event, data } = req.body;
 
+    const {
+      id, status, paid_at,
+    } = req.body;
+
+    if (status === 'PAID') {
       try {
-        let order = await Order.findOne({ where: { paymentId: data.id } });
+        let order = await Order.findOne({ where: { paymentId: id } });
 
         if (!order) {
           const response = res.status(404).json({
@@ -99,7 +102,7 @@ const init = () => {
         const updatedAt = new Date().toISOString();
 
         order = {
-          paymentDate: new Date().toISOString(),
+          paymentDate: paid_at,
           orderStatusId: 2,
           updatedAt,
         };
@@ -120,7 +123,13 @@ const init = () => {
       }
     }
 
-    res.sendStatus(200);
+    // if (event === 'invoice.paid' && data.status === 'PAID') {
+    //   // Pembayaran telah berhasil, lakukan tindakan yang sesuai
+    //   console.log('Pembayaran berhasil:', data.external_id);
+
+    // }
+
+    res.status(200).end();
   });
 
   server.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
