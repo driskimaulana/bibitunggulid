@@ -102,6 +102,7 @@ const init = () => {
         const updatedAt = new Date().toISOString();
 
         order = {
+          ...order,
           paymentDate: paid_at,
           orderStatusId: 2,
           updatedAt,
@@ -111,6 +112,7 @@ const init = () => {
 
         const response = res.status(200).json({
           status: 'success',
+          data: order,
           message: 'Pay success. Wait for the shipment.',
         });
         return response;
