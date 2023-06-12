@@ -118,6 +118,10 @@ const init = () => {
         const response = res.status(500).json({
           status: 'failed',
           error: error.message,
+          body: req.body,
+          id,
+          statusBody: status,
+          paidAt: paid_at,
           message: 'Server unavailable.',
         });
         return response;
