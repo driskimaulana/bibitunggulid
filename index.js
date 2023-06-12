@@ -13,6 +13,8 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const favicon = require('serve-favicon');
+const path = require('path');
 const { Order } = require('./database/models');
 const authenticatiosRoutes = require('./src/routes/authentication.routes.js');
 const customerRoutes = require('./src/routes/customers.routes.js');
@@ -65,6 +67,8 @@ const init = () => {
   server.use(bodyParser.json({ limit: '30mb', extended: true }));
   server.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
   server.use(cors());
+
+  server.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
   // middlewares
   server.use(morgan('common'));
