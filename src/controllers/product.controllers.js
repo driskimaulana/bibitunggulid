@@ -1,4 +1,4 @@
-const { Product } = require('../../database/models');
+const { Product, Plants } = require('../../database/models');
 const processFileMiddleware = require('../middleware/uploadfile.middleware');
 const uploadImageToBucket = require('../services/uploadimage.services');
 
@@ -349,7 +349,7 @@ const deleteProduct = async (
       return response;
     }
     await product.destroy({ where: { id } });
-    const response = res.status(400).json({
+    const response = res.status(200).json({
       status: 'success',
       message: 'Data deleted successfully.',
     });
@@ -382,6 +382,13 @@ const addNewProduct = async (
     } = req.body;
 
     const { adminId } = req;
+
+    let getId;
+    if (planId) {
+      const responseId = await Plants.findOne({ attributes: ['id'], where: { scienceName: planId } });
+      getId = responseId.dataValues.id;
+      console.log(getId);
+    }
 
     if (!req.files) {
       const response = res.status(400).json({
@@ -423,7 +430,7 @@ const addNewProduct = async (
           pictures,
           adminId,
           slug,
-          planId,
+          planId: getId,
         });
 
         const response = res.status(200).json({
