@@ -102,7 +102,7 @@ const init = () => {
         const updatedAt = new Date().toISOString();
 
         order = {
-          ...order,
+          ...order.dataValues,
           paymentDate: paid_at,
           orderStatusId: 2,
           updatedAt,
