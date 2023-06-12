@@ -14,6 +14,6 @@ const {
 router.get('/', getCustomers);
 router.get('/:id', getCustomersById);
 router.put('/:id', updateCustomers);
-router.delete('/:id', deleteCustomers);
+router.delete('/', deleteCustomers);
 
 module.exports = router;
