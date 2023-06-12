@@ -18,9 +18,6 @@ const getAllOrder = async (
   try {
     // const customerCarts = await Cart.findAll({ where: { customerId: req.userId } });
 
-    const order2 = await Order.findOne({ where: { paymentId: '648732782e89949cae82598d' } });
-    console.log(order2);
-
     const orders = await sequelize.query(
       `SELECT "Orders".id, "Orders".freight, "OrderStatuses"."statusName", "Customers"."fullName"
       FROM "Orders" 
@@ -69,7 +66,6 @@ const getAllOrder = async (
       status: 'success',
       message: 'Fetch orders data success.',
       data: ordersData,
-      order2,
     });
 
     return response;
@@ -89,7 +85,6 @@ const createOrder = async (
   const {
     products,
     freight,
-    totalPay,
   } = req.body;
 
   const { userId } = req;
@@ -112,7 +107,7 @@ const createOrder = async (
       total += prod.unitPrice * products[i].quantity;
     }
 
-    const invoice = await createInvoince(totalPay, customer.email, userId);
+    const invoice = await createInvoince(total + freight, customer.email, userId);
 
     if (invoice.status === 'failed') {
       const response = res.status(invoice.statusCode).json({
