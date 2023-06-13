@@ -68,9 +68,8 @@ def getClass(id):
     
     return dataClass
 
-def getPlants(predicition):
-    scName = getClass(predicition)
-    # dummyName = "Chlorophytumcomosum"
+def getPlants(prediction):
+    scName = getClass(prediction)
     # inisialisasi postgresql
     conn = psycopg2.connect(
         host=os.getenv("DB_HOST"),
@@ -80,7 +79,35 @@ def getPlants(predicition):
         password=os.getenv("DB_PASSWORD")
     )
     cursor = conn.cursor()
-    # cursor.execute("SELECT * FROM \"Plants\" WHERE \"Plants\".\"scienceName\" = %s", (scName,))
+    cursor.execute("SELECT * FROM \"Plants\" WHERE \"Plants\".\"scienceName\" = %s", (scName,))
+    row = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    if row is not None:
+        # Return the column value as a response
+        return jsonify({
+            'localName': row[1],
+            'about': row[2],
+            'scienceName': row[3],
+            'family': row[4],
+            'kingdom': row[5],
+            'order': row[6],
+        })
+    else:
+        # Return a message if no row was found
+        return jsonify({'message': 'No data found for the given ID'})
+
+def getPlantsToProduct(prediction):
+    scName = getClass(prediction)
+    # inisialisasi postgresql
+    conn = psycopg2.connect(
+        host=os.getenv("DB_HOST"),
+        port=os.getenv("DB_PORT"),
+        database=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD")
+    )
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM \"Products\" LEFT JOIN \"Plants\" ON \"Products\".\"planId\" = \"Plants\".\"id\" WHERE \"Plants\".\"scienceName\" = %s", (scName,))
     row = cursor.fetchone()
     cursor.close()
@@ -109,7 +136,18 @@ app = Flask(__name__)
 CORS(app)
 @app.route("/", methods=["GET", "POST"])
 def main():
-    return "HELLO WORLD!!!"
+    if request.method == "POST":
+        file = request.files.get('file')
+        if file is None or file.filename == "":
+            return jsonify({"error": "no file"})
+        try:
+            image_bytes = file.read()
+            tensor = transform_image(image_bytes)
+            prediction = predict(tensor)
+            return getPlants(prediction=prediction)
+        except Exception as e:
+            return jsonify({"error": str(e)})
+    return "OK"
 
 @app.route("/android", methods=["GET", "POST"])
 def index():
@@ -121,7 +159,7 @@ def index():
             image_bytes = file.read()
             tensor = transform_image(image_bytes)
             prediction = predict(tensor)
-            return getPlants(predicition=prediction)
+            return getPlantsToProduct(prediction=prediction)
         except Exception as e:
             return jsonify({"error": str(e)})
     return "OK"
