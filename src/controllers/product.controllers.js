@@ -129,17 +129,31 @@ const getProduct = async (
 ) => {
   const keyword = req.query.keyword || '';
   const page = parseInt(req.query.page) || 1; //Halaman saat ini
-  const limit = parseInt(req.query.limit) || 10; //Jumlah item per halaman
+  const limit = parseInt(req.query.limit) || 5; //Jumlah item per halaman
+  const keyFilter = req.query.keyfilter || '';
+  let whereCondition = {
+    [Op.or]: [
+      { productName: { [Op.iLike]: `%${keyword}%` } },
+    ],
+  };
+  let order = [['id', 'ASC']];
+  if (keyFilter === 'terbaru'){
+    whereCondition = {
+      ...whereCondition,
+      createdAt: {[Op.gte]: new Date(new Date() - 7 * 24 * 60 * 60 * 1000)}
+    }
+  } 
+  else if (keyFilter === 'terlaris'){
+    order = [['id', 'DESC']];
+  }
   try {
     const {count, rows} = await Product.findAndCountAll(
       {
         offset: (page - 1) * limit,
         limit: limit,
-        where: {
-        [Op.or]: [
-          {productName: {[Op.iLike]: `%${keyword}%`}},
-        ]
-      }}
+        where: whereCondition,
+        order: order,
+      }
     );
     const totalPages = Math.ceil(count / limit);
     if (!rows) {
