@@ -23,4 +23,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body request: AddShipAddressRequest
     ): Call<ApiResponse<ShipAddressModel>>
+
+    @DELETE("shipaddress/{id}")
+    suspend fun deleteShipAddress(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): ApiResponseNoData
 }

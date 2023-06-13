@@ -2,6 +2,7 @@ package com.example.hiazee.ui.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.LocusId
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.JsonToken
@@ -84,7 +85,38 @@ class ShipAddressActivity : AppCompatActivity() {
         recyclerViewShipAddress.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewShipAddressAdapter = ShipAddressAdapter(this, shipAddressList)
+
+        recyclerViewShipAddressAdapter.setOnMenuItemClickListener(object : ShipAddressAdapter.OnMenuItemClickListener {
+            override fun onEditClicked(shipAddressId: Int) {
+                Log.e("DEBUGNOVALEDIT", shipAddressId.toString())
+            }
+
+            override fun onDeleteClicked(shipAddressId: Int) {
+                deleteShipData(shipAddressId.toString())
+            }
+        })
+
         recyclerViewShipAddress.adapter = recyclerViewShipAddressAdapter
+    }
+
+    private fun deleteShipData(id: String){
+        viewModel.deleteShipAddress(userData.token, id).observe(this) {
+            if (it != null) {
+                when (it) {
+                    is Result.Loading -> {
+                        // loadingState(true)
+                    }
+                    is Result.Success -> {
+                        // loadingState(false)
+                        renderShipAddressList()
+                    }
+                    is Result.Error -> {
+                        // loadingState(false)
+                        Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 
     private fun openAddShipAddressActivity() {

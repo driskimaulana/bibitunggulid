@@ -3,6 +3,7 @@ package com.example.hiazee.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.hiazee.data.remote.api.ApiService
+import com.example.hiazee.data.remote.models.ApiResponseNoData
 import com.example.hiazee.data.remote.models.ShipAddressModel
 import com.example.hiazee.data.remote.models.UserData
 import com.example.hiazee.data.remote.requests.AddShipAddressRequest
@@ -46,6 +47,21 @@ class ShipAddressRepository private constructor(
             } else {
                 val errorResponse = response.errorBody()?.string()
                 emit(Result.Error(extractErrorMessage(errorResponse)))
+            }
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun deleteShipAddress(token: String, id: String): LiveData<Result<String>> = liveData {
+        emit(Result.Loading)
+
+        try {
+            val response = apiService.deleteShipAddress("Bearer $token", id)
+            if (response.status != "error") {
+                emit(Result.Success(response.message))
+            } else {
+                emit(Result.Error(response.message))
             }
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
