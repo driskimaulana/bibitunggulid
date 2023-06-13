@@ -1,4 +1,5 @@
 const { Plants } = require('../../database/models');
+const { Op } = require('sequelize');
 
 /**
  * @swagger
@@ -167,19 +168,34 @@ const getPlants = async (
   /** @type import("express").Response */
   res,
 ) => {
+  const keyword = req.query.keyword || '';
+  const page = parseInt(req.query.page) || 1; //Halaman saat ini
+  const limit = parseInt(req.query.limit) || 10; //Jumlah item per halaman
   try {
-    const plant = await Plants.findAll();
-    if (!plant) {
+    const { count, rows } = await Plants.findAndCountAll({
+      offset: (page - 1) * limit,
+      limit: limit,
+      where: {
+        [Op.or]: [
+          {scienceName: {[Op.iLike]: `%${keyword}%`}},
+        ]
+      }
+    });
+    if (!rows) {
       const response = res.status(404).json({
         status: 'failed',
         message: 'no plant found',
       });
       return response;
     }
+    totalPages = Math.ceil(count / limit);
     const response = res.status(200).json({
       status: 'success',
       message: 'Fetch data successfull',
-      data: plant,
+      currentPage: page,
+      totalPages: totalPages,
+      totalCount: count,
+      data: rows,
     });
     return response;
   } catch (err) {

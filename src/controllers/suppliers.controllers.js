@@ -125,26 +125,40 @@
 const { Supplier } = require('../../database/models');
 const processFileMiddleware = require('../middleware/uploadfile.middleware');
 const uploadImageToBucket = require('../services/uploadimage.services');
+const { Op } = require('sequelize');
 
 const getAllSuppliers = async (
 /** @type import('express').Request */ req,
   /** @type import('express').Response */ res,
 ) => {
+  const keyword = req.query.keyword || '';
+  const page = parseInt(req.query.page) || 1; //Halaman saat ini
+  const limit = parseInt(req.query.limit) || 10; //Jumlah item per halaman
   try {
-    const suppliers = await Supplier.findAll();
-
-    if (!suppliers) {
+    const { count, rows } = await Supplier.findAndCountAll({
+      offset: (page - 1) * limit,
+      limit: limit,
+      where: {
+        [Op.or]: [
+          {companyName: {[Op.iLike]: `%${keyword}%`}}
+        ]
+      }
+    });
+    if (!rows) {
       const response = res.status(404).json({
         status: 'failed',
         message: 'No suppliers data found.',
       });
       return response;
     }
-
+    totalPages = Math.ceil(count / limit);
     const response = res.status(200).json({
       status: 'success',
       message: 'Fetch data successfull',
-      data: suppliers,
+      currentPage: page,
+      totalPages: totalPages,
+      totalCount: count,
+      data: rows,
     });
     return response;
   } catch (err) {
