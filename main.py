@@ -86,6 +86,7 @@ def getPlants(prediction):
     if row is not None:
         # Return the column value as a response
         return jsonify({
+            'id': row[0],
             'localName': row[1],
             'about': row[2],
             'scienceName': row[3],
@@ -116,6 +117,7 @@ def getPlantsToProduct(prediction):
     if row is not None:
         # Return the column value as a response
         return jsonify({
+            'id': row[0],
             'supplierId': row[1],
             'productName': row[2],
             'productDescription': row[3],
