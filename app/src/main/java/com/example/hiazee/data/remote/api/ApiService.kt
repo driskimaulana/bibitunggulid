@@ -1,12 +1,10 @@
 package com.example.hiazee.data.remote.api
 
 import com.example.hiazee.data.remote.models.*
+import com.example.hiazee.data.remote.requests.AddShipAddressRequest
 import com.example.hiazee.data.remote.requests.LoginRequest
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService {
     @POST("authentication/signin")
@@ -19,4 +17,10 @@ interface ApiService {
     suspend fun getAllShipAddress(
         @Header("Authorization") token: String,
     ): ApiResponse<List<ShipAddressModel>>
+
+    @POST("shipaddress")
+    fun addShipAddress(
+        @Header("Authorization") token: String,
+        @Body request: AddShipAddressRequest
+    ): Call<ApiResponse<ShipAddressModel>>
 }

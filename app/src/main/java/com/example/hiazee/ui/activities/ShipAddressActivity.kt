@@ -1,5 +1,6 @@
 package com.example.hiazee.ui.activities
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.util.JsonToken
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hiazee.R
 import com.example.hiazee.data.remote.models.ProductModel
 import com.example.hiazee.data.remote.models.ShipAddressModel
+import com.example.hiazee.data.remote.models.UserData
 import com.example.hiazee.databinding.ActivityShipAddressBinding
 import com.example.hiazee.ui.adapters.ShipAddressAdapter
 import com.example.hiazee.ui.fragments.HomeFragment
@@ -28,6 +31,8 @@ class ShipAddressActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
 
+    private lateinit var userData: UserData
+
     private lateinit var recyclerViewShipAddress: RecyclerView
     private lateinit var recyclerViewShipAddressAdapter: ShipAddressAdapter
 
@@ -36,7 +41,13 @@ class ShipAddressActivity : AppCompatActivity() {
         binding = ActivityShipAddressBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getToken()
+        lifecycleScope.launch {
+            viewModel.getUserData().collect {
+                userData = it
+            }
+        }
+
+        renderShipAddressList()
 
         binding.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -44,34 +55,23 @@ class ShipAddressActivity : AppCompatActivity() {
 
 
         binding.buttonAddShipAddress.setOnClickListener{
-            val intent = Intent(this, AddShipAddressActivity::class.java)
-            startActivity(intent)
+            openAddShipAddressActivity()
         }
     }
 
-    private fun getToken() {
-        lifecycleScope.launch {
-            viewModel.getUserData().collect { userData ->
-                if (userData.token != "") {
-                    showShipAddress(userData.token)
-                }
-            }
-        }
-    }
-
-    private fun showShipAddress(token: String){
-        viewModel.getAllShipAddress(token).observe(this) {
+    private fun renderShipAddressList(){
+        viewModel.getAllShipAddress(userData.token).observe(this) {
             if (it != null) {
                 when (it) {
                     is Result.Loading -> {
-                        binding.shipAddressRecyclerViewLoading.visibility = View.VISIBLE
+                        loadingState(true)
                     }
                     is Result.Success -> {
-                        binding.shipAddressRecyclerViewLoading.visibility = View.GONE
+                        loadingState(false)
                         initShipAddressRecyclerView(it.data)
                     }
                     is Result.Error -> {
-                        binding.shipAddressRecyclerViewLoading.visibility = View.GONE
+                        loadingState(false)
                         Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -86,4 +86,32 @@ class ShipAddressActivity : AppCompatActivity() {
         recyclerViewShipAddressAdapter = ShipAddressAdapter(this, shipAddressList)
         recyclerViewShipAddress.adapter = recyclerViewShipAddressAdapter
     }
+
+    private fun openAddShipAddressActivity() {
+        val intent = Intent(this, AddShipAddressActivity::class.java)
+        resultLauncher.launch(intent)
+    }
+
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // There are no request codes
+            renderShipAddressList()
+            Toast.makeText(this, "SUCCESS ADD SHIP ADDRESS", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun loadingState(isLoading: Boolean) {
+        if (isLoading) {
+            binding.apply {
+                recyclerViewShipAddress.visibility = View.INVISIBLE
+                shipAddressRecyclerViewLoading.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                recyclerViewShipAddress.visibility = View.VISIBLE
+                shipAddressRecyclerViewLoading.visibility = View.GONE
+            }
+        }
+    }
+
 }
