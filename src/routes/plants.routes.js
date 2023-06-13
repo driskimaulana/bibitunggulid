@@ -5,7 +5,7 @@ const {
 
 router.post('/', addNewPlants);
 router.get('/', getPlants);
-router.delete('/:id', deletePlants);
+router.delete('/', deletePlants);
 router.put(':/id', updatePlants);
 
 module.exports = router;
