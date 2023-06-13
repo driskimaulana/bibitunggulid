@@ -83,11 +83,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'orders',
         onDelete: 'CASCADE',
       });
-      Order.hasOne(models.Shipper, {
-        foreignKey: 'shipperId',
-        as: 'shippers',
-        onDelete: 'CASCADE',
-      });
+
       Order.hasOne(models.OrderStatus, {
         foreignKey: 'orderStatusId',
         as: 'orderStatuses',
@@ -98,13 +94,14 @@ module.exports = (sequelize, DataTypes) => {
   Order.init({
     customerId: DataTypes.INTEGER,
     paymentId: DataTypes.STRING,
-    shipperId: DataTypes.INTEGER,
+    shipmentId: DataTypes.INTEGER,
     shipDate: DataTypes.DATE,
     shipLimitDate: DataTypes.DATE,
     freight: DataTypes.DOUBLE,
     orderStatusId: DataTypes.INTEGER,
     paymentDate: DataTypes.DATE,
     totalPayment: DataTypes.DOUBLE,
+    shipAddressId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Order',

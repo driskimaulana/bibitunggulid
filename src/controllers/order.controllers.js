@@ -8,6 +8,7 @@
 * */
 const {
   Order, OrderDetail, Customers, Product, sequelize, OrderStatus,
+  Shipment,
 } = require('../../database/models');
 const { createInvoince, getPaymentDetails } = require('../services/payment.service');
 
@@ -285,6 +286,9 @@ const changeToOnShipping = async (
 ) => {
   const { userId } = req;
   const { orderId } = req.params;
+  const {
+    courierName, phone, delieveryTime, estimatedReceiveTime,
+  } = req.body;
 
   try {
     let order = await Order.findOne({ where: { id: orderId, customerId: userId } });
@@ -296,10 +300,26 @@ const changeToOnShipping = async (
       return response;
     }
 
+    const shipment = await Shipment.create({
+      phone,
+      courierName,
+      delieveryTime,
+      estimatedReceiveTime,
+    });
+
+    if (!shipment) {
+      const response = res.status(400).json({
+        status: 'failed',
+        message: 'Failed to save shipment details.',
+      });
+      return response;
+    }
+
     const updatedAt = new Date().toISOString();
 
     order = {
       orderStatusId: 3,
+      shipmentId: shipment.dataValues.id,
       shipDate: new Date().toISOString(),
       updatedAt,
     };
@@ -308,9 +328,11 @@ const changeToOnShipping = async (
     const response = res.status(200).json({
       status: 'success',
       message: 'Update data successfull',
+      data: shipment,
     });
     return response;
   } catch (error) {
+    console.error(error);
     const response = res.status(500).json({
       status: 'failed',
       message: 'Server unavailable.',
