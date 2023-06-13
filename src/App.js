@@ -11,7 +11,10 @@ import Router from './routes/routes';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#464646',
+      main: '#0FB203',
+    },
+    secondary: {
+      main: '#0FB203',
     },
   },
   typography: {

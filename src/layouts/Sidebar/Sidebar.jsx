@@ -25,7 +25,7 @@ const MySideBar = () => {
   return (
     <div style={{
       display: 'flex',
-      height,
+      height: '900px',
       position: 'fixed',
     }}
     >
@@ -47,8 +47,7 @@ const MySideBar = () => {
           backgroundColor: 'white',
         }}
         >
-          <img src={Logo} alt="logo" width="auto" height="50px" />
-          <h3>Utami Bakery</h3>
+          <img src={Logo} alt="logo" width="auto" height="100px" />
           <IconButton onClick={handleLogout}>
             <Icon icon="solar:logout-3-bold" color="red" />
           </IconButton>
@@ -57,10 +56,13 @@ const MySideBar = () => {
           backgroundColor: 'white',
         }}
         >
-          <MenuItem component={<Link to="/dashboard/app" />} icon={<SpaceDashboardIcon style={{ color: '#5A236D' }} />}> Dashboard</MenuItem>
-          <MenuItem component={<Link to="/dashboard/products" />} icon={<InventoryIcon style={{ color: '#5A236D' }} />}> Produk</MenuItem>
-          <MenuItem component={<Link to="/dashboard/users" />} icon={<SupervisedUserCircleIcon style={{ color: '#5A236D' }} />}> Pengguna</MenuItem>
-          <MenuItem component={<Link to="/dashboard/blogs" />} icon={<NewspaperIcon style={{ color: '#5A236D' }} />}> Blog</MenuItem>
+          <MenuItem component={<Link to="/dashboard/app" />} icon={<SpaceDashboardIcon style={{ color: '#0FB203' }} />}> Dashboard</MenuItem>
+          <MenuItem component={<Link to="/dashboard/products" />} icon={<InventoryIcon style={{ color: '#0FB203' }} />}> Produk</MenuItem>
+          <MenuItem component={<Link to="/dashboard/users" />} icon={<SupervisedUserCircleIcon style={{ color: '#0FB203' }} />}> Pengguna</MenuItem>
+          <MenuItem component={<Link to="/dashboard/category" />} icon={<NewspaperIcon style={{ color: '#0FB203' }} />}> Kategory</MenuItem>
+          <MenuItem component={<Link to="/dashboard/suppliers" />} icon={<Icon icon="ri:store-3-fill" height="27px" color="#0FB203" />}> Suppliers</MenuItem>
+          <MenuItem component={<Link to="/dashboard/orders" />} icon={<Icon icon="icons8:buy" height="27px" color="#0FB203" />}> Orders</MenuItem>
+          <MenuItem component={<Link to="/dashboard/plants" />} icon={<Icon icon="mdi:flower" height="27px" color="#0FB203" />}> Plants</MenuItem>
         </Menu>
       </Sidebar>
     </div>

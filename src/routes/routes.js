@@ -3,16 +3,20 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from '../layouts/dashboard/DashboardLayout';
 
 import Dashboard from '../pages/Dashboard/Dashboard';
-import Product from '../pages/Product/Product';
-import Blog from '../pages/Blog/Blog';
-import ProductAdd from '../pages/ProductAdd/ProductAdd';
-import ProductDetails from '../pages/ProductDetails/ProductDetails';
-import ProductEdit from '../pages/ProductEdit/ProductEdit';
-import UserList from '../pages/UserList/UserList';
-import BlogAdd from '../pages/BlogAdd/BlogAdd';
-import BlogDetails from '../pages/BlogDetails/BlogDetails';
-import BlogEdit from '../pages/BlogEdit/BlogEdit';
+import Product from '../pages/Products/ProductList/Product';
+import ProductAdd from '../pages/Products/ProductAdd/ProductAdd';
+import UserList from '../pages/User/UserList/UserList';
 import SignIn from '../pages/SignIn/SignIn';
+import ProductDetails from '../pages/Products/ProductDetails/ProductDetails';
+import ProductEdit from '../pages/Products/ProductEdit/ProductEdit';
+import CategoryList from '../pages/Category/CategoryList/CategoryList';
+import AddCategory from '../pages/Category/AddCategory/AddCategory';
+import SupplierList from '../pages/Suppliers/SupplierList/SuppliersList';
+import AddSupplier from '../pages/Suppliers/AddSupplier/AddSupplier';
+import AddUser from '../pages/User/AddUsers/AddUser';
+import OrderList from '../pages/Orders/OrderList/OrderList';
+import PlatList from '../pages/Plants/PlantList/PlantList';
+import AddPlant from '../pages/Plants/AddPlant/AddPlant';
 
 // ----------------------------------------------------------------------
 
@@ -30,14 +34,18 @@ export default function Router() {
         { element: <Navigate to="app" />, index: true },
         { path: 'app', element: <Dashboard /> },
         { path: 'users', element: <UserList /> },
+        { path: 'users/add', element: <AddUser /> },
         { path: 'products', element: <Product /> },
-        { path: 'blogs', element: <Blog /> },
-        { path: 'blogs/add', element: <BlogAdd /> },
-        { path: 'blogs/:id', element: <BlogDetails /> },
-        { path: 'blogs/edit/:id', element: <BlogEdit /> },
         { path: 'products/add', element: <ProductAdd /> },
         { path: 'products/:id', element: <ProductDetails /> },
         { path: 'products/edit/:id', element: <ProductEdit /> },
+        { path: 'category', element: <CategoryList /> },
+        { path: 'category/add', element: <AddCategory /> },
+        { path: 'suppliers', element: <SupplierList /> },
+        { path: 'suppliers/add', element: <AddSupplier /> },
+        { path: 'orders', element: <OrderList /> },
+        { path: 'plants', element: <PlatList /> },
+        { path: 'plants/add', element: <AddPlant /> },
       ],
     },
   ]);

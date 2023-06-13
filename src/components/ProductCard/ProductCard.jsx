@@ -23,7 +23,7 @@ const ProductCard = (props) => {
         }}
         >
           <Typography variant="p" fontWeight="600" fontSize="14pt">{name}</Typography>
-          <Typography variant="p" fontWeight="800" fontSize="18pt" color="#5A236D" sx={{ }}>{price}</Typography>
+          <Typography variant="p" fontWeight="800" fontSize="18pt" color="#0FB203" sx={{ }}>{price}</Typography>
         </CardContent>
       </CardActionArea>
     </Card>

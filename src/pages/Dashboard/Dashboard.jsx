@@ -7,13 +7,13 @@ import CardDashboard from '../../components/CardDashboard/CardDashboard';
 
 const Dashboard = () => {
   const [dashboardData, setdashboardData] = useState(null);
-  const [isLoading, setisLoading] = useState(true);
+  const [isLoading, setisLoading] = useState(false);
 
   const getData = async () => {
-    await Axios.get('https://utamibakery-backend.vercel.app/dashboard').then((response) => {
-      setdashboardData(response.data.data);
-      setisLoading(false);
-    });
+    // await Axios.get('https://utamibakery-backend.vercel.app/dashboard').then((response) => {
+    //   setdashboardData(response.data.data);
+    //   setisLoading(false);
+    // });
   };
 
   useEffect(() => {
@@ -22,23 +22,17 @@ const Dashboard = () => {
 
   return (
     <Box>
-      {
-        dashboardData !== null
-    && (
-    <Grid container spacing={2} justifyContent="space-evenly">
 
-      <Grid item>
-        <CardDashboard name="Produk" value={dashboardData.products} />
+      <Grid container spacing={2} justifyContent="space-evenly">
+
+        <Grid item>
+          <CardDashboard name="Produk" value={10} />
+        </Grid>
+        <Grid item>
+          <CardDashboard name="Pengguna" value={1} />
+        </Grid>
       </Grid>
-      <Grid item>
-        <CardDashboard name="Blog" value={dashboardData.blogs} />
-      </Grid>
-      <Grid item>
-        <CardDashboard name="Pengguna" value={dashboardData.users} />
-      </Grid>
-    </Grid>
-    )
-      }
+
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}

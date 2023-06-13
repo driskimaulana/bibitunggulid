@@ -29,8 +29,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'managed by '}
-      <Link color="inherit" href="https://mui.com/">
-        UtamiBakery
+      <Link color="inherit" href="">
+        HiazeeID
       </Link>
       {' '}
       {new Date().getFullYear()}
@@ -66,12 +66,12 @@ export default function SignIn() {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     try {
-      await axios.post('https://utamibakery-backend.vercel.app/authentication/signinadmin', {
-        telephone: data.get('telephone'),
+      await axios.post('https://dev-bibitunggulid-zldx7crkfq-et.a.run.app/admin/signin', {
+        userName: data.get('username'),
         password: data.get('password'),
       }).then((response) => {
         console.log(response);
-        localStorage.setItem('adminLoggedIn', JSON.stringify(response.data.data.user));
+        localStorage.setItem('adminLoggedIn', JSON.stringify(response.data.data));
         // Navigate to root page on successful form submission
         navigate('/dashboard');
       });
@@ -129,10 +129,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="telephone"
-              label="Telephone Number"
-              name="telephone"
-              autoComplete="telephone"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField
