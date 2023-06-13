@@ -5,7 +5,7 @@ const { Model } = require('sequelize');
  * @swagger
  * components:
  *  schemas:
- *      Shipper:
+ *      Shipment:
  *          type: object
  *          required:
  *              - companyName
@@ -19,7 +19,7 @@ const { Model } = require('sequelize');
  *                  description: The name of company
  *              phone:
  *                  type: int
- *                  description: The phone number of shipper service
+ *                  description: The phone number of Shipment service
  *              createdAt:
  *                  type: date
  *                  description: The date cart created
@@ -35,7 +35,7 @@ const { Model } = require('sequelize');
  */
 
 module.exports = (sequelize, DataTypes) => {
-  class Shipper extends Model {
+  class Shipment extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -45,12 +45,14 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Shipper.init({
-    companyName: DataTypes.STRING,
+  Shipment.init({
+    courierName: DataTypes.STRING,
     phone: DataTypes.STRING,
+    delieveryTime: DataTypes.STRING,
+    estimatedReceiveTime: DataTypes.STRING,
   }, {
     sequelize,
-    modelName: 'Shipper',
+    modelName: 'Shipment',
   });
-  return Shipper;
+  return Shipment;
 };

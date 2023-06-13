@@ -136,16 +136,16 @@ const deletePlants = async (
   /** @type import('express').Request */ req,
   /** @type import('express').Response */ res,
 ) => {
-  const { id } = req.params;
+  const { id } = req.body;
   try {
-    const plant = await Plants.findOne({ where: { id } });
-    if (!plant) {
-      const response = res.status(404).json({
-        status: 'failed',
-        message: 'Data is not found.',
-      });
-      return response;
-    }
+    // const plant = await Plants.findOne({ where: { id } });
+    // if (!plant) {
+    //   const response = res.status(404).json({
+    //     status: 'failed',
+    //     message: 'Data is not found.',
+    //   });
+    //   return response;
+    // }
 
     await Plants.destroy({ where: { id } });
     const response = res.status(200).json({
