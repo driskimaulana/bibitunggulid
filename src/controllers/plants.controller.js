@@ -1,5 +1,7 @@
-const { Plants } = require('../../database/models');
+/* eslint-disable no-undef */
+/* eslint-disable radix */
 const { Op } = require('sequelize');
+const { Plants } = require('../../database/models');
 
 /**
  * @swagger
@@ -169,17 +171,17 @@ const getPlants = async (
   res,
 ) => {
   const keyword = req.query.keyword || '';
-  const page = parseInt(req.query.page) || 1; //Halaman saat ini
-  const limit = parseInt(req.query.limit) || 10; //Jumlah item per halaman
+  const page = parseInt(req.query.page) || 1; // Halaman saat ini
+  const limit = parseInt(req.query.limit) || 10; // Jumlah item per halaman
   try {
     const { count, rows } = await Plants.findAndCountAll({
       offset: (page - 1) * limit,
-      limit: limit,
+      limit,
       where: {
         [Op.or]: [
-          {scienceName: {[Op.iLike]: `%${keyword}%`}},
-        ]
-      }
+          { scienceName: { [Op.iLike]: `%${keyword}%` } },
+        ],
+      },
     });
     if (!rows) {
       const response = res.status(404).json({
@@ -193,7 +195,7 @@ const getPlants = async (
       status: 'success',
       message: 'Fetch data successfull',
       currentPage: page,
-      totalPages: totalPages,
+      totalPages,
       totalCount: count,
       data: rows,
     });
