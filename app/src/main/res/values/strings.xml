@@ -7,4 +7,19 @@
     <string name="terbaru">Terbaru</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="deadpool_steins">Deadpool SteinS</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="pengaturan">Pengaturan</string>
+    <string name="ganti_password">Ganti Password</string>
+    <string name="ganti_tema">Ganti Tema</string>
+    <string name="notifikasi">Notifikasi</string>
+    <string name="tentang_kami">Tentang Kami</string>
+    <string name="kebijakan_privasi">Kebijakan Privasi</string>
+    <string name="faq">FAQ</string>
+    <string name="logout">Logout</string>
+    <string name="_4_items">4 Items</string>
+    <string name="total">Total</string>
+    <string name="rp_200_000">Rp. 200.000</string>
+    <string name="beli_sekarang">Beli Sekarang</string>
 </resources>

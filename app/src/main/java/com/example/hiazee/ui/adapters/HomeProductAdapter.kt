@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.hiazee.R
-import com.example.hiazee.data.ProductModel
+import com.example.hiazee.data.remote.models.ProductModel
 
 class HomeProductAdapter(private val context: Context, private val productList: List<ProductModel>) :
     RecyclerView.Adapter<HomeProductAdapter.ViewHolder>() {
@@ -32,10 +32,10 @@ class HomeProductAdapter(private val context: Context, private val productList: 
         val product = productList[position]
 
         Glide.with(context)
-            .load(product.imageUrl)
+            .load(product.pictures[0])
             .into(holder.productImage)
-        holder.productName.text = product.name
-        holder.productPrice.text = product.price
+        holder.productName.text = product.productName
+        holder.productPrice.text = product.unitPrice.toString()
         holder.addButton.setOnClickListener {
             // Handle button click here
         }

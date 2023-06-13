@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,9 +31,6 @@
 
                     <EditText
                         android:id="@+id/searchInput"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
                         android:layout_marginHorizontal="18dp"
@@ -43,30 +41,33 @@
                         android:hint="@string/cari_tanaman_hias"
                         android:inputType="text"
                         android:padding="12dp"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/isViewImage"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/searchInput"
                         android:layout_width="match_parent"
                         android:layout_height="175dp"
-                        android:layout_marginTop="20dp" />
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/searchInput" />
 
                     <me.relex.circleindicator.CircleIndicator3
                         android:id="@+id/indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp"
                         app:ci_drawable="@drawable/circle_indicator_selector"
                         app:ci_height="6dp"
                         app:ci_margin="4dp"
                         app:ci_width="6dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/isViewImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="16dp" />
+                        app:layout_constraintTop_toBottomOf="@+id/isViewImage" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -121,11 +122,21 @@
                 android:layout_marginTop="16dp"
                 android:orientation="vertical">
 
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
                 <LinearLayout
+                    android:id="@+id/terbaruContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingHorizontal="18dp">
+                    android:paddingHorizontal="18dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -147,6 +158,7 @@
                         android:textColor="@color/main_green"
                         android:textSize="14sp"
                         android:textStyle="bold" />
+
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -155,8 +167,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:paddingHorizontal="10dp" />
-            </LinearLayout>
+                    android:paddingHorizontal="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/terbaruContainer" />
+
+                <ProgressBar
+                    android:id="@+id/homeProductRecyclerViewLoading2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/homeProductRecyclerView2"
+                    app:layout_constraintEnd_toEndOf="@+id/homeProductRecyclerView2"
+                    app:layout_constraintStart_toStartOf="@+id/homeProductRecyclerView2"
+                    app:layout_constraintTop_toTopOf="@+id/homeProductRecyclerView2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>
