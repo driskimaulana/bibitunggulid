@@ -4,10 +4,11 @@ const {
   deleteFavorite,
   addFavorite,
 } = require('../controllers/favorite.controllers');
+const middleware = require('../middleware/authentication.middleware');
 
-router.get('/:customerId', getFavoriteById);
+router.get('/', middleware, getFavoriteById);
 // router.put('/:customerId', updateFavorite);
-router.delete('/:favoriteId', deleteFavorite);
-router.post('/', addFavorite);
+router.delete('/:favoriteId', middleware, deleteFavorite);
+router.post('/', middleware, addFavorite);
 
 module.exports = router;

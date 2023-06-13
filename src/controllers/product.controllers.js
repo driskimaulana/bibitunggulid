@@ -1,7 +1,7 @@
+const { Op } = require('sequelize');
 const { Product, Plants } = require('../../database/models');
 const processFileMiddleware = require('../middleware/uploadfile.middleware');
 const uploadImageToBucket = require('../services/uploadimage.services');
-const { Op } = require('sequelize');
 
 require('dotenv').config();
 /**
@@ -128,18 +128,19 @@ const getProduct = async (
   res,
 ) => {
   const keyword = req.query.keyword || '';
-  const page = parseInt(req.query.page) || 1; //Halaman saat ini
-  const limit = parseInt(req.query.limit) || 10; //Jumlah item per halaman
+  const page = parseInt(req.query.page) || 1; // Halaman saat ini
+  const limit = parseInt(req.query.limit) || 10; // Jumlah item per halaman
   try {
-    const {count, rows} = await Product.findAndCountAll(
+    const { count, rows } = await Product.findAndCountAll(
       {
         offset: (page - 1) * limit,
-        limit: limit,
+        limit,
         where: {
-        [Op.or]: [
-          {productName: {[Op.iLike]: `%${keyword}%`}},
-        ]
-      }}
+          [Op.or]: [
+            { productName: { [Op.iLike]: `%${keyword}%` } },
+          ],
+        },
+      },
     );
     const totalPages = Math.ceil(count / limit);
     if (!rows) {
@@ -153,7 +154,7 @@ const getProduct = async (
       status: 'success',
       message: 'Fetch data successfull',
       currentPages: page,
-      totalPages: totalPages,
+      totalPages,
       totalCount: count,
       data: rows,
     });

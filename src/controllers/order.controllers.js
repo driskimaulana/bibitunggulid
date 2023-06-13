@@ -85,7 +85,7 @@ const createOrder = async (
 ) => {
   const {
     products,
-    freight,
+    shipAddressId,
   } = req.body;
 
   const { userId } = req;
@@ -108,7 +108,7 @@ const createOrder = async (
       total += prod.unitPrice * products[i].quantity;
     }
 
-    const invoice = await createInvoince(total + freight, customer.email, userId);
+    const invoice = await createInvoince(total + 10000, customer.email, userId);
 
     if (invoice.status === 'failed') {
       const response = res.status(invoice.statusCode).json({
@@ -121,7 +121,7 @@ const createOrder = async (
     const order = await Order.create({
       customerId: userId,
       paymentId: invoice.data.id,
-      freight,
+      shipAddressId,
       orderStatusId: 1,
       totalPayment: invoice.data.amount,
     });

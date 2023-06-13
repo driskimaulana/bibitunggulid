@@ -1,4 +1,4 @@
-const { Favorite } = require('../../database/models');
+const { Favorite, sequelize } = require('../../database/models');
 
 /**
  * @swagger
@@ -82,9 +82,12 @@ const addFavorite = async (
   /** @type import("express").Response */
   res,
 ) => {
-  const { productId, customerId } = req.body;
+  const { productId } = req.body;
+
+  const { userId } = req;
+
   const newFavorites = new Favorite({
-    customerId,
+    customerId: userId,
     productId,
   });
 
@@ -112,8 +115,7 @@ const getFavoriteById = async (
   /** @type import("express").Response */
   res,
 ) => {
-  const { customerId } = req.params;
-  console.log(customerId);
+  const customerId = req.userId;
   try {
     if (!customerId) {
       const response = res.status(400).json({
@@ -122,7 +124,15 @@ const getFavoriteById = async (
       });
       return response;
     }
-    const favorite = await Favorite.findAll({ where: { customerId } });
+
+    const favorite = await sequelize.query(`SELECT "Favorites".id, "Products".id as "productId", "Products"."productName", 
+    "Products"."unitPrice", "Products".pictures
+    FROM "Products" 
+    LEFT JOIN "Favorites" ON "Products".id = "Favorites"."productId" 
+    WHERE "Favorites"."customerId"=${req.userId};
+    `);
+
+    // const favorite = await Favorite.findAll({ where: { customerId } });
     if (!favorite) {
       const response = res.status(404).json({
         status: 'failed',
@@ -146,46 +156,6 @@ const getFavoriteById = async (
   }
 };
 
-// const updateFavorite = async(
-//   /** @type import('express').Request */
-//   req,
-//   /** @type import('express').Response */
-//   res,
-// ) => {
-//   const {favoriteId} = req.params;
-//   const {productId, customerId} = req.body;
-//   try{
-//     let favorite = await Favorite.findAll({where: { favoriteId }});
-//     if(!favorite){
-//       const response = res.status(400).json({
-//         status: 'failed',
-//         message: `Favorite with favoriteId: ${favoriteId} is not found.`,
-//       })
-//       return response;
-//     }
-//     const updatedAt = new Date().toISOString();
-//     favorite = {
-//       productId,
-//       favoriteId,
-//       customerId,
-//       updatedAt,
-//     };
-//     await Favorite.update({...favorite}, {where: { favoriteId }});
-//     const response = res.status(200).json({
-//       status: 'success',
-//       message: 'Update data successfull.',
-//       data: favorite,
-//     });
-//     return response;
-//   }catch(error){
-//     const response = res.status(500).json({
-//       status: 'failed',
-//       message: 'Server unavailable.',
-//     });
-//     return response;
-//   }
-// };
-
 const deleteFavorite = async (
   /** @type import('express').Request */
   req,
@@ -193,8 +163,12 @@ const deleteFavorite = async (
   res,
 ) => {
   const { favoriteId } = req.params;
+  const { userId } = req;
   try {
-    const favorite = await Favorite.findAll({ where: { id: favoriteId } });
+    const favorite = await Favorite.findAll({
+      where:
+       { productId: favoriteId, customerId: userId },
+    });
     if (!favorite) {
       const response = res.status(404).json({
         status: 'failed',
@@ -202,7 +176,8 @@ const deleteFavorite = async (
       });
       return response;
     }
-    await Favorite.destroy({ where: { id: favoriteId } });
+    await Favorite.destroy({ where: { productId: favoriteId, customerId: userId } });
+    console.log(favorite);
     const response = res.status(400).json({
       status: 'success',
       message: 'Data deleted successfully.',
