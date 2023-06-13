@@ -6,3 +6,4 @@ numpy
 pillow
 flask-cors
 psycopg2-binary==2.9.6
+h5py

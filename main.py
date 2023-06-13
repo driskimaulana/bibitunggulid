@@ -10,8 +10,14 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import psycopg2
 from dotenv import load_dotenv
+import requests
+import h5py
 
-model = keras.models.load_model("models/modelv1.h5")
+url = "https://storage.googleapis.com/ml_hiazee_bucket/modelv2.h5"
+response = requests.get(url)
+model_content = response.content
+with h5py.File(io.BytesIO(model_content), "r") as f:
+    model = keras.models.load_model(f)
 
 def transform_image(image_bytes):
     img = image.load_img(io.BytesIO(image_bytes), target_size=(400,400))
@@ -19,7 +25,6 @@ def transform_image(image_bytes):
     x = np.expand_dims(x, axis=0)
     x /= 255.0
     return x
-
 
 def predict(x):
     predictions = model.predict(x)
@@ -102,6 +107,9 @@ def getPlants(predicition):
 
 app = Flask(__name__)
 CORS(app)
+@app.route("/", methods=["GET", "POST"])
+def main():
+    return "HELLO WORLD!!!"
 
 @app.route("/android", methods=["GET", "POST"])
 def index():
@@ -109,7 +117,6 @@ def index():
         file = request.files.get('file')
         if file is None or file.filename == "":
             return jsonify({"error": "no file"})
-    
         try:
             image_bytes = file.read()
             tensor = transform_image(image_bytes)
@@ -117,9 +124,7 @@ def index():
             return getPlants(predicition=prediction)
         except Exception as e:
             return jsonify({"error": str(e)})
-
     return "OK"
-
 
 if __name__ == "__main__":
     app.run(debug=True)
