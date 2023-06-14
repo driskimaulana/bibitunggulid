@@ -65,7 +65,7 @@ def getClass(id):
         dataClass = "Whiteorchids"
     elif int(id) == 14:
         dataClass = "Zamioculcas" 
-    
+
     return dataClass
 
 def getPlants(prediction):
@@ -84,8 +84,9 @@ def getPlants(prediction):
     cursor.close()
     conn.close()
     if row is not None:
-        # Return the column value as a response
         return jsonify({
+            'response': 200,
+            'status': 'success',
             'id': row[0],
             'localName': row[1],
             'about': row[2],
@@ -95,8 +96,11 @@ def getPlants(prediction):
             'order': row[6],
         })
     else:
-        # Return a message if no row was found
-        return jsonify({'message': 'No data found for the given ID'})
+        return jsonify({
+            'response': 500,
+            'status': 'error',
+            'message': str(e),
+        })
 
 def getPlantsToProduct(prediction):
     scName = getClass(prediction)
@@ -113,10 +117,10 @@ def getPlantsToProduct(prediction):
     row = cursor.fetchone()
     cursor.close()
     conn.close()
-
     if row is not None:
-        # Return the column value as a response
         return jsonify({
+            'response': 200,
+            'status': 'success',
             'id': row[0],
             'supplierId': row[1],
             'productName': row[2],
@@ -131,8 +135,11 @@ def getPlantsToProduct(prediction):
             'slug': row[13],
         })
     else:
-        # Return a message if no row was found
-        return jsonify({'message': 'No data found for the given ID'})
+        return jsonify({
+            'response': 500,
+            'status': 'error',
+            'message': "No data found for the given ID",
+        })
 
 app = Flask(__name__)
 CORS(app)
@@ -142,14 +149,14 @@ def main():
         file = request.files.get('file')
         if file is None or file.filename == "":
             return jsonify({"error": "no file"})
-        try:
+        try: 
             image_bytes = file.read()
             tensor = transform_image(image_bytes)
             prediction = predict(tensor)
             return getPlants(prediction=prediction)
         except Exception as e:
             return jsonify({"error": str(e)})
-    return "OK"
+    return "HELLO WORLD"
 
 @app.route("/android", methods=["GET", "POST"])
 def index():
