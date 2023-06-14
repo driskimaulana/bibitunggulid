@@ -23,4 +23,6 @@ class ShipAddressViewModel(
         token,
         addShipAddressRequest
     )
+
+    fun deleteShipAddress(token: String, id: String) = shipAddressRepository.deleteShipAddress(token, id)
 }

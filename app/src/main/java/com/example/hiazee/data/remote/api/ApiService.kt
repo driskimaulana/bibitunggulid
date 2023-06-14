@@ -28,4 +28,10 @@ interface ApiService {
     suspend fun getCustomerOrderList(
         @Header("Authorization") token: String,
     ): ApiResponse<List<OrderModel>>
+
+    @DELETE("shipaddress/{id}")
+    suspend fun deleteShipAddress(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): ApiResponseNoData
 }
