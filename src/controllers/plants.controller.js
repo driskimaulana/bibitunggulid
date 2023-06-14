@@ -33,7 +33,7 @@ const { Plants } = require('../../database/models');
  *              description: Service unavailable
  *  post:
  *      summary: create new plants
- *      tags: [Plants ]
+ *      tags: [Plants]
  *      requestBody:
  *          required: true
  *          content:
@@ -56,7 +56,7 @@ const { Plants } = require('../../database/models');
  * /plants/{id}:
  *  delete:
  *      summary: delete plants by id
- *      tags: [Plants ]
+ *      tags: [Plants]
  *      parameters:
  *          -   in: path
  *              name: favoriteId
@@ -74,28 +74,6 @@ const { Plants } = require('../../database/models');
  *              description: No id is specified
  *          404:
  *              description: plants data is not found
- *          500:
- *              description: Service unavailable
- *  put:
- *      summary: update ship address details
- *      tags: [ShipAddress ]
- *      parameters:
- *          -   in: path
- *              name: id
- *              schema:
- *                  type: int
- *              summary: The ship address id
- *      responses:
- *          200:
- *              desciption: Ship address updated.
- *              content:
- *                  application/json:
- *                      schema:
- *                          $ref: '#/components/schemas/ShipAddress'
- *          400:
- *              description: No id is specified
- *          404:
- *              description: ShipAddress data is not found
  *          500:
  *              description: Service unavailable
  */

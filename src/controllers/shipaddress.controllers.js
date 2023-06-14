@@ -14,7 +14,7 @@
  * /shipaddress/:
  *  get:
  *      summary: get all ShipAddress by customer id
- *      tags: [ShipAddress ]
+ *      tags: [ShipAddress]
  *      responses:
  *          200:
  *              desciption: get ShipAddress data success
@@ -28,7 +28,7 @@
  *              description: Service unavailable
  *  post:
  *      summary: Add new ship address to customers ShipAddress.
- *      tags: [ShipAddress ]
+ *      tags: [ShipAddress]
  *      requestBody:
  *          required: true
  *          content:
@@ -50,7 +50,7 @@
  * /shipaddress/{id}:
  *  delete:
  *      summary: delete ship address from customers ShipAddress using product id
- *      tags: [ShipAddress ]
+ *      tags: [ShipAddress]
  *      parameters:
  *          -   in: path
  *              name: id
@@ -68,7 +68,7 @@
  *              description: Service unavailable
  *  put:
  *      summary: update ship address details
- *      tags: [ShipAddress ]
+ *      tags: [ShipAddress]
  *      parameters:
  *          -   in: path
  *              name: id
