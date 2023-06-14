@@ -122,6 +122,7 @@ const createOrder = async (
       customerId: userId,
       paymentId: invoice.data.id,
       shipAddressId,
+      freight: 10000,
       orderStatusId: 1,
       totalPayment: invoice.data.amount,
     });
@@ -230,9 +231,11 @@ const getOrderByCustomerId = async (
     // );
 
     const orders = await sequelize.query(
-      `SELECT "Orders".id, "Orders".freight, "OrderStatuses"."statusName"
+      `SELECT "Orders".id, "Orders".freight, "Orders"."createdAt", "OrderStatuses"."statusName",
+      "ShipAddresses"."fullAddress"
       FROM "Orders" 
-      LEFT JOIN "OrderStatuses" ON "Orders"."orderStatusId" = "OrderStatuses".id 
+      INNER JOIN "OrderStatuses" ON "Orders"."orderStatusId" = "OrderStatuses".id 
+      INNER JOIN "ShipAddresses" ON "Orders"."shipAddressId" = "ShipAddresses".id
       WHERE "Orders"."customerId"=${userId};`,
     );
 
