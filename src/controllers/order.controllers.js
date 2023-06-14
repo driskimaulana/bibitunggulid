@@ -357,7 +357,7 @@ const getOrderByCustomerId = async (
       for (const j in prods) {
         const prodDetails = await Product.findOne(
           {
-            attributes: ['productName', 'pictures', 'unitPrice'],
+            attributes: ['id', 'productName', 'pictures', 'unitPrice'],
             where: { id: prods[j].productId },
           },
 
