@@ -20,6 +20,11 @@ interface ApiService {
     @GET("product?keyfilter=terbaru")
     suspend fun getProductsTerbaru(): ApiResponse<List<ProductModel>>
 
+    @GET("product/{id}")
+    suspend fun getDetailProduct(
+        @Path("id") id: String
+    ): ApiResponse<ProductModel>
+
     @GET("shipaddress")
     suspend fun getAllShipAddress(
         @Header("Authorization") token: String,

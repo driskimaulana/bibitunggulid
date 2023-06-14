@@ -55,6 +55,21 @@ class ProductRepository private constructor(
         }
     }
 
+    fun getDetailProduct(productId: String): LiveData<Result<ProductModel>> = liveData {
+        emit(Result.Loading)
+
+        try {
+            val response = apiService.getDetailProduct(productId)
+            if (response.status != "error") {
+                emit(Result.Success(response.data))
+            } else {
+                emit(Result.Error(response.message))
+            }
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
     companion object {
         @Volatile
         private var instance: ProductRepository? = null

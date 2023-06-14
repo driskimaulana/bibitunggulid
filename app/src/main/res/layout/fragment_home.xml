@@ -106,7 +106,7 @@
                         android:fontFamily="sans-serif-medium"
                         android:text="@string/lainnya"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/main_green"
+                        android:textColor="@color/main_gold"
                         android:textSize="14sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -172,7 +172,7 @@
                         android:fontFamily="sans-serif-medium"
                         android:text="@string/lainnya"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/main_green"
+                        android:textColor="@color/main_gold"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 

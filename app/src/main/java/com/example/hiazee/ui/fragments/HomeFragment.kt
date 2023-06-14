@@ -177,6 +177,12 @@ class HomeFragment : Fragment() {
         recyclerView2.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         productAdapter2 = HomeProductAdapter(requireContext(), productList)
+
+        productAdapter2.setItemClickListener(object : HomeProductAdapter.ItemClickListener {
+            override fun onAddButtonClicked(productId: Int) {
+                addProductToCart(productId.toString())
+            }
+        })
         recyclerView2.adapter = productAdapter2
     }
 

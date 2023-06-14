@@ -18,8 +18,7 @@ class ViewModelFactory private constructor(
     private val userRepository: UserRepository,
     private val productRepository: ProductRepository,
     private val shipAddressRepository: ShipAddressRepository,
-    private val cartRepository: CartRepository
-    private val shipAddressRepository: ShipAddressRepository,
+    private val cartRepository: CartRepository,
     private val orderListRepository: OrderListRepository
 ) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
@@ -42,6 +41,11 @@ class ViewModelFactory private constructor(
             modelClass.isAssignableFrom(OrderListViewModel::class.java) -> OrderListViewModel(
                 userRepository,
                 orderListRepository
+            ) as T
+            modelClass.isAssignableFrom(DetailProductViewModel::class.java) -> DetailProductViewModel(
+                userRepository,
+                productRepository,
+                cartRepository
             ) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
