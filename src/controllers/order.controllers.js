@@ -339,37 +339,37 @@ const getOrderByCustomerId = async (
       WHERE "Orders"."customerId"=${userId};`,
     );
 
-    // const ordersData = [];
+    const ordersData = [];
 
-    // // eslint-disable-next-line array-callback-return
-    // orders[0].map((e) => {
-    //   ordersData.push(e);
-    // });
+    // eslint-disable-next-line array-callback-return
+    orders[0].map((e) => {
+      ordersData.push(e);
+    });
 
-    // // eslint-disable-next-line guard-for-in
-    // for (const i in ordersData) {
-    //   const prods = await OrderDetail.findAll(
-    //     { where: { orderId: ordersData[i].id } },
-    //   );
-    //   ordersData[i].products = [];
+    // eslint-disable-next-line guard-for-in
+    for (const i in ordersData) {
+      const prods = await OrderDetail.findAll(
+        { where: { orderId: ordersData[i].id } },
+      );
+      ordersData[i].products = [];
 
-    //   // eslint-disable-next-line guard-for-in
-    //   for (const j in prods) {
-    //     const prodDetails = await Product.findOne(
-    //       {
-    //         attributes: ['productName', 'pictures', 'unitPrice'],
-    //         where: { id: prods[j].productId },
-    //       },
+      // eslint-disable-next-line guard-for-in
+      for (const j in prods) {
+        const prodDetails = await Product.findOne(
+          {
+            attributes: ['productName', 'pictures', 'unitPrice'],
+            where: { id: prods[j].productId },
+          },
 
-    //     );
-    //     ordersData[i].products.push({ ...prodDetails.dataValues, quantity: prods[j].quantity });
-    //   }
-    // }
+        );
+        ordersData[i].products.push({ ...prodDetails.dataValues, quantity: prods[j].quantity });
+      }
+    }
 
     const response = res.status(200).json({
       status: 'success',
       message: 'Fetch customer orders history data success.',
-      data: orders[0],
+      data: ordersData,
     });
 
     return response;
