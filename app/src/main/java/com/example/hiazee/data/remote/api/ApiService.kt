@@ -24,6 +24,11 @@ interface ApiService {
         @Body request: AddShipAddressRequest
     ): Call<ApiResponse<ShipAddressModel>>
 
+    @GET("orders/customer")
+    suspend fun getCustomerOrderList(
+        @Header("Authorization") token: String,
+    ): ApiResponse<List<OrderModel>>
+
     @DELETE("shipaddress/{id}")
     suspend fun deleteShipAddress(
         @Header("Authorization") token: String,

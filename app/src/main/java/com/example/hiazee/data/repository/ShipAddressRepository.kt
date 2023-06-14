@@ -1,5 +1,6 @@
 package com.example.hiazee.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.hiazee.data.remote.api.ApiService
@@ -11,6 +12,7 @@ import com.example.hiazee.data.remote.requests.LoginRequest
 import com.example.hiazee.utils.Result
 import com.example.hiazee.utils.extractErrorMessage
 import retrofit2.awaitResponse
+import kotlin.math.log
 
 class ShipAddressRepository private constructor(
     private val apiService: ApiService,
@@ -21,6 +23,7 @@ class ShipAddressRepository private constructor(
 
         try {
             val response = apiService.getAllShipAddress("Bearer $token")
+            Log.d("driskidebug", "getAllShipAddress: ${response}")
             if (response.status != "error") {
                 emit(Result.Success(response.data))
             } else {

@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.hiazee.databinding.FragmentProfileBinding
 import com.example.hiazee.ui.activities.LoginActivity
+import com.example.hiazee.ui.activities.OrderListActivity
 import com.example.hiazee.ui.activities.ShipAddressActivity
 import com.example.hiazee.ui.viewmodels.ProfileViewModel
 import com.example.hiazee.utils.ViewModelFactory
@@ -48,6 +49,11 @@ class ProfileFragment : Fragment() {
 
         binding.pengaturanAlamat.setOnClickListener {
             val intent = Intent(activity, ShipAddressActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.orderListButton.setOnClickListener{
+            val intent = Intent(activity, OrderListActivity::class.java)
             startActivity(intent)
         }
     }

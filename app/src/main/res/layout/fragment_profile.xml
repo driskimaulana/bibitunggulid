@@ -120,6 +120,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:id="@+id/orderListButton"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/search_background"
                     android:padding="14dp">
@@ -131,14 +132,14 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_darkmode" />
+                        app:srcCompat="@drawable/ic_baselineshopping_bag_24" />
 
                     <TextView
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="@string/ganti_tema"
+                        android:text="@string/pesanan_saya"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView4"
