@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable no-unused-vars */
 /**
 * Programmer: D'Riski Maulana
@@ -157,6 +158,105 @@ const createOrder = async (
 };
 
 const getOrderDetails = async (
+/** @type import('express').Request */ req,
+  /** @type Response */ res,
+) => {
+  const { userId } = req;
+
+  const { orderId } = req.params;
+
+  try {
+    const customer = await Customers.findOne({ where: { id: userId } });
+    if (!customer) {
+      const response = res.status(404).json({
+        status: 'failed',
+        message: 'Customer is not found in database',
+      });
+      return response;
+    }
+
+    const order = await Order.findOne({ where: { id: orderId, customerId: userId } });
+
+    if (!order) {
+      const response = res.status(404).json({
+        status: 'failed',
+        message: 'No order is found.',
+      });
+      return response;
+    }
+
+    const orders = await sequelize.query(
+      `SELECT "Orders".id, "Orders".freight, "Orders"."createdAt", "OrderStatuses"."statusName", "Orders"."paymentId",
+      "ShipAddresses"."fullAddress", "ShipAddresses".name, "ShipAddresses".phone,  "Orders"."shipmentId",
+      "ShipAddresses".province, "ShipAddresses".city, "ShipAddresses"."subDistrict", "ShipAddresses"."postalCode"
+      FROM "Orders" 
+      INNER JOIN "OrderStatuses" ON "Orders"."orderStatusId" = "OrderStatuses".id 
+      INNER JOIN "ShipAddresses" ON "Orders"."shipAddressId" = "ShipAddresses".id
+      WHERE "Orders".id=${orderId};`,
+    );
+    const ordersData = [];
+
+    // eslint-disable-next-line array-callback-return
+    orders[0].map((e) => {
+      ordersData.push(e);
+    });
+
+    // eslint-disable-next-line guard-for-in
+    for (const i in ordersData) {
+      const prods = await OrderDetail.findAll(
+        { where: { orderId: ordersData[i].id } },
+      );
+      ordersData[i].products = [];
+
+      // eslint-disable-next-line guard-for-in
+      for (const j in prods) {
+        const prodDetails = await Product.findOne(
+          {
+            attributes: ['productName', 'pictures', 'unitPrice'],
+            where: { id: prods[j].productId },
+          },
+
+        );
+        ordersData[i].products.push({ ...prodDetails.dataValues, quantity: prods[j].quantity });
+      }
+    }
+
+    let shipment = null;
+    if (ordersData[0].shipmentId) {
+      shipment = await Shipment.findOne({ where: { id: ordersData[0].shipmentId } });
+    }
+
+    let responseData = { ...ordersData[0] };
+    if (shipment) {
+      responseData = { ...responseData, ...shipment.dataValues };
+    }
+
+    let totalHarga = 0;
+    ordersData[0].products.map(
+      (e) => totalHarga += e.unitPrice * e.quantity,
+    );
+
+    responseData = { ...responseData, totalHarga };
+
+    const response = res.status(201).json({
+      status: 'success',
+      message: 'Order Success',
+      data: {
+        ...responseData,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error.message);
+    const response = res.status(500).json({
+      status: 'failed',
+      message: 'Service unavailable.',
+    });
+    return response;
+  }
+};
+
+const getOrderPaymentDetails = async (
 /** @type import('express').Request */ req,
   /** @type import('express').Response */ res,
 ) => {
@@ -387,6 +487,7 @@ module.exports = {
   getAllOrder,
   createOrder,
   getOrderDetails,
+  getOrderPaymentDetails,
   getOrderByCustomerId,
   changeToOnShipping,
   changeToFinish,
