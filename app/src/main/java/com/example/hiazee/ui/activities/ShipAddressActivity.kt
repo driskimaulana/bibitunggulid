@@ -2,10 +2,8 @@ package com.example.hiazee.ui.activities
 
 import android.app.Activity
 import android.content.Intent
-import android.content.LocusId
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.JsonToken
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -15,12 +13,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hiazee.R
-import com.example.hiazee.data.remote.models.ProductModel
 import com.example.hiazee.data.remote.models.ShipAddressModel
 import com.example.hiazee.data.remote.models.UserData
 import com.example.hiazee.databinding.ActivityShipAddressBinding
 import com.example.hiazee.ui.adapters.ShipAddressAdapter
-import com.example.hiazee.ui.fragments.HomeFragment
 import com.example.hiazee.ui.viewmodels.ShipAddressViewModel
 import com.example.hiazee.utils.Result
 import com.example.hiazee.utils.ViewModelFactory

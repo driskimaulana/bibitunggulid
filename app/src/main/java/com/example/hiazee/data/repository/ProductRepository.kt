@@ -25,6 +25,36 @@ class ProductRepository private constructor(
         }
     }
 
+    fun getProductsTerlaris(): LiveData<Result<List<ProductModel>>> = liveData {
+        emit(Result.Loading)
+
+        try {
+            val response = apiService.getProductsTerlaris()
+            if (response.status != "error") {
+                emit(Result.Success(response.data))
+            } else {
+                emit(Result.Error(response.message))
+            }
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun getProductsTerbaru(): LiveData<Result<List<ProductModel>>> = liveData {
+        emit(Result.Loading)
+
+        try {
+            val response = apiService.getProductsTerbaru()
+            if (response.status != "error") {
+                emit(Result.Success(response.data))
+            } else {
+                emit(Result.Error(response.message))
+            }
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
     companion object {
         @Volatile
         private var instance: ProductRepository? = null

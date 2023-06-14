@@ -1,6 +1,7 @@
 package com.example.hiazee.data.remote.api
 
 import com.example.hiazee.data.remote.models.*
+import com.example.hiazee.data.remote.requests.AddProductToCartRequest
 import com.example.hiazee.data.remote.requests.AddShipAddressRequest
 import com.example.hiazee.data.remote.requests.LoginRequest
 import retrofit2.Call
@@ -12,6 +13,12 @@ interface ApiService {
 
     @GET("product")
     suspend fun getAllProducts(): ApiResponse<List<ProductModel>>
+
+    @GET("product?keyfilter=terlaris")
+    suspend fun getProductsTerlaris(): ApiResponse<List<ProductModel>>
+
+    @GET("product?keyfilter=terbaru")
+    suspend fun getProductsTerbaru(): ApiResponse<List<ProductModel>>
 
     @GET("shipaddress")
     suspend fun getAllShipAddress(
@@ -29,4 +36,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") id: String
     ): ApiResponseNoData
+
+    @POST("carts")
+    fun addProductToCart(
+        @Header("Authorization") token: String,
+        @Body request: AddProductToCartRequest
+    ): Call<ApiResponse<CartModel>>
 }

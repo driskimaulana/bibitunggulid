@@ -73,23 +73,27 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/terlarisContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingHorizontal="18dp">
+                    android:paddingHorizontal="18dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/diskon"
+                        android:text="Terlaris"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -113,8 +117,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:paddingHorizontal="10dp" />
-            </LinearLayout>
+                    android:paddingHorizontal="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/terlarisContainer"/>
+
+                <ProgressBar
+                    android:id="@+id/homeProductRecyclerViewLoading1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/homeProductRecyclerView1"
+                    app:layout_constraintEnd_toEndOf="@+id/homeProductRecyclerView1"
+                    app:layout_constraintStart_toStartOf="@+id/homeProductRecyclerView1"
+                    app:layout_constraintTop_toBottomOf="@+id/terlarisContainer" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -180,7 +197,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/homeProductRecyclerView2"
                     app:layout_constraintEnd_toEndOf="@+id/homeProductRecyclerView2"
                     app:layout_constraintStart_toStartOf="@+id/homeProductRecyclerView2"
-                    app:layout_constraintTop_toTopOf="@+id/homeProductRecyclerView2" />
+                    app:layout_constraintTop_toBottomOf="@+id/terbaruContainer" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -15,6 +15,8 @@ import com.example.hiazee.data.remote.models.ProductModel
 class HomeProductAdapter(private val context: Context, private val productList: List<ProductModel>) :
     RecyclerView.Adapter<HomeProductAdapter.ViewHolder>() {
 
+    private var itemClickListener: ItemClickListener? = null
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val productImage: ImageView = itemView.findViewById(R.id.productImage)
         val productName: TextView = itemView.findViewById(R.id.productName)
@@ -37,11 +39,19 @@ class HomeProductAdapter(private val context: Context, private val productList: 
         holder.productName.text = product.productName
         holder.productPrice.text = product.unitPrice.toString()
         holder.addButton.setOnClickListener {
-            // Handle button click here
+            itemClickListener?.onAddButtonClicked(product.id)
         }
     }
 
     override fun getItemCount(): Int {
         return productList.size
+    }
+
+    fun setItemClickListener(listener: ItemClickListener) {
+        itemClickListener = listener
+    }
+
+    interface ItemClickListener {
+        fun onAddButtonClicked(productId: Int)
     }
 }

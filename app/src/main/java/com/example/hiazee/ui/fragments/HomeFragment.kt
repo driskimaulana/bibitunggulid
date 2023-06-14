@@ -1,6 +1,7 @@
 package com.example.hiazee.ui.fragments
 
 import android.content.Intent
+import android.content.LocusId
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -21,6 +22,7 @@ import com.example.hiazee.R
 import com.example.hiazee.data.SliderModel
 import com.example.hiazee.data.remote.UserDataStore
 import com.example.hiazee.data.remote.models.ProductModel
+import com.example.hiazee.data.remote.models.UserData
 import com.example.hiazee.databinding.FragmentHomeBinding
 import com.example.hiazee.ui.activities.LoginActivity
 import com.example.hiazee.ui.activities.MainActivity
@@ -54,6 +56,8 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerView2: RecyclerView
     private lateinit var productAdapter2: HomeProductAdapter
 
+    private lateinit var userData: UserData
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,21 +69,44 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        lifecycleScope.launch {
+            viewModel.getUserData().collect {
+                userData = it
+            }
+        }
+
         initSliderHome(view)
 
-        viewModel.getAllProducts().observe(this) {
+        viewModel.getProductsTerlaris().observe(this) {
             if (it != null) {
                 when (it) {
                     is Result.Loading -> {
-                        binding.homeProductRecyclerViewLoading2.visibility = View.VISIBLE
+                        loadingState1(true)
                     }
                     is Result.Success -> {
-                        binding.homeProductRecyclerViewLoading2.visibility = View.GONE
+                        loadingState1(false)
                         initRecyclerView1(view, it.data)
+                    }
+                    is Result.Error -> {
+                        loadingState1(false)
+                        Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        viewModel.getProductsTerbaru().observe(this) {
+            if (it != null) {
+                when (it) {
+                    is Result.Loading -> {
+                        loadingState2(true)
+                    }
+                    is Result.Success -> {
+                        loadingState2(false)
                         initRecyclerView2(view, it.data)
                     }
                     is Result.Error -> {
-                        binding.homeProductRecyclerViewLoading2.visibility = View.GONE
+                        loadingState2(false)
                         Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -135,8 +162,15 @@ class HomeFragment : Fragment() {
         recyclerView1.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         productAdapter1 = HomeProductAdapter(requireContext(), productList)
+
+        productAdapter1.setItemClickListener(object : HomeProductAdapter.ItemClickListener {
+            override fun onAddButtonClicked(productId: Int) {
+                addProductToCart(productId.toString())
+            }
+        })
         recyclerView1.adapter = productAdapter1
     }
+
 
     private fun initRecyclerView2(view: View, productList: List<ProductModel>) {
         recyclerView2 = view.findViewById(R.id.homeProductRecyclerView2)
@@ -149,6 +183,55 @@ class HomeFragment : Fragment() {
     val sliderRunnable = Runnable {
         isViewImage.currentItem =
             if (isViewImage.currentItem < sliderList.size - 1) isViewImage.currentItem + 1 else 0
+    }
+
+    private fun addProductToCart(productId: String){
+        viewModel.addProductToCart(userData.token, productId)
+            .observe(this) {
+                if (it != null) {
+                    when (it) {
+                        is Result.Loading -> {
+                            // loadingState(true)
+                        }
+                        is Result.Success -> {
+                            // loadingState(false)
+                            Toast.makeText(requireContext(), "Product Berhasil Ditambahkan", Toast.LENGTH_SHORT).show()
+                        }
+                        is Result.Error -> {
+                            // loadingState(false)
+                            Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+    }
+
+    private fun loadingState1(isLoading: Boolean) {
+        if (isLoading) {
+            binding.apply {
+                homeProductRecyclerView1.visibility = View.INVISIBLE
+                homeProductRecyclerViewLoading1.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                homeProductRecyclerView1.visibility = View.VISIBLE
+                homeProductRecyclerViewLoading1.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun loadingState2(isLoading: Boolean) {
+        if (isLoading) {
+            binding.apply {
+                homeProductRecyclerView2.visibility = View.INVISIBLE
+                homeProductRecyclerViewLoading2.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                homeProductRecyclerView2.visibility = View.VISIBLE
+                homeProductRecyclerViewLoading2.visibility = View.GONE
+            }
+        }
     }
 
     override fun onPause() {
