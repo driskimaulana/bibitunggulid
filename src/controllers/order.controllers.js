@@ -187,7 +187,7 @@ const getOrderDetails = async (
 
     const orders = await sequelize.query(
       `SELECT "Orders".id, "Orders".freight, "Orders"."createdAt", "OrderStatuses"."statusName", "Orders"."paymentId",
-      "ShipAddresses"."fullAddress", "ShipAddresses".name, "ShipAddresses".phone,  "Orders"."shipmentId",
+      "ShipAddresses"."fullAddress", "ShipAddresses".name, "ShipAddresses".phone AS "shipPhone",  "Orders"."shipmentId",
       "ShipAddresses".province, "ShipAddresses".city, "ShipAddresses"."subDistrict", "ShipAddresses"."postalCode"
       FROM "Orders" 
       INNER JOIN "OrderStatuses" ON "Orders"."orderStatusId" = "OrderStatuses".id 
@@ -223,12 +223,28 @@ const getOrderDetails = async (
 
     let shipment = null;
     if (ordersData[0].shipmentId) {
-      shipment = await Shipment.findOne({ where: { id: ordersData[0].shipmentId } });
+      shipment = await Shipment.findOne({
+        attributes: [
+          'courierName',
+          'phone',
+          'delieveryTime',
+          'estimatedReceiveTime',
+        ],
+        where: { id: ordersData[0].shipmentId },
+      });
     }
 
     let responseData = { ...ordersData[0] };
     if (shipment) {
       responseData = { ...responseData, ...shipment.dataValues };
+    } else {
+      shipment = {
+        courierName: '-',
+        phone: '-',
+        delieveryTime: '-',
+        estimatedReceiveTime: '-',
+      };
+      responseData = { ...responseData, ...shipment };
     }
 
     let totalHarga = 0;
