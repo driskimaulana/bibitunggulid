@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.example.hiazee.data.local.datastore.UserPreference
 import com.example.hiazee.data.remote.retrofit.RetrofitClient
+import com.example.hiazee.data.repository.OrderListRepository
 import com.example.hiazee.data.repository.CartRepository
 import com.example.hiazee.data.repository.ProductRepository
 import com.example.hiazee.data.repository.ShipAddressRepository
@@ -24,6 +25,11 @@ object Injection {
     fun provideShipAddressRepository(): ShipAddressRepository {
         val apiService = RetrofitClient.apiService
         return ShipAddressRepository.getInstance(apiService)
+    }
+
+    fun provideOrderListRepository(): OrderListRepository {
+        val apiService = RetrofitClient.apiService
+        return OrderListRepository.getInstance(apiService)
     }
 
     fun provideCartRepository(): CartRepository {

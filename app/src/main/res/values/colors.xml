@@ -12,4 +12,7 @@
     <color name="indicator_unselected_color">#808080</color>
     <color name="main_green">#0FB203</color>
     <color name="primary_variant">#8BC589</color>
+    <color name="black_head">#333333</color>
+    <color name="black_light">#555555</color>
+    <color name="gray_light">#c9c9c9</color>
 </resources>

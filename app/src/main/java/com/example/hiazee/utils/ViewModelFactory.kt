@@ -7,6 +7,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.hiazee.data.repository.CartRepository
+import com.example.hiazee.data.repository.OrderListRepository
 import com.example.hiazee.data.repository.ProductRepository
 import com.example.hiazee.data.repository.ShipAddressRepository
 import com.example.hiazee.data.repository.UserRepository
@@ -18,6 +19,8 @@ class ViewModelFactory private constructor(
     private val productRepository: ProductRepository,
     private val shipAddressRepository: ShipAddressRepository,
     private val cartRepository: CartRepository
+    private val shipAddressRepository: ShipAddressRepository,
+    private val orderListRepository: OrderListRepository
 ) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -36,6 +39,10 @@ class ViewModelFactory private constructor(
                 userRepository,
                 shipAddressRepository
             ) as T
+            modelClass.isAssignableFrom(OrderListViewModel::class.java) -> OrderListViewModel(
+                userRepository,
+                orderListRepository
+            ) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
@@ -51,7 +58,8 @@ class ViewModelFactory private constructor(
                     Injection.provideUserRepository(context.dataStore),
                     Injection.provideProductRepository(),
                     Injection.provideShipAddressRepository(),
-                            Injection.provideCartRepository()
+                    Injection.provideCartRepository(),
+                    Injection.provideOrderListRepository()
                 )
             }.also {
                 instance = it
