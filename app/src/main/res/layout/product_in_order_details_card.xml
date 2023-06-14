@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="8dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/productLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/productImageOrderDetails"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvProductNameOrderDetails"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/productImageOrderDetails"
+                android:text="@string/product_name"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="10sp"
+                android:textColor="@color/black_head"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvQuantityOrderDetails"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/productImageOrderDetails"
+                android:text="@string/product_name"
+                app:layout_constraintTop_toBottomOf="@+id/tvProductNameOrderDetails"
+                android:textSize="7sp"
+                android:textColor="@color/black_head" />
+
+            <View
+                android:layout_marginHorizontal="10dp"
+                android:id="@+id/headerOrderDivider"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/gray_light"
+                app:layout_constraintStart_toEndOf="@id/productImageOrderDetails"
+                app:layout_constraintTop_toBottomOf="@id/tvQuantityOrderDetails"
+                android:layout_marginTop="5dp" />
+            <TextView
+                android:id="@+id/tvUnitPriceLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Harga"
+                app:layout_constraintStart_toEndOf="@id/productImageOrderDetails"
+                android:layout_marginStart="10dp"
+                app:layout_constraintTop_toBottomOf="@id/headerOrderDivider"
+                android:textSize="7sp"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/tvUnitPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20000"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/main_green"
+                app:layout_constraintTop_toTopOf="@id/tvUnitPriceLabel"
+                app:layout_constraintBottom_toBottomOf="@id/tvUnitPriceLabel"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+</androidx.cardview.widget.CardView>

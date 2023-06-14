@@ -23,4 +23,9 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body request: AddShipAddressRequest
     ): Call<ApiResponse<ShipAddressModel>>
+
+    @GET("orders/customer")
+    suspend fun getCustomerOrderList(
+        @Header("Authorization") token: String,
+    ): ApiResponse<List<OrderModel>>
 }
