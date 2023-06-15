@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 const { Op } = require('sequelize');
 const { Product, Plants } = require('../../database/models');
 const processFileMiddleware = require('../middleware/uploadfile.middleware');
@@ -130,31 +131,17 @@ const getProduct = async (
   const keyword = req.query.keyword || '';
   const page = parseInt(req.query.page) || 1; // Halaman saat ini
   const limit = parseInt(req.query.limit) || 10; // Jumlah item per halaman
-
-  const keyFilter = req.query.keyfilter || '';
-  let whereCondition = {
-    [Op.or]: [
-      { productName: { [Op.iLike]: `%${keyword}%` } },
-    ],
-  };
-  let order = [['id', 'ASC']];
-  if (keyFilter === 'terbaru'){
-    whereCondition = {
-      ...whereCondition,
-      createdAt: {[Op.gte]: new Date(new Date() - 7 * 24 * 60 * 60 * 1000)}
-    }
-  } 
-  else if (keyFilter === 'terlaris'){
-    order = [['id', 'DESC']];
-  }
   try {
     const { count, rows } = await Product.findAndCountAll(
       {
         offset: (page - 1) * limit,
-        limit: limit,
-        where: whereCondition,
-        order: order,
-      }
+        limit,
+        where: {
+          [Op.or]: [
+            { productName: { [Op.iLike]: `%${keyword}%` } },
+          ],
+        },
+      },
     );
     const totalPages = Math.ceil(count / limit);
     if (!rows) {
@@ -171,6 +158,31 @@ const getProduct = async (
       totalPages,
       totalCount: count,
       data: rows,
+    });
+    return response;
+  } catch (err) {
+    console.log(err.message);
+    const response = res.status(500).json({
+      status: 'failed',
+      message: 'Service unavailable.',
+    });
+    return response;
+  }
+};
+
+const getProductAdmin = async (
+  /** @type import("express").Request */
+  req,
+  /** @type import("express").Response */
+  res,
+) => {
+  try {
+    const products = await Product.findAll();
+
+    const response = res.status(200).json({
+      status: 'success',
+      message: 'Fetch data successfull',
+      data: products,
     });
     return response;
   } catch (err) {
@@ -489,4 +501,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   addNewProduct,
+  getProductAdmin,
 };
