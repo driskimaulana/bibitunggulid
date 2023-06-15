@@ -1,17 +1,23 @@
 package com.example.hiazee.ui.activities
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.content.res.AppCompatResources
+import com.example.hiazee.R
 import com.example.hiazee.data.remote.models.UserData
 import com.example.hiazee.databinding.ActivityLoginBinding
 import com.example.hiazee.ui.viewmodels.AuthViewModel
 import com.example.hiazee.utils.ViewModelFactory
 import com.example.hiazee.utils.Result
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -24,11 +30,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.buttonMasuk.setOnClickListener {
-            val email = binding.textFieldEmail.editText?.text.toString()
-            val password = binding.textFieldPassword.editText?.text.toString()
-            login(email, password)
-        }
+        initActionView()
     }
 
     private fun login(email: String, password: String) {
@@ -36,16 +38,16 @@ class LoginActivity : AppCompatActivity() {
             if (it != null) {
                 when (it) {
                     is Result.Loading -> {
-                        // binding.loadingProgressBar.visibility = View.VISIBLE
+                        loadingState(true)
                     }
                     is Result.Success -> {
-                        // binding.loadingProgressBar.visibility = View.GONE
+                        loadingState(false)
                         saveUserData(it.data)
 
                         startMainActivity()
                     }
                     is Result.Error -> {
-                        // binding.loadingProgressBar.visibility = View.GONE
+                        loadingState(false)
                         Toast.makeText(this, it.error, Toast.LENGTH_SHORT)
                             .show()
                     }
@@ -62,5 +64,27 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun initActionView() {
+        binding.buttonMasuk.setOnClickListener {
+            val email = binding.textFieldEmail.editText?.text.toString()
+            val password = binding.customPasswordInput.getPassword()
+            login(email, password)
+        }
+    }
+
+    private fun loadingState(isLoading: Boolean) {
+        if (isLoading) {
+            binding.apply {
+                submitTextview.visibility = View.INVISIBLE
+                submitLoading.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                submitTextview.visibility = View.VISIBLE
+                submitLoading.visibility = View.GONE
+            }
+        }
     }
 }
