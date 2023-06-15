@@ -24,6 +24,13 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     fun login(email: String, password: String) = userRepository.login(email, password)
 
+    fun register(
+        fullname: String,
+        email: String,
+        phone: String,
+        password: String
+    ) = userRepository.register(fullname, email, phone, password)
+
     fun saveUserData(userdata: UserData) {
         viewModelScope.launch {
             userRepository.saveUserData(userdata)
