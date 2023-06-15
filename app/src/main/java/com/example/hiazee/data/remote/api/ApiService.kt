@@ -12,7 +12,7 @@ interface ApiService {
     fun login(@Body request: LoginRequest): Call<ApiResponse<UserData>>
 
     @GET("product")
-    suspend fun getAllProducts(): ApiResponse<List<ProductModel>>
+    suspend fun getAllProducts(@Query("keyword") keyword: String?): ApiResponse<List<ProductModel>>
 
     @GET("product?keyfilter=terlaris")
     suspend fun getProductsTerlaris(): ApiResponse<List<ProductModel>>
@@ -47,9 +47,26 @@ interface ApiService {
         @Path("id") id: String
     ): ApiResponseNoData
 
+    @GET("carts")
+    suspend fun getCart(
+        @Header("Authorization") token: String,
+    ): ApiResponse<List<CartModel>>
+
     @POST("carts")
     fun addProductToCart(
         @Header("Authorization") token: String,
         @Body request: AddProductToCartRequest
     ): Call<ApiResponse<CartModel>>
+
+    @DELETE("carts/{id}")
+    suspend fun deleteProductFromCart(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): ApiResponseNoData
+
+    @PUT("carts/{id}")
+    suspend fun reduceProductFromCart(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): ApiResponseNoData
 }

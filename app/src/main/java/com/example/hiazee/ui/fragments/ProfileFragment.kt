@@ -63,7 +63,6 @@ class ProfileFragment : Fragment() {
             viewModel.getUserData().collect { userData ->
                 if (userData.token != "") {
                     binding.profileFullname.text = userData.fullName
-                    Log.d("DEBUGNOVAL", userData.fullName)
                 }
             }
         }

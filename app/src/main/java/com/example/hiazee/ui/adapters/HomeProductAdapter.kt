@@ -53,7 +53,7 @@ class HomeProductAdapter(private val context: Context, private val productList: 
         holder.productPrice.text = "Rp $formattedPrice"
 
         holder.addButton.setOnClickListener {
-            itemClickListener?.onAddButtonClicked(product.id)
+            itemClickListener?.onAddButtonClicked(product.id.toString())
         }
 
         holder.productCard.setOnClickListener{
@@ -72,6 +72,6 @@ class HomeProductAdapter(private val context: Context, private val productList: 
     }
 
     interface ItemClickListener {
-        fun onAddButtonClicked(productId: Int)
+        fun onAddButtonClicked(productId: String)
     }
 }

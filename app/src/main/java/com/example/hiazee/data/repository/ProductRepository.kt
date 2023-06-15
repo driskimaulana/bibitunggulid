@@ -10,11 +10,11 @@ class ProductRepository private constructor(
     private val apiService: ApiService,
 ) {
 
-    fun getAllProducts(): LiveData<Result<List<ProductModel>>> = liveData {
+    fun getAllProducts(key: String = ""): LiveData<Result<List<ProductModel>>> = liveData {
         emit(Result.Loading)
 
         try {
-            val response = apiService.getAllProducts()
+            val response = apiService.getAllProducts(key)
             if (response.status != "error") {
                 emit(Result.Success(response.data))
             } else {

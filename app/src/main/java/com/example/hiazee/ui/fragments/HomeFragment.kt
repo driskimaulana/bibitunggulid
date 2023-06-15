@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -26,6 +27,7 @@ import com.example.hiazee.data.remote.models.UserData
 import com.example.hiazee.databinding.FragmentHomeBinding
 import com.example.hiazee.ui.activities.LoginActivity
 import com.example.hiazee.ui.activities.MainActivity
+import com.example.hiazee.ui.activities.SearchActivity
 import com.example.hiazee.ui.adapters.HomeProductAdapter
 import com.example.hiazee.ui.adapters.SliderAdapter
 import com.example.hiazee.ui.viewmodels.AuthViewModel
@@ -76,6 +78,7 @@ class HomeFragment : Fragment() {
         }
 
         initSliderHome(view)
+        initActionView()
 
         viewModel.getProductsTerlaris().observe(this) {
             if (it != null) {
@@ -164,8 +167,8 @@ class HomeFragment : Fragment() {
         productAdapter1 = HomeProductAdapter(requireContext(), productList)
 
         productAdapter1.setItemClickListener(object : HomeProductAdapter.ItemClickListener {
-            override fun onAddButtonClicked(productId: Int) {
-                addProductToCart(productId.toString())
+            override fun onAddButtonClicked(productId: String) {
+                addProductToCart(productId)
             }
         })
         recyclerView1.adapter = productAdapter1
@@ -179,8 +182,8 @@ class HomeFragment : Fragment() {
         productAdapter2 = HomeProductAdapter(requireContext(), productList)
 
         productAdapter2.setItemClickListener(object : HomeProductAdapter.ItemClickListener {
-            override fun onAddButtonClicked(productId: Int) {
-                addProductToCart(productId.toString())
+            override fun onAddButtonClicked(productId: String) {
+                addProductToCart(productId)
             }
         })
         recyclerView2.adapter = productAdapter2
@@ -210,6 +213,23 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
+    }
+
+    private fun initActionView() {
+
+        binding.searchInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                goToAllProductPage(binding.searchInput.text.toString())
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
+    }
+
+    private fun goToAllProductPage(key: String){
+        val intent = Intent(requireContext(), SearchActivity::class.java)
+        intent.putExtra("key", key)
+        startActivity(intent)
     }
 
     private fun loadingState1(isLoading: Boolean) {

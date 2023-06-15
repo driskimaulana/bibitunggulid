@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F6F6F6">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,6 +40,7 @@
                         android:drawableStart="@drawable/ic_search"
                         android:drawablePadding="12dp"
                         android:hint="@string/cari_tanaman_hias"
+                        android:imeOptions="actionSearch"
                         android:inputType="text"
                         android:padding="12dp"
                         android:textSize="12sp"
@@ -120,7 +122,7 @@
                     android:paddingHorizontal="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/terlarisContainer"/>
+                    app:layout_constraintTop_toBottomOf="@+id/terlarisContainer" />
 
                 <ProgressBar
                     android:id="@+id/homeProductRecyclerViewLoading1"

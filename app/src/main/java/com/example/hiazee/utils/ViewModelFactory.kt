@@ -47,6 +47,15 @@ class ViewModelFactory private constructor(
                 productRepository,
                 cartRepository
             ) as T
+            modelClass.isAssignableFrom(CartViewModel::class.java) -> CartViewModel(
+                userRepository,
+                cartRepository
+            ) as T
+            modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(
+                userRepository,
+                productRepository,
+                cartRepository
+            ) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
