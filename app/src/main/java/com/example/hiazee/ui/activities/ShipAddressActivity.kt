@@ -2,6 +2,7 @@ package com.example.hiazee.ui.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.LocusId
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
