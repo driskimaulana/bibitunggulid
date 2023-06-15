@@ -6,11 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.hiazee.data.repository.CartRepository
-import com.example.hiazee.data.repository.OrderListRepository
-import com.example.hiazee.data.repository.ProductRepository
-import com.example.hiazee.data.repository.ShipAddressRepository
-import com.example.hiazee.data.repository.UserRepository
+import com.example.hiazee.data.repository.*
 import com.example.hiazee.di.Injection
 import com.example.hiazee.ui.viewmodels.*
 
@@ -19,7 +15,9 @@ class ViewModelFactory private constructor(
     private val productRepository: ProductRepository,
     private val shipAddressRepository: ShipAddressRepository,
     private val cartRepository: CartRepository,
-    private val orderListRepository: OrderListRepository
+    private val orderListRepository: OrderListRepository,
+    private val mlRepository: MLRepository
+
 ) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -62,6 +60,9 @@ class ViewModelFactory private constructor(
                 shipAddressRepository,
                 orderListRepository
             ) as T
+            modelClass.isAssignableFrom(CameraViewModel::class.java) -> CameraViewModel(
+                mlRepository
+            ) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
@@ -78,8 +79,9 @@ class ViewModelFactory private constructor(
                     Injection.provideProductRepository(),
                     Injection.provideShipAddressRepository(),
                     Injection.provideCartRepository(),
-                    Injection.provideOrderListRepository()
-                )
+                    Injection.provideOrderListRepository(),
+                    Injection.provideMLRepository()
+                    )
             }.also {
                 instance = it
             }
