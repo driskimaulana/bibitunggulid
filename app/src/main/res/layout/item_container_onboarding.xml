@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="30dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/ic_hiazeelogo_onboarding_foreground"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp"
+        android:id="@+id/hiazeeLogo"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/hiazeeLogo"
+        android:text="Title"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textColor="@color/main_green"
+        app:layout_constraintTop_toBottomOf="@id/hiazeeLogo"
+        app:layout_constraintEnd_toEndOf="@id/hiazeeLogo"
+        android:id="@+id/onboardingTitle"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp" />
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:id="@+id/onboardingImage"
+        app:layout_constraintTop_toBottomOf="@+id/onboardingTitle"
+        app:layout_constraintEnd_toEndOf="@id/onboardingTitle"
+        app:layout_constraintStart_toStartOf="@id/onboardingTitle"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/onboardingImage"
+        android:text="Title"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        android:textColor="@color/black_head"
+        app:layout_constraintTop_toBottomOf="@id/onboardingImage"
+        app:layout_constraintEnd_toEndOf="@id/onboardingImage"
+        android:id="@+id/onboardingDescription"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/primary_button"
+        app:layout_constraintTop_toBottomOf="@id/onboardingDescription"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/onboardingDescription"
+        app:layout_constraintEnd_toEndOf="@id/onboardingDescription"
+        android:text="Gabung Sekarang"
+        android:textAllCaps="false"
+        android:id="@+id/btnGabungSekarang" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

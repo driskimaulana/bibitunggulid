@@ -122,22 +122,10 @@ class HomeFragment : Fragment() {
         sliderList = ArrayList()
 
         sliderAdapter = SliderAdapter(sliderList, requireContext())
-
-        sliderList.add(SliderModel(0, "https://source.unsplash.com/random/400x230/?plants"))
-        sliderList.add(SliderModel(1, "https://source.unsplash.com/random/400x230/?nature,plants"))
-        sliderList.add(
-            SliderModel(
-                2,
-                "https://source.unsplash.com/random/400x230/?greenery,plants"
-            )
-        )
-        sliderList.add(
-            SliderModel(
-                3,
-                "https://source.unsplash.com/random/400x230/?gardening,plants"
-            )
-        )
-        sliderList.add(SliderModel(4, "https://source.unsplash.com/random/400x230/?flowers,plants"))
+        sliderList.add(SliderModel(0, "https://storage.googleapis.com/homepage_banner/Banner%202.png"))
+        sliderList.add(SliderModel(1, "https://storage.googleapis.com/homepage_banner/Banner%203.png"))
+        sliderList.add(SliderModel(2, "https://storage.googleapis.com/homepage_banner/Banner%204.png"))
+        sliderList.add(SliderModel(3, "https://storage.googleapis.com/homepage_banner/Banner%205.png"))
 
         sliderAdapter.notifyDataSetChanged()
 
