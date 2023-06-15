@@ -83,4 +83,12 @@
     <string name="detail_pembayaran">Detail Pembayaran</string>
     <string name="metode_pembayaran">Metode Pembayaran</string>
     <string name="keluar">Keluar</string>
+    <string name="failed_open_camera">Failed Open Camera</string>
+    <string name="failed_take_picture">Fails to take picture</string>
+    <string name="switch_camera">Switch camera</string>
+    <string name="camera_x">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="doesnt_get_permission">doesn\'t get permission</string>
+    <string name="choose_picture">Choose Picture</string>
+    <string name="find">Find</string>
 </resources>
