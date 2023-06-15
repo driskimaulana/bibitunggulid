@@ -77,7 +77,7 @@ const Product = () => {
 
   useEffect(() => {
     // Axios.get('http://localhost:5000/product/').then((response) => {
-    Axios.get('https://dev-bibitunggulid-zldx7crkfq-et.a.run.app/product/').then((response) => {
+    Axios.get('https://dev-bibitunggulid-zldx7crkfq-et.a.run.app/product/admin/').then((response) => {
       setprods(response.data.data);
     });
   }, []);
