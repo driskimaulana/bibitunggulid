@@ -17,6 +17,7 @@ import com.example.hiazee.R
 import com.example.hiazee.data.remote.models.ProductModel
 import com.example.hiazee.ui.activities.DetailProductActivity
 import com.example.hiazee.ui.activities.OrderListActivity
+import com.example.hiazee.utils.showPriceIndoFormat
 import java.text.DecimalFormat
 
 class HomeProductAdapter(private val context: Context, private val productList: List<ProductModel>) :
@@ -48,9 +49,7 @@ class HomeProductAdapter(private val context: Context, private val productList: 
             .into(holder.productImage)
         holder.productName.text = product.productName
 
-        val decimalFormat = DecimalFormat("#,###")
-        val formattedPrice = decimalFormat.format(product.unitPrice.toInt())
-        holder.productPrice.text = "Rp $formattedPrice"
+        holder.productPrice.text = showPriceIndoFormat(product.unitPrice.toInt())
 
         holder.addButton.setOnClickListener {
             itemClickListener?.onAddButtonClicked(product.id.toString())

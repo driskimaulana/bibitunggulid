@@ -25,6 +25,7 @@ import com.example.hiazee.ui.viewmodels.DetailProductViewModel
 import com.example.hiazee.utils.Result
 import com.example.hiazee.utils.ViewModelFactory
 import com.example.hiazee.utils.calculateTotalPrice
+import com.example.hiazee.utils.formatPrice
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.*
@@ -39,6 +40,8 @@ class CartActivity : AppCompatActivity() {
 
     private lateinit var recyclerViewCart: RecyclerView
     private lateinit var recyclerViewCartAdapter: CartAdapter
+
+    private var canCheckout: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,8 +72,11 @@ class CartActivity : AppCompatActivity() {
                         is Result.Success -> {
                             loadingState1(false)
                             initCartItemList(it.data)
-                            binding.totalPriceCart.text = calculateTotalPrice(it.data)
-                            binding.totalItems.text = "${it.data.size.toString()} Items"
+
+                            binding.totalPriceCart.text = formatPrice(calculateTotalPrice(it.data))
+                            binding.totalItems.text = "${it.data.size} Items"
+
+                            canCheckout = it.data.isNotEmpty()
                         }
                         is Result.Error -> {
                             loadingState1(false)
@@ -88,8 +94,12 @@ class CartActivity : AppCompatActivity() {
         }
 
         binding.buttonCheckout.setOnClickListener {
-            val intent = Intent(this, CheckoutActivity::class.java)
-            startActivity(intent)
+            if (canCheckout) {
+                val intent = Intent(this, CheckoutActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Keranjang kamu kosong!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

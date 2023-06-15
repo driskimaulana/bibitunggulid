@@ -1,10 +1,7 @@
 package com.example.hiazee.data.remote.api
 
 import com.example.hiazee.data.remote.models.*
-import com.example.hiazee.data.remote.requests.AddProductToCartRequest
-import com.example.hiazee.data.remote.requests.AddShipAddressRequest
-import com.example.hiazee.data.remote.requests.LoginRequest
-import com.example.hiazee.data.remote.requests.RegisterRequest
+import com.example.hiazee.data.remote.requests.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -62,6 +59,12 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") orderId: Int,
     ): ApiResponse<Nothing>
+
+    @POST("orders")
+    fun addOrder(
+        @Header("Authorization") token: String,
+        @Body request: OrderRequest
+    ): Call<ApiResponse<OrderResponse>>
 
     @DELETE("shipaddress/{id}")
     suspend fun deleteShipAddress(

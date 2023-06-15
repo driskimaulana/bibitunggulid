@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrow_back"
-        app:tint="@color/main_green" />
+        app:tint="@color/main_gold" />
 
     <TextView
         android:id="@+id/textView9"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/_4_items"
-        android:textColor="@color/main_green"
+        android:textColor="@color/main_gold"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imageView13"
@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_mode_horiz"
-        app:tint="@color/main_green" />
+        app:tint="@color/main_gold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewShipAddress"

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.hiazee.R
 import com.example.hiazee.data.remote.models.CartModel
-import java.text.DecimalFormat
+import com.example.hiazee.utils.showPriceIndoFormat
 
 class CartAdapter(private val context: Context, private val cartList: List<CartModel>) :
     RecyclerView.Adapter<CartAdapter.ViewHolder>() {
@@ -45,11 +45,7 @@ class CartAdapter(private val context: Context, private val cartList: List<CartM
             .into(holder.productImage)
 
         holder.productName.text = cartItem.productName
-
-        val decimalFormat = DecimalFormat("#,###")
-        val formattedPrice = decimalFormat.format(cartItem.unitPrice.toInt())
-        holder.productPrice.text = "Rp $formattedPrice"
-
+        holder.productPrice.text = showPriceIndoFormat(cartItem.unitPrice)
         holder.itemCount.text = cartItem.count.toString()
 
         holder.deleteButton.setOnClickListener {

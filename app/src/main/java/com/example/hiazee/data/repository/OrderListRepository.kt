@@ -6,8 +6,14 @@ import androidx.lifecycle.liveData
 import com.example.hiazee.data.remote.api.ApiService
 import com.example.hiazee.data.remote.models.OrderDetailsModel
 import com.example.hiazee.data.remote.models.OrderModel
+import com.example.hiazee.data.remote.models.OrderResponse
 import com.example.hiazee.data.remote.models.PaymentDetailsModel
+import com.example.hiazee.data.remote.requests.AddProductToCartRequest
+import com.example.hiazee.data.remote.requests.OrderRequest
+import com.example.hiazee.data.remote.requests.ProductItem
 import com.example.hiazee.utils.Result
+import com.example.hiazee.utils.extractErrorMessage
+import retrofit2.awaitResponse
 
 
 class OrderListRepository private constructor(
@@ -76,6 +82,30 @@ class OrderListRepository private constructor(
                 emit(Result.Error(e.message.toString()))
             }
         }
+
+    fun addOrder(
+        token: String,
+        products: List<ProductItem>,
+        shipAddressId: Int
+    ): LiveData<Result<OrderResponse>> = liveData {
+        emit(Result.Loading)
+        val request = OrderRequest(products, shipAddressId)
+
+        try {
+            val response = apiService.addOrder("Bearer $token", request).awaitResponse()
+            if (response.isSuccessful) {
+                val apiResponse = response.body()
+                if (apiResponse != null) {
+                    emit(Result.Success(apiResponse.data))
+                }
+            } else {
+                val errorResponse = response.errorBody()?.string()
+                emit(Result.Error(extractErrorMessage(errorResponse)))
+            }
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
 
     companion object {
         @Volatile

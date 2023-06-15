@@ -1,8 +1,10 @@
 package com.example.hiazee.utils
 
 import com.example.hiazee.data.remote.models.CartModel
+import com.example.hiazee.data.remote.requests.ProductItem
 import org.json.JSONException
 import org.json.JSONObject
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 
@@ -15,15 +17,35 @@ fun extractErrorMessage(errorResponse: String?): String {
     }
 }
 
-fun calculateTotalPrice(cartItemList: List<CartModel>): String {
+fun calculateTotalPrice(cartItemList: List<CartModel>): Int {
     var totalPrice = 0
     for (cartItem in cartItemList) {
         totalPrice += cartItem.unitPrice * cartItem.count
     }
-    return formatPrice(totalPrice)
+    return totalPrice
 }
 
 fun formatPrice(price: Int): String {
     val formattedPrice = NumberFormat.getNumberInstance(Locale.getDefault()).format(price)
     return "Rp $formattedPrice"
+}
+
+fun showPriceIndoFormat(price: Int): String{
+    val decimalFormat = DecimalFormat("#,###")
+    val formattedPrice = decimalFormat.format(price)
+    return "Rp $formattedPrice"
+}
+
+fun convertToProductItemList(cartItemList: List<CartModel>): List<ProductItem> {
+    val productItemList = mutableListOf<ProductItem>()
+
+    for (cartItem in cartItemList) {
+        val productItem = ProductItem(
+            id = cartItem.productId,
+            quantity = cartItem.count
+        )
+        productItemList.add(productItem)
+    }
+
+    return productItemList
 }

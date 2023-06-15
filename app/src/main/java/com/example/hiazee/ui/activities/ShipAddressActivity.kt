@@ -1,5 +1,6 @@
 package com.example.hiazee.ui.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.LocusId
@@ -57,6 +58,7 @@ class ShipAddressActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun renderShipAddressList(){
         viewModel.getAllShipAddress(userData.token).observe(this) {
             if (it != null) {
@@ -67,6 +69,7 @@ class ShipAddressActivity : AppCompatActivity() {
                     is Result.Success -> {
                         loadingState(false)
                         initShipAddressRecyclerView(it.data)
+                        binding.textView9.text = "${it.data.size} Items"
                     }
                     is Result.Error -> {
                         loadingState(false)
