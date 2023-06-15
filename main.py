@@ -64,7 +64,7 @@ def getClass(id):
     elif int(id) == 13:
         dataClass = "Phalaenopsisamabilis"
     elif int(id) == 14:
-        dataClass = "Zamioculcas" 
+        dataClass = " " 
 
     return dataClass
 
