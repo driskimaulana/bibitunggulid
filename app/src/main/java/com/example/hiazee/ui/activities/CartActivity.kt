@@ -74,7 +74,7 @@ class CartActivity : AppCompatActivity() {
                             initCartItemList(it.data)
 
                             binding.totalPriceCart.text = formatPrice(calculateTotalPrice(it.data))
-                            binding.totalItems.text = "${it.data.size} Items"
+                            binding.totalItems.text = "${it.data.size} Item"
 
                             canCheckout = it.data.isNotEmpty()
                         }

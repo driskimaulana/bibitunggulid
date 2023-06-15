@@ -22,7 +22,7 @@
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#D9ECD8"
+                android:background="#83D350"
                 android:orientation="vertical"
                 android:paddingVertical="16dp">
 

@@ -69,7 +69,7 @@ class ShipAddressActivity : AppCompatActivity() {
                     is Result.Success -> {
                         loadingState(false)
                         initShipAddressRecyclerView(it.data)
-                        binding.textView9.text = "${it.data.size} Items"
+                        binding.textView9.text = "${it.data.size} Item"
                     }
                     is Result.Error -> {
                         loadingState(false)

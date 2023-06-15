@@ -5,6 +5,7 @@ import com.example.hiazee.data.remote.requests.ProductItem
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
 import java.util.*
 
@@ -30,10 +31,13 @@ fun formatPrice(price: Int): String {
     return "Rp $formattedPrice"
 }
 
-fun showPriceIndoFormat(price: Int): String{
-    val decimalFormat = DecimalFormat("#,###")
+fun showPriceIndoFormat(price: Int): String {
+    val decimalFormatSymbols = DecimalFormatSymbols().apply {
+        groupingSeparator = '.'
+    }
+    val decimalFormat = DecimalFormat("#,###", decimalFormatSymbols)
     val formattedPrice = decimalFormat.format(price)
-    return "Rp $formattedPrice"
+    return "Rp. $formattedPrice"
 }
 
 fun convertToProductItemList(cartItemList: List<CartModel>): List<ProductItem> {

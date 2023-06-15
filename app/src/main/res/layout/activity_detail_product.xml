@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrow_back"
-        app:tint="@color/main_green" />
+        app:tint="@color/main_gold" />
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -94,11 +94,13 @@
 
         <FrameLayout
             android:id="@+id/beliSekarangButton"
-            android:layout_width="184dp"
+            android:layout_width="0dp"
             android:layout_height="60dp"
+            android:layout_marginStart="48dp"
             android:background="@drawable/primary_button_not_rounded"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cartButton"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -117,13 +119,13 @@
             android:id="@+id/cartButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="48dp"
             android:layout_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/beliSekarangButton"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_cart"
-            app:tint="@color/main_gold" />
+            app:tint="@color/main_green" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar

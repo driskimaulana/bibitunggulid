@@ -48,10 +48,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/secondary_button"
+                android:background="@drawable/product_card_button"
                 android:minHeight="32dp"
-                android:text="@string/add"
-                android:textColor="@color/main_gold"
+                android:text="Tambah +"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
 
