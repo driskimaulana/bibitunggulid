@@ -97,11 +97,15 @@ class OrderListActivity : AppCompatActivity() {
                 )
             ),
 
-
             )
 
         renderOrderList()
-
+        val pullToRefresh = binding.swiperefresh
+        pullToRefresh.setOnRefreshListener { // your code
+            pullToRefresh.isRefreshing = false
+            renderOrderList()
+            Log.d("driskidebug", "onCreate: Refresh")
+        }
 
     }
 

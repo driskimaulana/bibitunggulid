@@ -17,4 +17,9 @@ class OrderListViewModel(
 
     fun getCustomerOrderList(token: String) = orderListRepository.getCustomerOrderList(token)
 
+    fun getCustomerOrderDetails(token: String, orderId: Int) = orderListRepository.getCustomerOrderDetails(token, orderId)
+
+    fun getCustomerOrderPaymentDetails(token: String, orderId: Int) = orderListRepository.getCustomerOrderPaymentDetails(token, orderId)
+    fun changeOrderStatusToFinish(token: String, orderId: Int) = orderListRepository.changeOrderStatusToFinish(token, orderId)
+
 }

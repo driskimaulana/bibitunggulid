@@ -28,4 +28,24 @@ interface ApiService {
     suspend fun getCustomerOrderList(
         @Header("Authorization") token: String,
     ): ApiResponse<List<OrderModel>>
+
+    @GET("orders/details/{id}")
+    suspend fun getCustomerOrderDetails(
+        @Header("Authorization") token: String,
+        @Path("id") orderId: Int,
+    ): ApiResponse<OrderDetailsModel>
+
+    @GET("orders/details/payment/{id}")
+    suspend fun getCustomerOrderPaymentDetails(
+        @Header("Authorization") token: String,
+        @Path("id") orderId: Int,
+    ): ApiResponse<PaymentDetailsModel>
+
+    @PUT("orders/finish/{id}")
+    suspend fun changeOrderStatusToFinish(
+        @Header("Authorization") token: String,
+        @Path("id") orderId: Int,
+    ): ApiResponse<Nothing>
+
+
 }

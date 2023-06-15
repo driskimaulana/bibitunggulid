@@ -28,7 +28,7 @@
                     android:layout_width="86dp"
                     android:layout_height="86dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@drawable/circle_background"
+                    android:background="@mipmap/ic_profiledefault_foreground"
                     android:contentDescription="@string/profile_image"
                     tools:srcCompat="@tools:sample/avatars" />
 
@@ -295,11 +295,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:background="@drawable/secondary_button"
+                android:background="@drawable/warning_button"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                android:text="@string/logout"
-                android:textColor="@color/main_green"
+                android:text="@string/keluar"
+                android:textColor="@color/red"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
