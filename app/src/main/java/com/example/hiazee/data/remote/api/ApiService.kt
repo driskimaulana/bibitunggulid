@@ -4,12 +4,16 @@ import com.example.hiazee.data.remote.models.*
 import com.example.hiazee.data.remote.requests.AddProductToCartRequest
 import com.example.hiazee.data.remote.requests.AddShipAddressRequest
 import com.example.hiazee.data.remote.requests.LoginRequest
+import com.example.hiazee.data.remote.requests.RegisterRequest
 import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiService {
     @POST("authentication/signin")
     fun login(@Body request: LoginRequest): Call<ApiResponse<UserData>>
+
+    @POST("authentication/signup")
+    fun register(@Body request: RegisterRequest): Call<ApiResponse<UserData>>
 
     @GET("product")
     suspend fun getAllProducts(@Query("keyword") keyword: String?): ApiResponse<List<ProductModel>>

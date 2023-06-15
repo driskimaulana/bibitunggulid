@@ -26,6 +26,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.activities.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.OrderPaymentDetailsActivity"
             android:exported="false"
             android:label="@string/title_activity_order_payment_details"
