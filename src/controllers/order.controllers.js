@@ -310,16 +310,14 @@ const getOrderPaymentDetails = async (
       return response;
     }
 
-    const response = res.status(201).json({
+    const response = res.status(200).json({
       status: 'success',
       message: 'Order Success',
       data: {
-        payment: {
-          status: paymentDetails.data.status,
-          amount: paymentDetails.data.amount,
-          url: paymentDetails.data.invoice_url,
-          expireDate: paymentDetails.data.expire_date,
-        },
+        status: paymentDetails.data.status,
+        amount: paymentDetails.data.amount,
+        url: paymentDetails.data.invoice_url,
+        expireDate: paymentDetails.data.expire_date,
       },
     });
     return response;
