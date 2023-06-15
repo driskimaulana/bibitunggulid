@@ -62,7 +62,7 @@ def getClass(id):
     elif int(id) == 12:
         dataClass = "Spathiphyllum"
     elif int(id) == 13:
-        dataClass = "Whiteorchids"
+        dataClass = "Phalaenopsisamabilis"
     elif int(id) == 14:
         dataClass = "Zamioculcas" 
 
