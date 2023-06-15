@@ -7,6 +7,8 @@
 * Date: June 09, 2023
 * Description: This is controllers for order functionality
 * */
+const { Op } = require('sequelize');
+const { raw } = require('body-parser');
 const {
   Order, OrderDetail, Customers, Product, sequelize, OrderStatus,
   Shipment,
@@ -50,18 +52,30 @@ const getAllOrder = async (
         { where: { orderId: ordersData[i].id } },
       );
       ordersData[i].products = [];
+      const prodsId = [];
+      prods.map((e) => prodsId.push(e.productId));
+
+      ordersData[i].products = await Product.findAll({
+        attributes: ['id', 'productName', 'pictures', 'unitPrice'],
+        where: {
+          id: {
+            [Op.in]: prodsId,
+          },
+        },
+        raw: true,
+      });
 
       // eslint-disable-next-line guard-for-in
-      for (const j in prods) {
-        const prodDetails = await Product.findOne(
-          {
-            attributes: ['productName', 'pictures', 'unitPrice'],
-            where: { id: prods[j].productId },
-          },
+      //   for (const j in prods) {
+      //     const prodDetails = await Product.findOne(
+      //       {
+      //         attributes: ['productName', 'pictures', 'unitPrice'],
+      //         where: { id: prods[j].productId },
+      //       },
 
-        );
-        ordersData[i].products.push({ ...prodDetails.dataValues, quantity: prods[j].quantity });
-      }
+    //     );
+    //     ordersData[i].products.push({ ...prodDetails.dataValues, quantity: prods[j].quantity });
+    //   }
     }
 
     const response = res.status(200).json({
@@ -207,18 +221,30 @@ const getOrderDetails = async (
         { where: { orderId: ordersData[i].id } },
       );
       ordersData[i].products = [];
+      const prodsId = [];
+      prods.map((e) => prodsId.push(e.productId));
+
+      ordersData[i].products = await Product.findAll({
+        attributes: ['id', 'productName', 'pictures', 'unitPrice'],
+        where: {
+          id: {
+            [Op.in]: prodsId,
+          },
+        },
+        raw: true,
+      });
 
       // eslint-disable-next-line guard-for-in
-      for (const j in prods) {
-        const prodDetails = await Product.findOne(
-          {
-            attributes: ['id', 'productName', 'pictures', 'unitPrice'],
-            where: { id: prods[j].productId },
-          },
+      // for (const j in prods) {
+      //   const prodDetails = await Product.findOne(
+      //     {
+      //       attributes: ['id', 'productName', 'pictures', 'unitPrice'],
+      //       where: { id: prods[j].productId },
+      //     },
 
-        );
-        ordersData[i].products.push({ ...prodDetails.dataValues, quantity: prods[j].quantity });
-      }
+      //   );
+      //   ordersData[i].products.push({ ...prodDetails.dataValues, quantity: prods[j].quantity });
+      // }
     }
 
     let shipment = null;
@@ -363,21 +389,39 @@ const getOrderByCustomerId = async (
     // eslint-disable-next-line guard-for-in
     for (const i in ordersData) {
       const prods = await OrderDetail.findAll(
-        { where: { orderId: ordersData[i].id } },
+        {
+          attributes: ['productId'],
+          where: { orderId: ordersData[i].id },
+          raw: true,
+        },
+
       );
       ordersData[i].products = [];
 
-      // eslint-disable-next-line guard-for-in
-      for (const j in prods) {
-        const prodDetails = await Product.findOne(
-          {
-            attributes: ['id', 'productName', 'pictures', 'unitPrice'],
-            where: { id: prods[j].productId },
-          },
+      const prodsId = [];
+      prods.map((e) => prodsId.push(e.productId));
 
-        );
-        ordersData[i].products.push({ ...prodDetails.dataValues, quantity: prods[j].quantity });
-      }
+      ordersData[i].products = await Product.findAll({
+        attributes: ['id', 'productName', 'pictures', 'unitPrice'],
+        where: {
+          id: {
+            [Op.in]: prodsId,
+          },
+        },
+        raw: true,
+      });
+
+      // eslint-disable-next-line guard-for-in
+      // for (const j in prods) {
+      //   const prodDetails = await Product.findOne(
+      //     {
+      //       attributes: ['id', 'productName', 'pictures', 'unitPrice'],
+      //       where: { id: prods[j].productId },
+      //     },
+
+      //   );
+      //   ordersData[i].products.push({ ...prodDetails.dataValues, quantity: prods[j].quantity });
+      // }
     }
 
     const response = res.status(200).json({
