@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.hiazee.data.remote.models.ProductInOrderListModel
 import com.example.hiazee.R
 
-class ProductInOrderDetailsAdapter(private  val context: Context, private val productList: List<ProductInOrderListModel>) :
+class ProductInOrderDetailsAdapter(private  val context: Context, private val productList: Array<ProductInOrderListModel>) :
  RecyclerView.Adapter<ProductInOrderDetailsAdapter.ViewHolder>() {
 
      inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){

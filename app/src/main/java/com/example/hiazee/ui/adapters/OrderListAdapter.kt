@@ -49,9 +49,10 @@ class OrderListAdapter(private val context: Context, private val orderList: List
 
         val calendar = Calendar.getInstance()
         calendar.time = date
-        holder.orderDate.text = order.createdAt
         val dayOfWeek = SimpleDateFormat("EEEE", Locale("id", "ID")).format(date)
-        holder.orderDate.text = "${dayOfWeek}, ${date.date}-${date.month}-${calendar.get(Calendar.YEAR)}"
+        val monthOfYear = SimpleDateFormat("MMM", Locale("id", "ID")).format(date)
+
+        holder.orderDate.text = "${dayOfWeek}, ${date.date}, ${monthOfYear} ${calendar.get(Calendar.YEAR)}"
 
         var total = order.freight
         for (product in order.products) {
@@ -60,14 +61,16 @@ class OrderListAdapter(private val context: Context, private val orderList: List
         holder.totalBelanja.text = "Total Belanja: Rp $total"
         if (order.products.size == 1) {
             holder.otherProduct.visibility = View.GONE
+        }else{
+            holder.otherProduct.text = "+${order.products.size-1} barang"
         }
 
         Glide.with(context).load(order.products[0].pictures[0]).into(holder.prodctImage)
 
         holder.itemView.setOnClickListener {
-            Log.d("driskidebug", order.id.toString())
             val intent = Intent(context, OrderDetailsActivity::class.java)
-            intent.putExtra("id", order.id)
+            intent.putExtra("id", order.id.toString())
+
             context.startActivity(intent)
         }
 
