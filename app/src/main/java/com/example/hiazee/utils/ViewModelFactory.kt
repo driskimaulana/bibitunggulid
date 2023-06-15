@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.hiazee.data.repository.CartRepository
 import com.example.hiazee.data.repository.OrderListRepository
 import com.example.hiazee.data.repository.ProductRepository
 import com.example.hiazee.data.repository.ShipAddressRepository
@@ -17,6 +18,7 @@ class ViewModelFactory private constructor(
     private val userRepository: UserRepository,
     private val productRepository: ProductRepository,
     private val shipAddressRepository: ShipAddressRepository,
+    private val cartRepository: CartRepository,
     private val orderListRepository: OrderListRepository
 ) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
@@ -26,7 +28,8 @@ class ViewModelFactory private constructor(
             modelClass.isAssignableFrom(AuthViewModel::class.java) -> AuthViewModel(userRepository) as T
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> HomeViewModel(
                 userRepository,
-                productRepository
+                productRepository,
+                cartRepository
             ) as T
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(
                 userRepository
@@ -38,6 +41,20 @@ class ViewModelFactory private constructor(
             modelClass.isAssignableFrom(OrderListViewModel::class.java) -> OrderListViewModel(
                 userRepository,
                 orderListRepository
+            ) as T
+            modelClass.isAssignableFrom(DetailProductViewModel::class.java) -> DetailProductViewModel(
+                userRepository,
+                productRepository,
+                cartRepository
+            ) as T
+            modelClass.isAssignableFrom(CartViewModel::class.java) -> CartViewModel(
+                userRepository,
+                cartRepository
+            ) as T
+            modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(
+                userRepository,
+                productRepository,
+                cartRepository
             ) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
@@ -54,6 +71,7 @@ class ViewModelFactory private constructor(
                     Injection.provideUserRepository(context.dataStore),
                     Injection.provideProductRepository(),
                     Injection.provideShipAddressRepository(),
+                    Injection.provideCartRepository(),
                     Injection.provideOrderListRepository()
                 )
             }.also {

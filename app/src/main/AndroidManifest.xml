@@ -19,6 +19,12 @@
             android:label="@string/title_activity_order_payment_details"
             android:theme="@style/Theme.Hiazee" />
         <activity
+            android:name=".ui.activities.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.DetailProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.OrderDetailsActivity"
             android:exported="false"
             android:label="@string/title_activity_order_details"

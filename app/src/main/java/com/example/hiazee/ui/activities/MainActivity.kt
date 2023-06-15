@@ -28,14 +28,26 @@ class MainActivity : AppCompatActivity() {
 
         checkToken()
 
-        binding.bottomNavigationBar.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.home       -> replaceFragment(HomeFragment())
-                R.id.profile    -> replaceFragment(ProfileFragment())
-                else            -> {}
+        binding.realBottomNavbar.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.home -> replaceFragment(HomeFragment())
+                R.id.product -> goToAllProductPage()
+                R.id.profile -> replaceFragment(ProfileFragment())
+                R.id.cart -> goToCartPage()
+                else -> {}
             }
             true
         }
+    }
+
+    private fun goToAllProductPage() {
+        val intent = Intent(this, SearchActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun goToCartPage() {
+        val intent = Intent(this, CartActivity::class.java)
+        startActivity(intent)
     }
 
     private fun checkToken() {
@@ -59,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.mainScreenFragment, fragment)
