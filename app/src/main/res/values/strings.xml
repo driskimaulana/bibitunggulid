@@ -79,4 +79,8 @@
     <string name="status_pesanan_selesai">Status Pesanan: Selesai</string>
     <string name="status_pesanan">Status Pesanan</string>
     <string name="rincian_pembayaran">Rincian Pembayaran</string>
+    <string name="title_activity_order_payment_details">OrderPaymentDetailsActivity</string>
+    <string name="detail_pembayaran">Detail Pembayaran</string>
+    <string name="metode_pembayaran">Metode Pembayaran</string>
+    <string name="keluar">Keluar</string>
 </resources>

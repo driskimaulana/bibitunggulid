@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.activities.OrderPaymentDetailsActivity">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:id="@+id/layoutWaitingPayment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvWaitingLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Menunggu Pembayaran"
+                        android:textColor="@color/main_green"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tvpayAmount"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rp 20000"
+                        android:textColor="@color/black_head"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@id/tvWaitingLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        app:layout_constraintTop_toBottomOf="@id/tvpayAmount"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:src="@drawable/ic_waitingforpayment_foreground"
+                        android:id="@+id/imgWaitingPayment"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/metode_pembayaran"
+                        app:layout_constraintTop_toBottomOf="@id/imgWaitingPayment"
+                        app:layout_constraintStart_toStartOf="@id/imgWaitingPayment"
+                        app:layout_constraintEnd_toEndOf="@id/imgWaitingPayment"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/black_head"
+                        android:id="@+id/tvPaymentMetodeLabel" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/listBank1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintTop_toBottomOf="@id/tvPaymentMetodeLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+
+                        <ImageView
+                            android:id="@+id/bniLogo"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_bnilogo_foreground"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                        <ImageView
+                            android:id="@+id/briLogo"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_brilogo_foreground"
+                            app:layout_constraintTop_toTopOf="@id/bniLogo"
+                            app:layout_constraintStart_toEndOf="@id/bniLogo"
+                            app:layout_constraintBottom_toBottomOf="@id/bniLogo"
+                            app:layout_constraintEnd_toStartOf="@id/mandiriLogo"
+                            android:layout_marginHorizontal="20dp"
+                            />
+
+                        <ImageView
+                            android:id="@+id/mandiriLogo"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_mandirilogo_foreground"
+                            android:layout_marginStart="20dp"
+                            app:layout_constraintTop_toTopOf="@id/briLogo"
+                            app:layout_constraintStart_toEndOf="@id/briLogo"
+                            app:layout_constraintBottom_toBottomOf="@id/briLogo"
+                            />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/listBank2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/listBank1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+
+                        <ImageView
+                            android:id="@+id/permataLogo"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_prematalogo_foreground"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                        <ImageView
+                            android:id="@+id/bsiLogo"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_bsilogo_foreground"
+                            app:layout_constraintTop_toTopOf="@id/permataLogo"
+                            app:layout_constraintStart_toEndOf="@id/permataLogo"
+                            app:layout_constraintBottom_toBottomOf="@id/permataLogo"
+                            app:layout_constraintEnd_toStartOf="@id/bsiLogo"
+                            android:layout_marginHorizontal="20dp"
+                            />
+
+                        <ImageView
+                            android:id="@+id/bjbLogo"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_bjblogo_foreground"
+                            android:layout_marginStart="20dp"
+                            app:layout_constraintTop_toTopOf="@id/bsiLogo"
+                            app:layout_constraintStart_toEndOf="@id/bsiLogo"
+                            app:layout_constraintBottom_toBottomOf="@id/bsiLogo"
+                            />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <FrameLayout
+                        android:id="@+id/btnPayHere"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="70dp"
+                        app:layout_constraintTop_toBottomOf="@+id/listBank2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@drawable/primary_button">
+
+                        <TextView
+                            android:id="@+id/finishTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Bayar Disini"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"/>
+
+                        <ProgressBar
+                            android:id="@+id/submitFinishLoading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible"
+                            android:layout_gravity="center" />
+                    </FrameLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </ScrollView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutPaymentSuccess"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvPaymentSuccessLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pembayaran Terverifikasi"
+                    android:textColor="@color/main_green"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tvNoteAfterPayment"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hiazee sedang menyiapkan pesananmu."
+                    android:textColor="@color/black_head"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toBottomOf="@id/tvPaymentSuccessLabel"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvNoteAfterPayment"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/ic_paymentsuccess_foreground"
+                    android:id="@+id/imgPaymentSuccess"/>
+
+                <FrameLayout
+                    android:id="@+id/btnPayDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="70dp"
+                    app:layout_constraintTop_toBottomOf="@+id/imgPaymentSuccess"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/primary_button">
+
+                    <TextView
+                        android:id="@+id/paymentDetailText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Lihat Detail Pembayaran"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"/>
+
+
+                </FrameLayout>
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutPaymentExpired"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvPaymentExpiredLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Invoice Kadaluwarsa"
+                    android:textColor="@color/main_green"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvPaymentExpiredLabel"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/ic_paymentexpired_foreground"
+                    android:id="@+id/imgPaymentExpired"/>
+
+                <FrameLayout
+                    android:id="@+id/btnBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="70dp"
+                    app:layout_constraintTop_toBottomOf="@+id/imgPaymentExpired"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/primary_button">
+
+                    <TextView
+                        android:id="@+id/paymentFailedText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Kembali"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"/>
+
+
+                </FrameLayout>
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+
+    <ProgressBar
+        android:id="@+id/paymentDetailsLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
