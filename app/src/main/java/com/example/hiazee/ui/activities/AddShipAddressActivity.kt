@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.JsonToken
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -34,6 +35,14 @@ class AddShipAddressActivity : AppCompatActivity() {
             viewModel.getUserData().collect {
                 userData = it
             }
+        }
+
+        initActionView()
+    }
+
+    private fun initActionView() {
+        binding.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
 
         binding.buttonSubmit.setOnClickListener {

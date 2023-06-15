@@ -1,5 +1,6 @@
 package com.example.hiazee.ui.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -35,6 +36,7 @@ class OrderListAdapter(private val context: Context, private val orderList: List
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val order = orderList[position]
 

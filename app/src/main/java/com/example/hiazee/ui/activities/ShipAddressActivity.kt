@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.JsonToken
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -14,12 +13,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hiazee.R
-import com.example.hiazee.data.remote.models.ProductModel
 import com.example.hiazee.data.remote.models.ShipAddressModel
 import com.example.hiazee.data.remote.models.UserData
 import com.example.hiazee.databinding.ActivityShipAddressBinding
 import com.example.hiazee.ui.adapters.ShipAddressAdapter
-import com.example.hiazee.ui.fragments.HomeFragment
 import com.example.hiazee.ui.viewmodels.ShipAddressViewModel
 import com.example.hiazee.utils.Result
 import com.example.hiazee.utils.ViewModelFactory
@@ -84,7 +81,38 @@ class ShipAddressActivity : AppCompatActivity() {
         recyclerViewShipAddress.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewShipAddressAdapter = ShipAddressAdapter(this, shipAddressList)
+
+        recyclerViewShipAddressAdapter.setOnMenuItemClickListener(object : ShipAddressAdapter.OnMenuItemClickListener {
+            override fun onEditClicked(shipAddressId: Int) {
+                Log.e("DEBUGNOVALEDIT", shipAddressId.toString())
+            }
+
+            override fun onDeleteClicked(shipAddressId: Int) {
+                deleteShipData(shipAddressId.toString())
+            }
+        })
+
         recyclerViewShipAddress.adapter = recyclerViewShipAddressAdapter
+    }
+
+    private fun deleteShipData(id: String){
+        viewModel.deleteShipAddress(userData.token, id).observe(this) {
+            if (it != null) {
+                when (it) {
+                    is Result.Loading -> {
+                        // loadingState(true)
+                    }
+                    is Result.Success -> {
+                        // loadingState(false)
+                        renderShipAddressList()
+                    }
+                    is Result.Error -> {
+                        // loadingState(false)
+                        Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 
     private fun openAddShipAddressActivity() {
