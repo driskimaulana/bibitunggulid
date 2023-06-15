@@ -48,4 +48,9 @@ interface ApiService {
     ): ApiResponse<Nothing>
 
 
+    @DELETE("shipaddress/{id}")
+    suspend fun deleteShipAddress(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): ApiResponseNoData
 }
