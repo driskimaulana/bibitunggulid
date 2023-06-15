@@ -38,6 +38,11 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        binding.fabCamera.setOnClickListener {
+            val intent = Intent(this, CameraActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun goToAllProductPage() {

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -13,21 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hiazee.R
 import com.example.hiazee.data.remote.models.CartModel
-import com.example.hiazee.data.remote.models.ShipAddressModel
 import com.example.hiazee.data.remote.models.UserData
 import com.example.hiazee.databinding.ActivityCartBinding
-import com.example.hiazee.databinding.ActivityMainBinding
 import com.example.hiazee.ui.adapters.CartAdapter
-import com.example.hiazee.ui.adapters.HomeProductAdapter
-import com.example.hiazee.ui.adapters.ShipAddressAdapter
 import com.example.hiazee.ui.viewmodels.CartViewModel
-import com.example.hiazee.ui.viewmodels.DetailProductViewModel
 import com.example.hiazee.utils.Result
 import com.example.hiazee.utils.ViewModelFactory
 import com.example.hiazee.utils.calculateTotalPrice
 import com.example.hiazee.utils.formatPrice
 import kotlinx.coroutines.launch
-import java.text.NumberFormat
 import java.util.*
 
 class CartActivity : AppCompatActivity() {
