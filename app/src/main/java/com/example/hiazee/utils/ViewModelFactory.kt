@@ -56,6 +56,10 @@ class ViewModelFactory private constructor(
                 productRepository,
                 cartRepository
             ) as T
+            modelClass.isAssignableFrom(CheckoutViewModel::class.java) -> CheckoutViewModel(
+                userRepository,
+                cartRepository
+            ) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

@@ -1,6 +1,7 @@
 package com.example.hiazee.ui.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,7 @@ import com.example.hiazee.ui.viewmodels.CartViewModel
 import com.example.hiazee.ui.viewmodels.DetailProductViewModel
 import com.example.hiazee.utils.Result
 import com.example.hiazee.utils.ViewModelFactory
+import com.example.hiazee.utils.calculateTotalPrice
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.*
@@ -54,10 +56,10 @@ class CartActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun renderCartItemList(){
+    private fun renderCartItemList() {
         loadingState1(true)
 
-        if(userData.token != "") {
+        if (userData.token != "") {
             viewModel.getCart(userData.token).observe(this) {
                 if (it != null) {
                     when (it) {
@@ -80,9 +82,14 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
-    private fun initActionView(){
+    private fun initActionView() {
         binding.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
+        }
+
+        binding.buttonCheckout.setOnClickListener {
+            val intent = Intent(this, CheckoutActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -96,9 +103,11 @@ class CartActivity : AppCompatActivity() {
             override fun onDeleteButtonClicked(productId: String) {
                 deleteProductFromCart(productId)
             }
+
             override fun onDecreaseButtonClicked(productId: String) {
                 reduceProductFromCart(productId)
             }
+
             override fun onIncreaseButtonClicked(productId: String) {
                 addProductFromCart(productId)
             }
@@ -107,8 +116,8 @@ class CartActivity : AppCompatActivity() {
         recyclerViewCart.adapter = recyclerViewCartAdapter
     }
 
-    private fun deleteProductFromCart(productId: String){
-        if(userData.token != ""){
+    private fun deleteProductFromCart(productId: String) {
+        if (userData.token != "") {
             viewModel.deleteProductFromCart(userData.token, productId).observe(this) {
                 if (it != null) {
                     when (it) {
@@ -129,8 +138,8 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
-    private fun addProductFromCart(productId: String){
-        if(userData.token != ""){
+    private fun addProductFromCart(productId: String) {
+        if (userData.token != "") {
             viewModel.addProductToCart(userData.token, productId).observe(this) {
                 if (it != null) {
                     when (it) {
@@ -151,8 +160,8 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
-    private fun reduceProductFromCart(productId: String){
-        if(userData.token != ""){
+    private fun reduceProductFromCart(productId: String) {
+        if (userData.token != "") {
             viewModel.reduceProductFromCart(userData.token, productId).observe(this) {
                 if (it != null) {
                     when (it) {
@@ -171,19 +180,6 @@ class CartActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun calculateTotalPrice(cartItemList: List<CartModel>): String {
-        var totalPrice = 0
-        for (cartItem in cartItemList) {
-            totalPrice += cartItem.unitPrice * cartItem.count
-        }
-        return formatPrice(totalPrice)
-    }
-
-    private fun formatPrice(price: Int): String {
-        val formattedPrice = NumberFormat.getNumberInstance(Locale.getDefault()).format(price)
-        return "Rp $formattedPrice"
     }
 
     private fun loadingState1(isLoading: Boolean) {

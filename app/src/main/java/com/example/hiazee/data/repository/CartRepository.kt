@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.hiazee.data.remote.api.ApiService
 import com.example.hiazee.data.remote.models.CartModel
-import com.example.hiazee.data.remote.models.ProductModel
 import com.example.hiazee.data.remote.requests.AddProductToCartRequest
 import com.example.hiazee.utils.Result
 import com.example.hiazee.utils.extractErrorMessage
