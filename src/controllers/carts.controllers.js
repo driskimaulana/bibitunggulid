@@ -12,85 +12,95 @@ const { Cart, sequelize } = require('../../database/models');
 /**
  * @swagger
  * tags:
- *  name: Carts
- *  description: The carts crud operations API
+ *   name: Carts
+ *   description: API endpoints for cart operations
+ *
  * /carts/:
- *  get:
- *      summary: get all carts by customer id
- *      tags: [Carts ]
- *      responses:
- *          200:
- *              desciption: get cart data success
- *              content:
- *                  application/json:
- *                      schema:
- *                          $ref: '#/components/schemas/Cart'
- *          404:
- *              description: Cart data is not found
- *          500:
- *              description: Service unavailable
- *  post:
- *      summary: Add product to customers cart using productId.
- *      tags: [Carts ]
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/Cart'
- *                  summary: The product id
- *      responses:
- *          201:
- *              description: New account succesfully created
- *              content:
- *                  application/json:
- *                      schema:
- *                          $ref: '#/components/schemas/Customer'
- *          400:
- *              description: Telphone is already used
- *          500:
- *              description: Service is unavailable
+ *   get:
+ *     summary: Get all carts by customer ID
+ *     tags: [Carts]
+ *     responses:
+ *       200:
+ *         description: Success. Retrieves cart data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Cart'
+ *       404:
+ *         description: Cart data not found.
+ *       500:
+ *         description: Internal server error.
+ *
+ *   post:
+ *     summary: Add a product to the customer's cart using the product ID.
+ *     tags: [Carts]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               productId:
+ *                 type: integer
+ *             example:
+ *               productId: 123
+ *     responses:
+ *       201:
+ *         description: Success. The product is added to the cart.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Cart'
+ *       400:
+ *         description: Bad request. Telephone is already used.
+ *       500:
+ *         description: Internal server error.
+ *
  * /carts/{productId}:
- *  delete:
- *      summary: delete product from customers cart using product id
- *      tags: [Carts ]
- *      parameters:
- *          -   in: path
- *              name: productId
- *              schema:
- *                  type: int
- *              summary: The product id
- *      responses:
- *          200:
- *              desciption: delete product data success
- *          400:
- *              description: No id is specified
- *          404:
- *              description: Product data is not found
- *          500:
- *              description: Service unavailable
- *  put:
- *      summary: reduce product count in the customers cart
- *      tags: [Carts ]
- *      parameters:
- *          -   in: path
- *              name: productId
- *              schema:
- *                  type: int
- *              summary: The product id
- *      responses:
- *          200:
- *              desciption: Product successfully reduced.
- *              content:
- *                  application/json:
- *                      schema:
- *                          $ref: '#/components/schemas/Cart'
- *          400:
- *              description: No id is specified
- *          404:
- *              description: Cart data is not found
- *          500:
- *              description: Service unavailable
+ *   delete:
+ *     summary: Delete a product from the customer's cart using the product ID.
+ *     tags: [Carts]
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The product ID
+ *     responses:
+ *       200:
+ *         description: Success. The product is deleted from the cart.
+ *       400:
+ *         description: Bad request. No ID is specified.
+ *       404:
+ *         description: Product data not found.
+ *       500:
+ *         description: Internal server error.
+ *
+ *   put:
+ *     summary: Reduce the product count in the customer's cart.
+ *     tags: [Carts]
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The product ID
+ *     responses:
+ *       200:
+ *         description: Success. The product count is reduced.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Cart'
+ *       400:
+ *         description: Bad request. No ID is specified.
+ *       404:
+ *         description: Cart data not found.
+ *       500:
+ *         description: Internal server error.
  */
 
 const getCartByCustomerId = async (

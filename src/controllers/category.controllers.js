@@ -13,22 +13,22 @@
  *  description: The category crud operations API
  * /category/:
  *  get:
- *      summary: get all categories data
- *      tags: [Categories ]
+ *      summary: Get all categories data
+ *      tags: [Categories]
  *      responses:
  *          200:
- *              desciption: get categories data success
+ *              description: Get categories data success
  *              content:
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/Category'
  *          404:
- *              description: category data is not found
+ *              description: Category data is not found
  *          500:
  *              description: Service unavailable
  *  post:
- *      summary: Create new categoy
- *      tags: [Categories ]
+ *      summary: Create new category
+ *      tags: [Categories]
  *      requestBody:
  *          required: true
  *          content:
@@ -37,47 +37,47 @@
  *                      $ref: '#/components/schemas/Category'
  *      responses:
  *          201:
- *              description: New category succesfully created
+ *              description: New category successfully created
  *              content:
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/Category'
  *          400:
- *              description: Telphone is already used
+ *              description: Category is already in the database
  *          500:
  *              description: Service is unavailable
  * /category/{id}:
  *  delete:
- *      summary: delete category by id
- *      tags: [Categories ]
+ *      summary: Delete category by ID
+ *      tags: [Categories]
  *      parameters:
  *          -   in: path
  *              name: id
  *              schema:
- *                  type: int
- *              summary: The categories id
+ *                  type: integer
+ *              summary: The category ID
  *      responses:
  *          200:
- *              desciption: delete categories data success
+ *              description: Delete category data success
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/category'
+ *                          $ref: '#/components/schemas/Category'
  *          400:
- *              description: No id is specified
+ *              description: No ID is specified
  *          404:
- *              description: category data is not found
+ *              description: Category data is not found
  *          500:
  *              description: Service unavailable
  *  put:
- *      summary: update category data
- *      tags: [Categories ]
+ *      summary: Update category data
+ *      tags: [Categories]
  *      parameters:
  *          -   in: path
  *              name: id
  *              schema:
- *                  type: int
- *              summary: The categories id
+ *                  type: integer
+ *              summary: The category ID
  *      requestBody:
  *          required: false
  *          content:
@@ -86,15 +86,15 @@
  *                      $ref: '#/components/schemas/Category'
  *      responses:
  *          200:
- *              desciption: get categories data success
+ *              description: Update category data success
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/category'
+ *                          $ref: '#/components/schemas/Category'
  *          400:
- *              description: No id is specified
+ *              description: No ID is specified
  *          404:
- *              description: category data is not found
+ *              description: Category data is not found
  *          500:
  *              description: Service unavailable
  */
