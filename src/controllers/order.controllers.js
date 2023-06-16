@@ -162,7 +162,7 @@ const createOrder = async (
       status: 'success',
       message: 'Order Success',
       data: {
-        orderId: invoice.data.id,
+        orderId: order.id,
         customerEmail: invoice.data.payer_email,
         urlPayment: invoice.data.invoice_url,
       },
