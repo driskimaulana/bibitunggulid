@@ -25,9 +25,6 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         Handler().postDelayed({
-            // on below line we are
-            // creating a new intent
-
             checkToken()
             finish()
         }, 2000)
