@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-vars */
 /**
@@ -53,7 +54,9 @@ const getAllOrder = async (
       );
       ordersData[i].products = [];
       const prodsId = [];
+      const quantity = [];
       prods.map((e) => prodsId.push(e.productId));
+      prods.map((e) => quantity.push(e.quantity));
 
       ordersData[i].products = await Product.findAll({
         attributes: ['id', 'productName', 'pictures', 'unitPrice'],
@@ -64,6 +67,10 @@ const getAllOrder = async (
         },
         raw: true,
       });
+
+      quantity.map((e, x) => ordersData[i].products[x] = { ...ordersData[i].products[x], quantity: e });
+
+      ordersData[i].products = [...ordersData[i].products];
 
       // eslint-disable-next-line guard-for-in
       //   for (const j in prods) {
@@ -221,8 +228,13 @@ const getOrderDetails = async (
         { where: { orderId: ordersData[i].id } },
       );
       ordersData[i].products = [];
+      // const prodsId = [];
+      // prods.map((e) => prodsId.push(e.productId));
+
       const prodsId = [];
+      const quantity = [];
       prods.map((e) => prodsId.push(e.productId));
+      prods.map((e) => quantity.push(e.quantity));
 
       ordersData[i].products = await Product.findAll({
         attributes: ['id', 'productName', 'pictures', 'unitPrice'],
@@ -233,6 +245,10 @@ const getOrderDetails = async (
         },
         raw: true,
       });
+
+      quantity.map((e, x) => ordersData[i].products[x] = { ...ordersData[i].products[x], quantity: e });
+
+      ordersData[i].products = [...ordersData[i].products];
 
       // eslint-disable-next-line guard-for-in
       // for (const j in prods) {
@@ -390,16 +406,15 @@ const getOrderByCustomerId = async (
     for (const i in ordersData) {
       const prods = await OrderDetail.findAll(
         {
-          attributes: ['productId'],
           where: { orderId: ordersData[i].id },
-          raw: true,
         },
-
       );
       ordersData[i].products = [];
 
       const prodsId = [];
+      const quantity = [];
       prods.map((e) => prodsId.push(e.productId));
+      prods.map((e) => quantity.push(e.quantity));
 
       ordersData[i].products = await Product.findAll({
         attributes: ['id', 'productName', 'pictures', 'unitPrice'],
@@ -410,6 +425,10 @@ const getOrderByCustomerId = async (
         },
         raw: true,
       });
+
+      quantity.map((e, x) => ordersData[i].products[x] = { ...ordersData[i].products[x], quantity: e });
+
+      ordersData[i].products = [...ordersData[i].products];
 
       // eslint-disable-next-line guard-for-in
       // for (const j in prods) {
@@ -423,6 +442,8 @@ const getOrderByCustomerId = async (
       //   ordersData[i].products.push({ ...prodDetails.dataValues, quantity: prods[j].quantity });
       // }
     }
+
+    // console.log(ordersData);
 
     const response = res.status(200).json({
       status: 'success',
