@@ -42,6 +42,7 @@ class OrderListAdapter(private val context: Context, private val orderList: List
 
         holder.statusName.text = order.statusName
         holder.productName.text = order.products[0].productName
+        Log.d("driskidebug", "onBindViewHolder: ${order.products[0].quantity}")
         holder.quantity.text = order.products[0].quantity.toString() + " barang"
 
         val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
