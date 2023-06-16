@@ -17,4 +17,7 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
             userRepository.deleteUserData()
         }
     }
+
+    fun changePassword(token: String, oldPassword: String, newPassword: String) = userRepository.changePassword(token, oldPassword, newPassword)
+
 }

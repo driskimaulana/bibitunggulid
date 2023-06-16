@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.hiazee.databinding.FragmentProfileBinding
+import com.example.hiazee.ui.activities.AboutUsActivity
+import com.example.hiazee.ui.activities.ChangePasswordActivity
+import com.example.hiazee.ui.activities.KebijakanPrivasiActivity
 import com.example.hiazee.ui.activities.LoginActivity
 import com.example.hiazee.ui.activities.OrderListActivity
 import com.example.hiazee.ui.activities.ShipAddressActivity
@@ -56,6 +59,30 @@ class ProfileFragment : Fragment() {
             val intent = Intent(activity, OrderListActivity::class.java)
             startActivity(intent)
         }
+
+        binding.btnChangePassword.setOnClickListener {
+            val intent = Intent(activity, ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnKebijakanPrivasi.setOnClickListener {
+            val intent = Intent(activity, KebijakanPrivasiActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnKebijakanPrivasi.setOnClickListener {
+            val intent = Intent(activity, KebijakanPrivasiActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnAboutUs.setOnClickListener {
+            val intent = Intent(activity, AboutUsActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
+
     }
 
     private fun renderUserData() {
@@ -63,6 +90,7 @@ class ProfileFragment : Fragment() {
             viewModel.getUserData().collect { userData ->
                 if (userData.token != "") {
                     binding.profileFullname.text = userData.fullName
+                    binding.profileEmail.text = userData.email
                 }
             }
         }

@@ -1,10 +1,12 @@
 package com.example.hiazee.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.hiazee.data.local.datastore.UserPreference
 import com.example.hiazee.data.remote.api.ApiService
 import com.example.hiazee.data.remote.models.UserData
+import com.example.hiazee.data.remote.requests.ChangePasswordRequest
 import com.example.hiazee.data.remote.requests.LoginRequest
 import com.example.hiazee.data.remote.requests.RegisterRequest
 import com.example.hiazee.utils.Result
@@ -68,6 +70,23 @@ class UserRepository private constructor(
 
     suspend fun deleteUserData() {
         preferences.deleteUserData()
+    }
+
+    fun changePassword(token: String, oldPassword: String, newPassword: String): LiveData<Result<String>> = liveData {
+        emit(Result.Loading)
+
+        val changePasswordRequest = ChangePasswordRequest(oldPassword, newPassword)
+
+        try {
+            val response = apiService.changePassword("Bearer $token", changePasswordRequest)
+            if (response.status != "error") {
+                emit(Result.Success(response.message))
+            } else {
+                emit(Result.Error(response.message))
+            }
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
     }
 
     companion object {

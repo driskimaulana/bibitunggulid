@@ -50,18 +50,27 @@
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/button"
-                        android:layout_width="wrap_content"
+                    
+                    <TextView
+                        android:id="@+id/profileEmail"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/primary_button"
-                        android:minHeight="20dp"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="4dp"
-                        android:text="@string/edit_profile"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:layout_marginBottom="8dp"
+                        android:text="monkeydluffy@gmail.com"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_width="match_parent"/>
+
+<!--                    <androidx.appcompat.widget.AppCompatButton-->
+<!--                        android:id="@+id/button"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:background="@drawable/primary_button"-->
+<!--                        android:minHeight="20dp"-->
+<!--                        android:paddingHorizontal="8dp"-->
+<!--                        android:paddingVertical="4dp"-->
+<!--                        android:text="@string/edit_profile"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
 
                 </LinearLayout>
             </LinearLayout>
@@ -83,6 +92,7 @@
                     android:textStyle="bold" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnChangePassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
@@ -217,6 +227,7 @@
                     android:textStyle="bold" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnKebijakanPrivasi"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
@@ -255,6 +266,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnAboutUs"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
@@ -275,7 +287,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="@string/faq"
+                        android:text="About Us"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView10"
