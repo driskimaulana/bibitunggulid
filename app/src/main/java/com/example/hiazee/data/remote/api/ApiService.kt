@@ -12,6 +12,12 @@ interface ApiService {
     @POST("authentication/signup")
     fun register(@Body request: RegisterRequest): Call<ApiResponse<UserData>>
 
+    @PUT("customers/changepassword")
+    suspend fun changePassword(
+        @Header("Authorization") token: String,
+        @Body request: ChangePasswordRequest
+    ): ApiResponseNoData
+
     @GET("product")
     suspend fun getAllProducts(@Query("keyword") keyword: String?): ApiResponse<List<ProductModel>>
 
@@ -94,4 +100,6 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") id: String
     ): ApiResponseNoData
+
+
 }

@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -47,9 +48,10 @@ class LoginActivity : AppCompatActivity() {
                         startMainActivity()
                     }
                     is Result.Error -> {
-                        loadingState(false)
-                        Toast.makeText(this, it.error, Toast.LENGTH_SHORT)
+                        Toast.makeText(this, "Login gagal. Periksa data anda.", Toast.LENGTH_SHORT)
                             .show()
+                        Log.d("driskidebug", "login: ${it}")
+                        loadingState(false)
                     }
                 }
             }

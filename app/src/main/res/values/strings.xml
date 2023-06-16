@@ -91,4 +91,7 @@
     <string name="doesnt_get_permission">doesn\'t get permission</string>
     <string name="choose_picture">Choose Picture</string>
     <string name="find">Find</string>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
+    <string name="title_activity_kebijakan_privasi">KebijakanPrivasiActivity</string>
+    <string name="title_activity_about_us">AboutUsActivity</string>
 </resources>
