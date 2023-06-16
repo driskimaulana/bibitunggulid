@@ -55,8 +55,6 @@ class OrderListActivity : AppCompatActivity() {
         }
         binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
 
-
-
         orderList = listOf(
             OrderModel(
                 10,
@@ -96,7 +94,6 @@ class OrderListActivity : AppCompatActivity() {
                     )
                 )
             ),
-
             )
 
         renderOrderList()
@@ -112,6 +109,7 @@ class OrderListActivity : AppCompatActivity() {
     private fun renderOrderList() {
         initOrderList(orderList)
         viewModel.getCustomerOrderList(userData.token).observe(this){
+            Log.d("driskidebug", "renderOrderList: ${userData.token}")
             if(it != null){
                 when (it) {
                     is Result.Loading -> {

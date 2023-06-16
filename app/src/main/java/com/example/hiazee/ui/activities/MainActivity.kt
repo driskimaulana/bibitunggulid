@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     private fun logout() {
         viewModel.deleteUserData()
 
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, SplashScreenActivity::class.java)
         startActivity(intent)
         finish()
     }
