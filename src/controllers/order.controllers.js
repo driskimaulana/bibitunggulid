@@ -466,14 +466,13 @@ const changeToOnShipping = async (
 /** @type import('express').Request */ req,
   /** @type import('express').Response */ res,
 ) => {
-  const { userId } = req;
   const { orderId } = req.params;
   const {
     courierName, phone, delieveryTime, estimatedReceiveTime,
   } = req.body;
 
   try {
-    let order = await Order.findOne({ where: { id: orderId, customerId: userId } });
+    let order = await Order.findOne({ where: { id: orderId } });
     if (!order) {
       const response = res.status(404).json({
         status: 'failed',
