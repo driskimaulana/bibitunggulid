@@ -78,6 +78,10 @@ class DetailProductActivity : AppCompatActivity() {
         binding.cartButton.setOnClickListener {
             addProductToCart(productId)
         }
+
+        binding.beliSekarangButton.setOnClickListener {
+            createOrder()
+        }
     }
 
     private fun addProductToCart(productId: String){
@@ -99,6 +103,11 @@ class DetailProductActivity : AppCompatActivity() {
                     }
                 }
             }
+    }
+
+    private fun createOrder(){
+        Log.d("driskidebug", "createOrder: Clicker")
+        Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT)
     }
 
     @SuppressLint("SetTextI18n")

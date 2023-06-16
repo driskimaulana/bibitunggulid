@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -102,6 +103,8 @@ class CameraActivity : AppCompatActivity() {
 
         val photoFile = createFile(application)
 
+        Log.d("driskidebug", "takePhoto: getin")
+
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
         imageCapture.takePicture(
             outputOptions,
@@ -136,7 +139,7 @@ class CameraActivity : AppCompatActivity() {
         binding.captureImage.setImageResource(R.drawable.ic_capture)
 
         binding.switchCamera.isEnabled = false
-
+        binding.cameraProgressBar.visibility = View.VISIBLE
         getPrediction()
     }
 
@@ -145,11 +148,13 @@ class CameraActivity : AppCompatActivity() {
             val file = reduceFileImage(getFile as File)
             val requestImageFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "photo",
+//                "photo",
+                "file",
                 file.name,
                 requestImageFile
             )
 
+            Log.d("driskidebug","hello")
             viewModel.predictPlant(imageMultipart).observe(this) {
                 if (it != null) {
                     when (it) {
@@ -163,6 +168,7 @@ class CameraActivity : AppCompatActivity() {
                         is Result.Error -> {
                             // loadingState(false)
                             Log.d("error", it.error)
+                            binding.cameraProgressBar.visibility = View.INVISIBLE
                             Toast.makeText(this, it.error, Toast.LENGTH_LONG).show()
                         }
                     }
@@ -173,10 +179,11 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun showPrediction(pred: PredictPlantResponse) {
-        Log.d("masuuk id", pred.id)
-        Log.d("masuuk id", pred.productName)
+        binding.cameraProgressBar.visibility = View.INVISIBLE
 
-        TODO("Not yet implemented")
+        val i = Intent(this, DetailProductActivity::class.java)
+        i.putExtra("id", pred.id)
+        startActivity(i)
     }
 
     private fun continueCamera() {
