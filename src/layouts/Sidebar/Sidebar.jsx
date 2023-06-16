@@ -1,4 +1,4 @@
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import {
   Sidebar, Menu, MenuItem, useProSidebar,
 } from 'react-pro-sidebar';
@@ -10,7 +10,7 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import { Icon } from '@iconify/react';
 
-import Logo from '../../assets/images/logo.png';
+import Logo from '../../assets/images/logo-only.png';
 
 const MySideBar = () => {
   const { collapseSidebar } = useProSidebar();
@@ -47,7 +47,11 @@ const MySideBar = () => {
           backgroundColor: 'white',
         }}
         >
-          <img src={Logo} alt="logo" width="auto" height="100px" />
+          <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+            <img src={Logo} alt="logo" width="auto" height="100px" />
+            <Typography variant="p" fontWeight="bold" color="secondary">Hiazee</Typography>
+
+          </Box>
           <IconButton onClick={handleLogout}>
             <Icon icon="solar:logout-3-bold" color="red" />
           </IconButton>

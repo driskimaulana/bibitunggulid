@@ -127,7 +127,9 @@ const OrderCard = (props) => {
           {
             order.products.map((p, i) => (
               <Box key={i} display="flex" columnGap={2} marginTop={2}>
-                <img src={p.pictures[0]} width={100} alt="prods" />
+                {
+                  p.pictures && <img src={p.pictures[0]} width={100} alt="prods" />
+                }
                 <Box display="flex" flexDirection="column">
                   <Typography variant="p" fontWeight="500" fontSize={13}>
                     {p.productName}
@@ -263,9 +265,9 @@ const OrderList = () => {
       headers: { Authorization: `Bearer ${adminLoggedIn.token}` },
     };
     await Axios.get('https://dev-bibitunggulid-zldx7crkfq-et.a.run.app/orders/', config).then((response) => {
+      console.log(response.data.data);
       setorders(response.data.data);
       setisLoading(false);
-      console.log(response);
     });
   };
 
