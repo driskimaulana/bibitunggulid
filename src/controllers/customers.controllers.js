@@ -5,6 +5,8 @@
 * Date:May 24, 2023
 * Description: This is controllers for customers
 * */
+const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 const Customer = require('../../database/models').Customers;
 
@@ -235,6 +237,63 @@ const deleteCustomers = async (
   }
 };
 
+const changePasswordCustomers = async (
+/** @type import('express').Request */ req,
+  /** @type import('express').Response */ res,
+) => {
+  const { oldPassword, newPassword } = req.body;
+
+  const { userId } = req;
+
+  try {
+    // search for customers data in database
+    let customer = await Customer.findOne({
+      where: { id: userId },
+    });
+
+    if (!customer) {
+      const response = res.status(404).json({
+        status: 'failed',
+        message: 'Email is not found.',
+      });
+      return response;
+    }
+
+    // check password
+    const isPasswordCorrect = await bcrypt.compare(oldPassword, customer.password);
+    if (!isPasswordCorrect) {
+      const response = res.status(400).json({
+        status: 'failed',
+        message: 'Old password is incorrect.',
+      });
+      return response;
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+    const updatedAt = new Date().toISOString();
+
+    customer = {
+      updatedAt,
+      password: hashedPassword,
+    };
+
+    await Customer.update({ ...customer }, { where: { id: userId } });
+
+    const response = res.status(200).json({
+      status: 'success',
+      message: 'Change Password Success.',
+    });
+    return response;
+  } catch (e) {
+    console.log(e.message);
+    const response = res.status(500).json({
+      status: 'failed',
+      message: 'Service unavailable.',
+    });
+    return response;
+  }
+};
+
 module.exports = {
-  getCustomers, getCustomersById, updateCustomers, deleteCustomers,
+  getCustomers, getCustomersById, updateCustomers, deleteCustomers, changePasswordCustomers,
 };
