@@ -1,13 +1,14 @@
 package com.example.hiazee.ui.activities
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.hiazee.R
@@ -17,6 +18,7 @@ import com.example.hiazee.databinding.ActivityDetailProductBinding
 import com.example.hiazee.ui.viewmodels.DetailProductViewModel
 import com.example.hiazee.utils.Result
 import com.example.hiazee.utils.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 
@@ -75,14 +77,19 @@ class DetailProductActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        binding.cartButton.setOnClickListener {
+        binding.btnCartButton.setOnClickListener {
             addProductToCart(productId)
         }
-
-        binding.beliSekarangButton.setOnClickListener {
-            createOrder()
-        }
+//        binding.cartButton.setOnClickListener {
+//            addProductToCart(productId)
+//        }
+//
+//        binding.beliSekarangButton.setOnClickListener {
+//            createOrder()
+//        }
     }
+
+
 
     private fun addProductToCart(productId: String){
         viewModel.addProductToCart(userData.token, productId)
@@ -94,7 +101,18 @@ class DetailProductActivity : AppCompatActivity() {
                         }
                         is Result.Success -> {
                             // loadingState(false)
-                            Toast.makeText(this, "Product Berhasil Ditambahkan", Toast.LENGTH_SHORT).show()
+//                            Toast.makeText(this, "Product Berhasil Ditambahkan", Toast.LENGTH_SHORT).show()
+
+//                            val mySnackbar = Snackbar.make(this, "Lanjutkan Ke Keranjang", Snackbar.LENGTH_SHORT)
+//                                .setAction("Keranjang", new View.)
+
+                            val snackbar = Snackbar
+                                .make(binding.coordinatorLayout, "Lanjut ke keranjang", Snackbar.LENGTH_LONG)
+                                .setAction("Buka Keranjang") {
+                                    val intent = Intent(this, CartActivity::class.java)
+                                    startActivity(intent)
+                                }
+                            snackbar.show()
                         }
                         is Result.Error -> {
                             // loadingState(false)
@@ -104,6 +122,8 @@ class DetailProductActivity : AppCompatActivity() {
                 }
             }
     }
+
+
 
     private fun createOrder(){
         Log.d("driskidebug", "createOrder: Clicker")
