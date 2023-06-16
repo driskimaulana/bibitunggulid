@@ -1,142 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F6F6F6"
-    tools:context=".ui.activities.DetailProductActivity">
-
-    <ImageView
-        android:id="@+id/backButton"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/gray_button_background"
-        android:elevation="4dp"
-        android:padding="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_arrow_back"
-        app:tint="@color/main_gold" />
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backButton">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/productImage"
-                android:layout_width="match_parent"
-                android:layout_height="248dp"
-                android:layout_marginBottom="32dp" />
-
-            <TextView
-                android:id="@+id/titleProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:text="Title Product"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Harga"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/productPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="Rp 50.000"
-                android:textColor="@color/main_green"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:background="@color/black" />
-
-            <TextView
-                android:id="@+id/productDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bunga anggrek ungu yang elegan dan memikat ini akan mempercantik ruangan Anda dengan keindahannya yang luar biasa, sementra aroma lembutnya akan menciptakan suasana yang menyegarkan dan menenangkan. Tambahkan sentuhan eksotis ke rumah atau kantor Anda dengan bunga ungu yang indah ini" />
-        </LinearLayout>
-    </ScrollView>
+    android:id="@+id/coordinatorLayout"
+    tools:context=".ui.activities.DetailProductActivity"
+    android:layout_height="match_parent" android:layout_width="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <FrameLayout
-            android:id="@+id/beliSekarangButton"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="48dp"
-            android:background="@drawable/primary_button_not_rounded"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cartButton"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/submitTextview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Beli Sekarang"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </FrameLayout>
+        android:layout_height="match_parent"
+        android:background="#F6F6F6"
+        >
 
         <ImageView
-            android:id="@+id/cartButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="48dp"
-            android:layout_weight="1"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/backButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/gray_button_background"
+            android:elevation="4dp"
+            android:padding="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cart"
-            app:tint="@color/main_green" />
+            app:srcCompat="@drawable/ic_arrow_back"
+            app:tint="@color/main_gold" />
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backButton">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/productImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="248dp"
+                    android:layout_marginBottom="32dp" />
+
+                <TextView
+                    android:id="@+id/titleProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:text="Title Product"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Harga"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/productPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text="Rp 50.000"
+                    android:textColor="@color/main_green"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/black" />
+
+                <TextView
+                    android:id="@+id/productDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bunga anggrek ungu yang elegan dan memikat ini akan mempercantik ruangan Anda dengan keindahannya yang luar biasa, sementra aroma lembutnya akan menciptakan suasana yang menyegarkan dan menenangkan. Tambahkan sentuhan eksotis ke rumah atau kantor Anda dengan bunga ungu yang indah ini" />
+            </LinearLayout>
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <FrameLayout
+                android:id="@+id/btnCartButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="0dp"
+                android:background="@drawable/primary_button_not_rounded"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/submitTextview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Beli"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+            <!--        <ImageView-->
+            <!--            android:id="@+id/cartButton"-->
+            <!--            android:layout_width="40dp"-->
+            <!--            android:layout_height="40dp"-->
+            <!--            android:layout_marginStart="48dp"-->
+            <!--            android:layout_weight="1"-->
+            <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--            app:layout_constraintStart_toStartOf="parent"-->
+            <!--            app:layout_constraintTop_toTopOf="parent"-->
+            <!--            app:srcCompat="@drawable/ic_cart"-->
+            <!--            app:tint="@color/main_green" />-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backButton" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backButton" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
